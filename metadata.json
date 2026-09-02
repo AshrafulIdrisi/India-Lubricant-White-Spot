@@ -1,0 +1,6 @@
+{
+  "name": "India Lubricants White-Spot & Demand Intelligence Platform",
+  "description": "Geospatial decision-support system for India lubricant demand estimation, supply-gap analysis, white-spot discovery, depot optimization, and market intelligence.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
