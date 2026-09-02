@@ -14,11 +14,13 @@ import {
   ShieldCheck,
   CheckCircle2,
   Sliders,
-  Terminal,
+  Search,
   Activity,
   Globe2,
   FileSpreadsheet,
-  ChevronDown
+  ChevronDown,
+  Menu,
+  X
 } from 'lucide-react';
 import { AlertNotification, FinancialAssumptions, LocationRecord } from '../types';
 import { downloadWhiteSpotExcel } from '../utils/excelExporter';
@@ -45,6 +47,8 @@ interface NavigationHeaderProps {
   onExportReport: () => void;
   onExportExcel?: () => void;
   locations?: LocationRecord[];
+  onToggleMobileSidebar?: () => void;
+  onSearchQuery?: (q: string) => void;
 }
 
 export const NavigationHeader: React.FC<NavigationHeaderProps> = ({
@@ -56,87 +60,95 @@ export const NavigationHeader: React.FC<NavigationHeaderProps> = ({
   onAssumptionsChange,
   onExportReport,
   onExportExcel,
-  locations = []
+  locations = [],
+  onToggleMobileSidebar,
+  onSearchQuery
 }) => {
-  const [alertsOpen, setAlertsOpen] = useState(false);
   const [scenarioOpen, setScenarioOpen] = useState(false);
   const [exportMenuOpen, setExportMenuOpen] = useState(false);
+  const [alertsOpen, setAlertsOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const tabs: { id: DashboardTab; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
-    { id: 'overview', label: 'Overview // GIS Canvas', icon: Map },
-    { id: 'state', label: 'All-India State Matrix (5.70M KL)', icon: Globe2 },
-    { id: 'brandValidation', label: 'Brand & Market Validation', icon: ShieldCheck },
+    { id: 'overview', label: 'Dashboard', icon: Map },
+    { id: 'state', label: 'All-India Matrix', icon: Globe2 },
+    { id: 'brandValidation', label: '50 Competitors', icon: ShieldCheck },
     { id: 'district', label: 'District Intelligence', icon: Fuel },
-    { id: 'product', label: 'Product Taxonomy', icon: Box },
-    { id: 'distributor', label: 'Distributor White-Spots', icon: Sliders },
+    { id: 'distributor', label: 'White Spot Analysis', icon: Sliders },
     { id: 'warehouse', label: 'Depot Optimization', icon: Box },
+    { id: 'product', label: 'Product Taxonomy', icon: Building2 },
     { id: 'forecast', label: 'Forecast // EV Shift', icon: TrendingUp },
     { id: 'businessCase', label: 'Financial Business Case', icon: DollarSign },
     { id: 'documentation', label: 'Methodology & Audit', icon: FileText }
   ];
 
-  const totalDemand = locations.reduce((sum, l) => sum + (l.totalEstimatedDemandKL || 0), 0) || 5700000;
-  const criticalCount = locations.filter(l => l.opportunityTier === 'Critical White Spot').length || 8;
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+    if (onSearchQuery) onSearchQuery(e.target.value);
+  };
 
   return (
-    <header className="w-full bg-[#0E1117] border-b border-[#1F2937] text-[#D1D5DB] sticky top-0 z-40 shadow-2xl">
-      {/* Top Telemetry Header Bar */}
-      <div className="max-w-7xl mx-auto px-4 py-2.5 flex flex-wrap items-center justify-between gap-3 border-b border-[#1F2937]">
-        {/* Brand identity */}
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-[#F27D26] rounded flex items-center justify-center shadow-[0_0_12px_rgba(242,125,38,0.35)] shrink-0">
-            <div className="w-4 h-4 border-2 border-[#0A0B0E] bg-transparent"></div>
+    <header className="w-full bg-white border-b border-slate-200/90 sticky top-0 z-20 shadow-sm select-none">
+      {/* Top Workspace Header Bar */}
+      <div className="max-w-7xl mx-auto px-4 lg:px-6 h-[72px] flex items-center justify-between gap-4">
+        
+        {/* Left: Mobile Sidebar Toggle & Search Input */}
+        <div className="flex items-center gap-3 flex-1 max-w-lg">
+          {onToggleMobileSidebar && (
+            <button
+              onClick={onToggleMobileSidebar}
+              className="lg:hidden p-2 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-100 transition-colors"
+              title="Toggle Menu"
+            >
+              <Menu className="w-5 h-5" />
+            </button>
+          )}
+
+          {/* Search Bar matching Variation 18 */}
+          <div className="relative w-full">
+            <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={handleSearchChange}
+              placeholder="Search markets, states, or distributors..."
+              className="w-full pl-10 pr-4 py-2 bg-slate-100/80 hover:bg-slate-100 focus:bg-white border border-transparent focus:border-purple-500 rounded-xl text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/20 transition-all font-sans"
+            />
           </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <h1 className="text-base font-bold tracking-tight text-white uppercase font-mono flex items-center gap-1.5">
-                LuboIntel <span className="text-[#F27D26]">// India</span>
-              </h1>
-              <span className="text-[9px] font-mono uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-[#1F2937] text-emerald-400 border border-[#374151] flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                ALL-INDIA 5.70M KL LIVE
-              </span>
+        </div>
+
+        {/* Center/Right: Macro Telemetry & Actions */}
+        <div className="flex items-center gap-3 shrink-0">
+          
+          {/* Live Data Ticker Pill */}
+          <div className="hidden xl:flex items-center gap-3 px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200/80 text-xs">
+            <div className="flex items-center gap-1.5 font-bold text-slate-800">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+              <span>5.70M KL</span>
+              <span className="text-slate-400 font-normal">(₹91.2K Cr)</span>
             </div>
-            <p className="text-[10px] font-mono text-gray-500 hidden sm:block">
-              ALL 36 STATES &amp; UTS // VAHAN 4.0 // PPAC DISCLOSURES // WHITE-SPOT ENGINE
-            </p>
+            <span className="text-slate-300">|</span>
+            <div className="text-slate-600">
+              Unmet Gap: <strong className="text-rose-600">1.51M KL</strong>
+            </div>
           </div>
-        </div>
 
-        {/* Center/Right Technical Telemetry Metrics */}
-        <div className="hidden md:flex items-center gap-5">
-          <div className="text-right">
-            <p className="text-[9px] text-gray-400 uppercase font-mono font-bold">ALL-INDIA MACRO TOTAL</p>
-            <p className="text-xs font-mono font-bold text-blue-400">5.70 Million KL <span className="text-[9px] text-emerald-400 font-normal">(₹91,200 Cr)</span></p>
-          </div>
-          <div className="text-right border-l border-[#1F2937] pl-5">
-            <p className="text-[9px] text-gray-400 uppercase font-mono font-bold">NATIONAL SUPPLY GAP</p>
-            <p className="text-xs font-mono font-bold text-red-400">1.51 Million KL <span className="text-[9px] text-gray-400 font-normal">(26.5% Gap)</span></p>
-          </div>
-          <div className="text-right border-l border-[#1F2937] pl-5">
-            <p className="text-[9px] text-gray-400 uppercase font-mono font-bold">ACCESSIBLE SUPPLY</p>
-            <p className="text-xs font-mono font-bold text-emerald-400">4.19 Million KL <span className="text-[9px] text-gray-400 font-normal">(73.5% Cov)</span></p>
-          </div>
-          <div className="text-right border-l border-[#1F2937] pl-5">
-            <p className="text-[9px] text-gray-400 uppercase font-mono font-bold">GEOGRAPHIC REACH</p>
-            <p className="text-xs font-mono font-bold text-white">36 States &amp; UTs <span className="text-[9px] text-[#F27D26] font-normal">(6 Zones)</span></p>
-          </div>
-        </div>
-
-        {/* Right Action Bar */}
-        <div className="flex items-center gap-2">
-          {/* Scenario Selector */}
+          {/* Scenario Selector Dropdown */}
           <div className="relative">
             <button
               onClick={() => setScenarioOpen(!scenarioOpen)}
-              className="flex items-center gap-1.5 text-[11px] font-mono px-2.5 py-1.5 rounded bg-[#1F2937] hover:bg-[#374151] border border-[#374151] transition-colors text-white"
+              className="flex items-center gap-2 text-xs font-bold px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200/70 border border-slate-200 text-slate-700 transition-colors shadow-sm"
             >
-              <span className="text-gray-400">SCENARIO:</span>
-              <span className="text-[#F27D26] font-bold uppercase">{financialAssumptions.scenario}</span>
+              <span className="text-slate-400 hidden sm:inline">Scenario:</span>
+              <span className="text-[#7C3AED] uppercase">{financialAssumptions.scenario}</span>
+              <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
             </button>
 
             {scenarioOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-[#0E1117] border border-[#374151] rounded p-1 shadow-2xl z-50 text-xs font-mono">
+              <div className="absolute right-0 mt-2 w-52 bg-white border border-slate-200 rounded-2xl p-1.5 shadow-xl z-50 text-xs animate-in fade-in zoom-in-95">
+                <div className="px-3 py-1 text-[10px] font-extrabold uppercase text-slate-400 tracking-wider">
+                  Target Scenario
+                </div>
                 {(['Conservative', 'Base', 'Aggressive'] as const).map(sc => (
                   <button
                     key={sc}
@@ -150,14 +162,14 @@ export const NavigationHeader: React.FC<NavigationHeaderProps> = ({
                       });
                       setScenarioOpen(false);
                     }}
-                    className={`w-full text-left px-2.5 py-1.5 rounded transition-colors uppercase flex items-center justify-between ${
+                    className={`w-full text-left px-3 py-2 rounded-xl transition-all flex items-center justify-between font-semibold ${
                       financialAssumptions.scenario === sc
-                        ? 'bg-[#F27D26] text-black font-bold'
-                        : 'text-gray-300 hover:bg-[#1F2937]'
+                        ? 'bg-[#7C3AED] text-white font-bold shadow-sm'
+                        : 'text-slate-700 hover:bg-slate-100'
                     }`}
                   >
                     <span>{sc}</span>
-                    <span className="text-[10px] opacity-75">
+                    <span className="text-[10px] opacity-80">
                       {sc === 'Conservative' ? '8% Share' : sc === 'Base' ? '15% Share' : '25% Share'}
                     </span>
                   </button>
@@ -166,31 +178,22 @@ export const NavigationHeader: React.FC<NavigationHeaderProps> = ({
             )}
           </div>
 
-          {/* AI Decision Assistant Trigger */}
-          <button
-            onClick={onOpenAiAssistant}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded bg-[#F27D26] hover:bg-[#E06D17] text-black font-mono font-bold text-[11px] shadow-[0_0_10px_rgba(242,125,38,0.3)] transition-colors uppercase tracking-wider"
-          >
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>AI COPILOT</span>
-          </button>
-
-          {/* Export Dropdown (Excel / JSON Dossier) */}
+          {/* Export Hub Dropdown */}
           <div className="relative">
             <button
               onClick={() => setExportMenuOpen(!exportMenuOpen)}
-              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded bg-emerald-950/80 hover:bg-emerald-900 text-emerald-300 border border-emerald-700/60 font-mono text-[11px] font-bold transition-all shadow"
-              title="Download Data (Excel .CSV / JSON)"
+              className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 font-bold text-xs shadow-sm transition-all"
+              title="Export CSV / JSON"
             >
-              <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-400" />
-              <span>EXCEL EXPORT</span>
-              <ChevronDown className="w-3 h-3 text-emerald-400 opacity-80" />
+              <Download className="w-4 h-4 text-slate-500" />
+              <span className="hidden sm:inline">Export</span>
+              <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
             </button>
 
             {exportMenuOpen && (
-              <div className="absolute right-0 mt-2 w-64 bg-[#0E1117] border border-[#374151] rounded p-1.5 shadow-2xl z-50 text-xs font-mono">
-                <div className="px-2 py-1 text-[9.5px] text-gray-500 font-bold uppercase border-b border-[#1F2937] mb-1">
-                  Export Data Formats
+              <div className="absolute right-0 mt-2 w-64 bg-white border border-slate-200 rounded-2xl p-2 shadow-xl z-50 text-xs animate-in fade-in zoom-in-95">
+                <div className="px-2.5 py-1 text-[10px] text-slate-400 font-extrabold uppercase tracking-wider">
+                  Download Formats
                 </div>
                 <button
                   onClick={() => {
@@ -201,14 +204,14 @@ export const NavigationHeader: React.FC<NavigationHeaderProps> = ({
                     }
                     setExportMenuOpen(false);
                   }}
-                  className="w-full text-left px-2.5 py-2 rounded hover:bg-[#1F2937] text-emerald-300 hover:text-emerald-200 transition-colors flex items-center gap-2.5 group"
+                  className="w-full text-left p-2.5 rounded-xl hover:bg-emerald-50 text-slate-800 hover:text-emerald-950 transition-colors flex items-center gap-3 group"
                 >
-                  <div className="p-1 rounded bg-emerald-500/20 text-emerald-400">
+                  <div className="p-2 rounded-lg bg-emerald-100 text-emerald-700">
                     <FileSpreadsheet className="w-4 h-4" />
                   </div>
                   <div>
-                    <div className="font-bold text-[11px] uppercase">White-Spot Excel (.CSV)</div>
-                    <div className="text-[9.5px] text-gray-400">Full 4-Section Validation Dataset (5.7M KL)</div>
+                    <div className="font-bold text-[12px]">White-Spot Dataset (.CSV)</div>
+                    <div className="text-[10px] text-slate-500">All 36 States &amp; 780 Districts</div>
                   </div>
                 </button>
 
@@ -217,25 +220,34 @@ export const NavigationHeader: React.FC<NavigationHeaderProps> = ({
                     onExportReport();
                     setExportMenuOpen(false);
                   }}
-                  className="w-full text-left px-2.5 py-2 rounded hover:bg-[#1F2937] text-gray-300 hover:text-white transition-colors flex items-center gap-2.5 group mt-1"
+                  className="w-full text-left p-2.5 rounded-xl hover:bg-purple-50 text-slate-800 hover:text-[#7C3AED] transition-colors flex items-center gap-3 group mt-1"
                 >
-                  <div className="p-1 rounded bg-blue-500/20 text-blue-400">
+                  <div className="p-2 rounded-lg bg-purple-100 text-[#7C3AED]">
                     <Download className="w-4 h-4" />
                   </div>
                   <div>
-                    <div className="font-bold text-[11px] uppercase">Strategic Dossier (.JSON)</div>
-                    <div className="text-[9.5px] text-gray-400">Structured parameters &amp; active scenario</div>
+                    <div className="font-bold text-[12px]">Strategic Dossier (.JSON)</div>
+                    <div className="text-[10px] text-slate-500">Configured Scenario &amp; Drivers</div>
                   </div>
                 </button>
               </div>
             )}
           </div>
+
+          {/* AI Decision Assistant Action Button */}
+          <button
+            onClick={onOpenAiAssistant}
+            className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-gradient-to-r from-[#7C3AED] to-[#4F46E5] hover:from-[#6D28D9] hover:to-[#4338CA] text-white font-bold text-xs shadow-md shadow-purple-500/25 transition-all active:scale-95"
+          >
+            <Sparkles className="w-4 h-4 text-purple-200" />
+            <span className="hidden sm:inline">AI Copilot</span>
+          </button>
         </div>
       </div>
 
-      {/* Main Tab Navigation Bar */}
-      <div className="max-w-7xl mx-auto px-4 overflow-x-auto no-scrollbar">
-        <nav className="flex space-x-1 py-1 font-mono text-xs whitespace-nowrap">
+      {/* Horizontal Sub-tabs (Visible on Tablet/Mobile or as quick switcher) */}
+      <div className="lg:hidden border-t border-slate-100 bg-slate-50/80 px-4 overflow-x-auto no-scrollbar">
+        <nav className="flex space-x-2 py-2 text-xs font-semibold whitespace-nowrap">
           {tabs.map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
@@ -243,13 +255,13 @@ export const NavigationHeader: React.FC<NavigationHeaderProps> = ({
               <button
                 key={tab.id}
                 onClick={() => onTabChange(tab.id)}
-                className={`flex items-center gap-1.5 px-3 py-2 border-b-2 text-[11px] font-bold uppercase transition-colors ${
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-colors ${
                   isActive
-                    ? 'border-[#F27D26] text-[#F27D26] bg-[#151921]'
-                    : 'border-transparent text-gray-400 hover:text-gray-200 hover:bg-[#151921]/50'
+                    ? 'bg-[#7C3AED] text-white shadow-sm'
+                    : 'bg-white text-slate-600 hover:bg-slate-200/80 border border-slate-200'
                 }`}
               >
-                <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-[#F27D26]' : 'text-gray-500'}`} />
+                <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-white' : 'text-slate-500'}`} />
                 <span>{tab.label}</span>
               </button>
             );
@@ -259,3 +271,4 @@ export const NavigationHeader: React.FC<NavigationHeaderProps> = ({
     </header>
   );
 };
+

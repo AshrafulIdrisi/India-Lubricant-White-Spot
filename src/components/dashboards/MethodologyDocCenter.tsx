@@ -33,33 +33,33 @@ export const MethodologyDocCenter: React.FC = () => {
   return (
     <div className="space-y-4">
       {/* Header */}
-      <div className="bg-[#0E1117] border border-[#1F2937] p-3.5 shadow-lg flex flex-wrap items-center justify-between gap-4">
+      <div className="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-sm flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h2 className="text-sm font-bold font-mono text-white uppercase flex items-center gap-2">
-            <FileText className="w-4 h-4 text-[#F27D26]" />
+          <h2 className="text-sm font-bold text-slate-900 uppercase flex items-center gap-2">
+            <FileText className="w-4 h-4 text-[#7C3AED]" />
             Methodology &amp; Engineering Documentation Repository
           </h2>
-          <p className="text-[10px] font-mono text-gray-500">
-            BUSINESS REQUIREMENTS SPECIFICATION // POSTGIS DDL SCHEMAS // MATHEMATICAL FORMULAS // DATA CATALOGUE
+          <p className="text-xs text-slate-500 mt-0.5">
+            Business requirements specification • PostGIS DDL schemas • Mathematical formulas • Data catalogue
           </p>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2.5">
           <button
             onClick={() => downloadWhiteSpotExcel(INDIA_LOCATIONS, 'Base')}
-            className="flex items-center gap-1.5 text-xs font-mono font-bold px-3 py-1.5 rounded bg-emerald-950 hover:bg-emerald-900 text-emerald-300 border border-emerald-700/60 transition-colors uppercase shadow"
+            className="flex items-center gap-1.5 text-xs font-bold px-3.5 py-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 transition-colors uppercase shadow-2xs cursor-pointer"
             title="Download full benchmark validation dataset as Excel .CSV"
           >
-            <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-400" />
-            <span>DOWNLOAD DATASET (.CSV)</span>
+            <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-600" />
+            <span>Download Dataset (.CSV)</span>
           </button>
 
           <button
             onClick={handleCopy}
-            className="flex items-center gap-1.5 text-xs font-mono font-bold px-3 py-1.5 rounded bg-[#1F2937] hover:bg-[#374151] text-gray-200 border border-[#374151] transition-colors uppercase"
+            className="flex items-center gap-1.5 text-xs font-bold px-3.5 py-2 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 transition-colors uppercase shadow-2xs cursor-pointer"
           >
-            {copied ? <Check className="w-3.5 h-3.5 text-green-400" /> : <Copy className="w-3.5 h-3.5 text-gray-400" />}
-            <span>{copied ? 'COPIED TO CLIPBOARD' : 'COPY SPECIFICATION'}</span>
+            {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5 text-slate-500" />}
+            <span>{copied ? 'Copied to Clipboard' : 'Copy Specification'}</span>
           </button>
         </div>
       </div>
@@ -67,24 +67,24 @@ export const MethodologyDocCenter: React.FC = () => {
       {/* Grid: Left Navigation (4 cols) & Right Document Viewer (8 cols) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
         {/* Left Navigation Menu */}
-        <div className="lg:col-span-4 space-y-1.5">
+        <div className="lg:col-span-4 space-y-2">
           {DOCUMENTATION_SECTIONS.map(sec => (
             <button
               key={sec.id}
               onClick={() => setActiveSectionId(sec.id)}
-              className={`w-full p-3 rounded-sm border-l-2 text-left transition-all flex flex-col justify-between ${
+              className={`w-full p-3.5 rounded-2xl text-left transition-all flex flex-col justify-between cursor-pointer ${
                 activeSectionId === sec.id
-                  ? 'border-[#F27D26] bg-[#1F2937] border-t border-r border-b border-[#F27D26]/40 text-white'
-                  : 'border-[#1F2937] bg-[#0E1117] border-t border-r border-b text-gray-400 hover:bg-[#151921] hover:text-gray-200'
+                  ? 'border-2 border-[#7C3AED] bg-purple-50/60 shadow-sm'
+                  : 'border border-slate-200/90 bg-white hover:bg-slate-50/80 shadow-2xs'
               }`}
             >
               <div className="flex items-center justify-between mb-1">
-                <span className="font-bold text-xs font-mono uppercase text-white">{sec.title.split('. ')[1]}</span>
-                <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-[#0A0B0E] text-[#F27D26] border border-[#374151]">
+                <span className="font-bold text-xs uppercase text-slate-900">{sec.title.split('. ')[1]}</span>
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-100/70 text-[#7C3AED] border border-purple-200">
                   {sec.badge}
                 </span>
               </div>
-              <p className="text-[10px] text-gray-400 font-mono leading-relaxed line-clamp-2">
+              <p className="text-xs text-slate-500 leading-relaxed line-clamp-2">
                 {sec.summary}
               </p>
             </button>
@@ -92,21 +92,21 @@ export const MethodologyDocCenter: React.FC = () => {
         </div>
 
         {/* Right Document Content */}
-        <div className="lg:col-span-8 bg-[#0E1117] border border-[#1F2937] p-4 shadow-xl max-h-[700px] overflow-y-auto">
-          <div className="flex items-center justify-between border-b border-[#1F2937] pb-2.5 mb-3">
+        <div className="lg:col-span-8 bg-white border border-slate-200/90 rounded-2xl p-5 shadow-sm max-h-[700px] overflow-y-auto">
+          <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
             <div>
-              <span className="text-[9px] font-mono text-[#F27D26] uppercase font-bold tracking-wider">
+              <span className="text-[10px] text-[#7C3AED] uppercase font-bold tracking-wider">
                 {activeSection.badge}
               </span>
-              <h3 className="font-bold text-sm text-white uppercase font-mono mt-0.5">{activeSection.title}</h3>
+              <h3 className="font-bold text-sm text-slate-900 uppercase mt-0.5">{activeSection.title}</h3>
             </div>
-            <span className="text-[10px] text-gray-500 font-mono flex items-center gap-1">
-              <ShieldCheck className="w-3.5 h-3.5 text-green-400" /> AUDITED SPECIFICATION
+            <span className="text-xs text-emerald-700 font-semibold flex items-center gap-1 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" /> Audited Specification
             </span>
           </div>
 
-          <div className="text-gray-300 leading-relaxed text-xs space-y-3 font-mono">
-            <pre className="bg-[#0A0B0E] p-3 rounded border border-[#1F2937] text-[10px] text-gray-300 overflow-x-auto whitespace-pre-wrap font-mono leading-relaxed">
+          <div className="text-slate-700 leading-relaxed text-xs space-y-3">
+            <pre className="bg-slate-50 p-4 rounded-xl border border-slate-200/80 text-xs text-slate-800 overflow-x-auto whitespace-pre-wrap font-mono leading-relaxed">
               {activeSection.markdownContent}
             </pre>
           </div>

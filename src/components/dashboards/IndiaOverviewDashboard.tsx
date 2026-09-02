@@ -3,6 +3,7 @@ import {
   Fuel, 
   TrendingUp, 
   ShieldAlert, 
+  ShieldCheck,
   Factory, 
   Car, 
   Wheat, 
@@ -40,7 +41,8 @@ import {
   YAxis,
   Tooltip,
   Legend,
-  CartesianGrid
+  CartesianGrid,
+  LabelList
 } from 'recharts';
 
 interface IndiaOverviewDashboardProps {
@@ -104,200 +106,259 @@ export const IndiaOverviewDashboard: React.FC<IndiaOverviewDashboardProps> = ({
   }, [selectedZoneFilter, stateSearchTerm]);
 
   return (
-    <div className="space-y-4">
-      {/* Top Banner: Overall India Macro Scope */}
-      <div className="bg-[#0E1117] border border-[#1F2937] p-3.5 rounded shadow-xl flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded bg-[#F27D26]/10 border border-[#F27D26]/30 flex items-center justify-center text-[#F27D26] shrink-0">
-            <Globe2 className="w-4 h-4" />
-          </div>
-          <div>
-            <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-white font-bold uppercase text-sm">OVERALL INDIA LUBRICANTS INTELLIGENCE:</span>
-              <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-700 font-bold uppercase">
-                100% NATIONWIDE COVERAGE (5.70M KL / ₹91,200 CR)
-              </span>
-            </div>
-            <p className="text-[11px] text-gray-400 mt-0.5">
-              Comprehensive market model synthesized across all 36 States &amp; Union Territories, 6 Macro Zones, and 780+ consuming districts.
-            </p>
-          </div>
-        </div>
-
-        {/* Quick Action to State Matrix */}
-        {onNavigateToTab && (
-          <button
-            onClick={() => onNavigateToTab('state')}
-            className="px-3 py-1.5 rounded bg-[#1F2937] hover:bg-[#374151] text-[#F27D26] border border-[#374151] font-bold transition-all uppercase text-[11px] flex items-center gap-1.5 shadow"
-          >
-            <span>View All 36 States Matrix</span>
-            <ChevronRight className="w-3.5 h-3.5" />
-          </button>
-        )}
-      </div>
-
-      {/* Top Telemetry KPI Metric Cards (Overall India Level) */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 font-mono">
-        {/* Card 1: Total Demand */}
-        <div className="bg-[#0E1117] border border-[#1F2937] p-3.5 flex flex-col justify-between shadow-md border-t-2 border-t-[#F27D26]">
-          <div className="flex items-center justify-between">
-            <span className="text-[10px] text-gray-400 uppercase font-bold">ALL-INDIA ANNUAL DEMAND</span>
-            <div className="p-1 rounded bg-[#1F2937] text-[#F27D26]">
-              <Fuel className="w-3.5 h-3.5" />
-            </div>
-          </div>
-          <div className="mt-2">
-            <div className="text-2xl font-bold text-[#F27D26] tracking-tight">
-              5.70 Million KL
-            </div>
-            <div className="flex items-center gap-1.5 text-[10px] text-gray-400 mt-0.5">
-              <span>5,700,000 KL / YR (₹91,200 CR MARKET)</span>
-            </div>
-          </div>
-          <div className="mt-2.5 pt-2 border-t border-[#1F2937] flex items-center justify-between text-[10px] text-gray-400">
-            <span>AUTO: 60% (3.42M KL)</span>
-            <span>IND: 35% (1.99M KL)</span>
-          </div>
-        </div>
-
-        {/* Card 2: Supply Deficit Gap */}
-        <div className="bg-[#0E1117] border border-[#1F2937] p-3.5 flex flex-col justify-between shadow-md border-t-2 border-t-red-500">
-          <div className="flex items-center justify-between">
-            <span className="text-[10px] text-gray-400 uppercase font-bold">NATIONAL SUPPLY DEFICIT GAP</span>
-            <div className="p-1 rounded bg-[#1F2937] text-red-500">
-              <ShieldAlert className="w-3.5 h-3.5" />
-            </div>
-          </div>
-          <div className="mt-2">
-            <div className="text-2xl font-bold text-red-400 tracking-tight">
-              1.51 Million KL
-            </div>
-            <div className="flex items-center gap-1.5 text-[10px] text-gray-400 mt-0.5">
-              <span>SUPPLY COVERAGE: <strong className="text-white">{nationalCoverageRatio}%</strong> (4.19M KL)</span>
-            </div>
-          </div>
-          <div className="mt-2.5 pt-2 border-t border-[#1F2937] flex items-center justify-between text-[10px] text-gray-400">
-            <span>UNMET RATIO: 26.5%</span>
-            <span className="text-red-400 font-bold">DEFICIT POOL</span>
-          </div>
-        </div>
-
-        {/* Card 3: Geographic Coverage Range */}
-        <div className="bg-[#0E1117] border border-[#1F2937] p-3.5 flex flex-col justify-between shadow-md border-t-2 border-t-blue-500">
-          <div className="flex items-center justify-between">
-            <span className="text-[10px] text-gray-400 uppercase font-bold">GEOGRAPHIC REACH</span>
-            <div className="p-1 rounded bg-[#1F2937] text-blue-400">
-              <MapPin className="w-3.5 h-3.5" />
-            </div>
-          </div>
-          <div className="mt-2">
-            <div className="text-2xl font-bold text-white tracking-tight">
-              36 States &amp; UTs
-            </div>
-            <div className="flex items-center gap-1.5 text-[10px] text-blue-400 mt-0.5">
-              <span>6 MACRO REGIONAL ZONES (780+ DIST.)</span>
-            </div>
-          </div>
-          <div className="mt-2.5 pt-2 border-t border-[#1F2937] flex items-center justify-between text-[10px] text-gray-400">
-            <span>100% NATIONWIDE FOOTPRINT</span>
-          </div>
-        </div>
-
-        {/* Card 4: Addressable Value Pool */}
-        <div className="bg-[#0E1117] border border-[#1F2937] p-3.5 flex flex-col justify-between shadow-md border-t-2 border-t-emerald-500">
-          <div className="flex items-center justify-between">
-            <span className="text-[10px] text-gray-400 uppercase font-bold">TOTAL MARKET VALUATION</span>
-            <div className="p-1 rounded bg-[#1F2937] text-emerald-400">
-              <Sparkles className="w-3.5 h-3.5" />
-            </div>
-          </div>
-          <div className="mt-2">
-            <div className="text-2xl font-bold text-emerald-400 tracking-tight">
-              ₹91,200 Crores
-            </div>
-            <div className="flex items-center gap-1.5 text-[10px] text-gray-400 mt-0.5">
-              <span>UNMET GAP VALUE: <strong className="text-emerald-300">₹24,117 CR</strong></span>
-            </div>
-          </div>
-          <div className="mt-2.5 pt-2 border-t border-[#1F2937] flex items-center justify-between text-[10px] text-gray-400">
-            <span>AVG REALIZATION: ~₹160/L</span>
-            <span>MARGIN: ~28.5%</span>
-          </div>
-        </div>
-      </div>
-
-      {/* 6 Macro Zones Distribution Banner */}
-      <div className="bg-[#0E1117] border border-[#1F2937] p-4 shadow-xl font-mono">
-        <div className="flex items-center justify-between border-b border-[#1F2937] pb-2.5 mb-3">
+    <div className="space-y-6">
+      {/* Top Banner: Overall India Macro Scope & Header */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
           <div className="flex items-center gap-2">
-            <Globe2 className="w-4 h-4 text-[#F27D26]" />
-            <h3 className="font-bold text-xs text-white uppercase tracking-wider">
-              All-India 6 Macro Zones Demand Spread (5.70 Million KL Total)
-            </h3>
+            <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+              India Lubricants Intelligence
+            </h1>
+            <span className="tag-purple text-[10px] font-bold uppercase tracking-wider">
+              5.70M KL Verified
+            </span>
           </div>
+          <p className="text-xs sm:text-sm text-slate-500 mt-1">
+            Nationwide Demand Model • 5.70M KL Capacity • 780 Districts • VAHAN 4.0 &amp; PPAC Grounded
+          </p>
+        </div>
+
+        {/* Quick Action to State Matrix & Competitor Dashboard */}
+        <div className="flex items-center gap-2.5">
           {onNavigateToTab && (
             <button
               onClick={() => onNavigateToTab('state')}
-              className="text-[10px] text-[#F27D26] hover:underline flex items-center gap-1 uppercase font-bold"
+              className="px-3.5 py-2 rounded-xl bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 text-xs font-bold transition-all flex items-center gap-2 shadow-sm"
             >
-              <span>Full 36 State Breakdown</span>
-              <ChevronRight className="w-3 h-3" />
+              <Globe2 className="w-4 h-4 text-[#7C3AED]" />
+              <span>36 States Matrix</span>
+              <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
+            </button>
+          )}
+          {onNavigateToTab && (
+            <button
+              onClick={() => onNavigateToTab('brandValidation')}
+              className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-[#7C3AED] to-[#4F46E5] text-white text-xs font-bold hover:shadow-md hover:shadow-purple-500/20 transition-all flex items-center gap-2"
+            >
+              <ShieldCheck className="w-4 h-4 text-purple-200" />
+              <span>50 Competitors</span>
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* KPI Cards Row (Matching Variation 18) */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* Card 1: Total Demand */}
+        <div className="bg-white border border-slate-200/90 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Total Annual Demand</span>
+            <div className="p-2 rounded-xl bg-purple-50 text-[#7C3AED]">
+              <Fuel className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="mt-3">
+            <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight font-sans">
+              5.70 M <span className="text-base text-slate-500 font-normal">KL</span>
+            </div>
+            <div className="flex items-center gap-1.5 text-xs text-emerald-600 font-semibold mt-1">
+              <TrendingUp className="w-3.5 h-3.5" />
+              <span>+4.2% YoY Growth Trend</span>
+            </div>
+          </div>
+          <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+            <span>Auto: <strong>60% (3.42M)</strong></span>
+            <span>Ind: <strong>35% (1.99M)</strong></span>
+          </div>
+        </div>
+
+        {/* Card 2: Market Valuation */}
+        <div className="bg-white border border-slate-200/90 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Market Valuation</span>
+            <div className="p-2 rounded-xl bg-emerald-50 text-emerald-700">
+              <TrendingUp className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="mt-3">
+            <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight font-sans">
+              ₹91.2 K <span className="text-base text-slate-500 font-normal">Cr</span>
+            </div>
+            <div className="flex items-center gap-1.5 text-xs text-slate-600 font-medium mt-1">
+              <span>Average ₹160/L realization</span>
+            </div>
+          </div>
+          <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+            <span>Leader Share: <strong>16.5% (Servo)</strong></span>
+            <span className="text-purple-600 font-semibold">50+ Brands</span>
+          </div>
+        </div>
+
+        {/* Card 3: Unmet Supply Gap */}
+        <div className="bg-white border border-slate-200/90 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Unmet Supply Gap</span>
+            <div className="p-2 rounded-xl bg-rose-50 text-rose-600">
+              <ShieldAlert className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="mt-3">
+            <div className="text-2xl sm:text-3xl font-extrabold text-rose-600 tracking-tight font-sans">
+              1.51 M <span className="text-base text-slate-500 font-normal">KL</span>
+            </div>
+            <div className="flex items-center gap-1.5 text-xs text-rose-600 font-semibold mt-1">
+              <span>26.5% Net National Deficit</span>
+            </div>
+          </div>
+          <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+            <span>Coverage: <strong>{nationalCoverageRatio}%</strong></span>
+            <span className="text-rose-600 font-semibold">₹24,160 Cr White-Spot</span>
+          </div>
+        </div>
+
+        {/* Card 4: Geographic Reach */}
+        <div className="bg-white border border-slate-200/90 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Geographic Footprint</span>
+            <div className="p-2 rounded-xl bg-blue-50 text-blue-600">
+              <Globe2 className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="mt-3">
+            <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight font-sans">
+              36 <span className="text-base text-slate-500 font-normal">States / UTs</span>
+            </div>
+            <div className="flex items-center gap-1.5 text-xs text-emerald-600 font-semibold mt-1">
+              <CheckCircle2 className="w-3.5 h-3.5" />
+              <span>100% Pan-India Audited</span>
+            </div>
+          </div>
+          <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+            <span>Zones: <strong>6 Macro Regions</strong></span>
+            <span>Districts: <strong>780+</strong></span>
+          </div>
+        </div>
+      </div>
+
+      {/* Strategic Insights Panel (Variation 18 Design Feature) */}
+      <div className="bg-gradient-to-br from-[#4F46E5] to-[#7C3AED] rounded-2xl p-5 text-white shadow-lg relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full -mr-20 -mt-20 blur-2xl pointer-events-none" />
+        
+        <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+          <div className="max-w-2xl">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="px-2.5 py-1 rounded-lg bg-white/20 text-white text-[11px] font-extrabold uppercase tracking-wider backdrop-blur-sm">
+                Strategic Market Directive
+              </span>
+              <span className="text-purple-200 text-xs font-medium">Q3 Commercial Assessment</span>
+            </div>
+            <h2 className="text-lg sm:text-xl font-bold tracking-tight text-white">
+              Primary White-Spot Opportunities: Western &amp; Southern Industrial Belts
+            </h2>
+            <p className="text-xs sm:text-sm text-purple-100 mt-1 leading-relaxed">
+              Maharashtra (826k KL) and Gujarat (655k KL) account for 26% of national volume. Supply deficit exceeds 380,000 KL in Tier-2/3 logistics clusters (Pune-Chakan, Surat-Vapi, Hosur-Bengaluru).
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 border border-white/15">
+              <div className="text-[10px] text-purple-200 font-bold uppercase">West Share</div>
+              <div className="text-base font-extrabold text-white mt-0.5">30.8%</div>
+              <div className="text-[10px] text-purple-200">1.75M KL / yr</div>
+            </div>
+            <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 border border-white/15">
+              <div className="text-[10px] text-purple-200 font-bold uppercase">South Share</div>
+              <div className="text-base font-extrabold text-white mt-0.5">27.5%</div>
+              <div className="text-[10px] text-purple-200">1.57M KL / yr</div>
+            </div>
+            <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 border border-white/15">
+              <div className="text-[10px] text-purple-200 font-bold uppercase">North Share</div>
+              <div className="text-base font-extrabold text-white mt-0.5">23.6%</div>
+              <div className="text-[10px] text-purple-200">1.35M KL / yr</div>
+            </div>
+            <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 border border-white/15">
+              <div className="text-[10px] text-purple-200 font-bold uppercase">East + NE</div>
+              <div className="text-base font-extrabold text-white mt-0.5">18.1%</div>
+              <div className="text-[10px] text-purple-200">1.03M KL / yr</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 6 Macro Zones Quick Bar */}
+      <div className="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-sm">
+        <div className="flex items-center justify-between mb-3 pb-2 border-b border-slate-100">
+          <div className="flex items-center gap-2">
+            <h3 className="text-xs font-bold text-slate-800 uppercase tracking-wider">
+              6 Macro Zones Consumption &amp; Deficit
+            </h3>
+            <span className="text-[11px] text-slate-400">Click to filter state matrix</span>
+          </div>
+          {selectedZoneFilter !== 'all' && (
+            <button
+              onClick={() => setSelectedZoneFilter('all')}
+              className="text-xs font-bold text-[#7C3AED] hover:underline"
+            >
+              Reset Filter ({selectedZoneFilter})
             </button>
           )}
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
-          {ALL_INDIA_ZONES_DATA.map((z) => (
-            <div 
-              key={z.zoneName} 
-              onClick={() => setSelectedZoneFilter(selectedZoneFilter === z.zoneName ? 'all' : z.zoneName)}
-              className={`p-2.5 rounded border transition-all cursor-pointer flex flex-col justify-between ${
-                selectedZoneFilter === z.zoneName
-                  ? 'bg-[#1F2937] border-[#F27D26]'
-                  : 'bg-[#05070B] border-[#1F2937] hover:border-[#374151]'
-              }`}
-            >
-              <div>
-                <div className="flex items-center justify-between text-xs font-bold text-white">
-                  <span>{z.zoneName.toUpperCase()}</span>
-                  <span className="text-[#F27D26] text-[11px]">{z.shareOfNationalPct}%</span>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+          {ALL_INDIA_ZONES_DATA.map((z) => {
+            const isSelected = selectedZoneFilter === z.zoneName;
+            return (
+              <div 
+                key={z.zoneName} 
+                onClick={() => setSelectedZoneFilter(isSelected ? 'all' : z.zoneName)}
+                className={`p-3 rounded-xl border transition-all cursor-pointer flex flex-col justify-between ${
+                  isSelected
+                    ? 'bg-purple-50/80 border-[#7C3AED] shadow-sm'
+                    : 'bg-slate-50/70 border-slate-200/80 hover:border-slate-300 hover:bg-white'
+                }`}
+              >
+                <div>
+                  <div className="flex items-center justify-between text-xs font-bold text-slate-900">
+                    <span>{z.zoneName}</span>
+                    <span className="text-[#7C3AED] text-[11px] font-extrabold">{z.shareOfNationalPct}%</span>
+                  </div>
+                  <div className="text-sm font-bold text-slate-800 mt-1">
+                    {(z.totalDemandKL / 1000).toFixed(0)}k <span className="text-[10px] text-slate-400 font-normal">KL</span>
+                  </div>
+                  <div className="text-[10px] text-emerald-700 font-semibold mt-0.5">
+                    ₹{z.totalValueINR.toLocaleString()} Cr
+                  </div>
                 </div>
-                <div className="text-base font-bold text-white mt-1">
-                  {(z.totalDemandKL / 1000).toFixed(0)}k <span className="text-[10px] text-gray-400 font-normal">KL/yr</span>
-                </div>
-                <div className="text-[9.5px] text-emerald-400">
-                  ₹{z.totalValueINR.toLocaleString()} Cr
+                <div className="mt-2 pt-1.5 border-t border-slate-200/60 text-[10px] text-slate-500">
+                  <span>Gap: <strong className="text-rose-600">{(z.supplyGapKL / 1000).toFixed(0)}k KL</strong></span>
                 </div>
               </div>
-              <div className="mt-2 pt-1.5 border-t border-[#1F2937] text-[9px] text-gray-400">
-                <span>Gap: <strong className="text-red-400">{(z.supplyGapKL / 1000).toFixed(0)}k KL</strong></span>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 
       {/* Main Grid: Interactive GIS Map & All-India States Panel */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left GIS Map View (7 Cols) */}
-        <div className="lg:col-span-7 flex flex-col gap-2">
-          <div className="h-10 bg-[#0E1117] border border-[#1F2937] flex items-center px-4 justify-between font-mono">
-            <span className="text-[11px] text-[#F27D26] uppercase font-bold flex items-center gap-2">
-              <MapPin className="w-3.5 h-3.5 text-[#F27D26]" />
-              SPATIAL GIS VIEW: ALL-INDIA DEMAND &amp; WHITE-SPOT MESH
+        <div className="lg:col-span-7 flex flex-col gap-3">
+          <div className="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-sm flex items-center justify-between">
+            <span className="text-xs text-slate-800 uppercase font-bold flex items-center gap-2">
+              <MapPin className="w-4 h-4 text-[#7C3AED]" />
+              Spatial GIS View: All-India Demand Mesh
             </span>
-            <div className="flex items-center gap-3">
-              <div className="flex items-center gap-1">
-                <div className="w-2 h-2 rounded-full bg-red-500"></div>
-                <span className="text-[9px] uppercase text-gray-400">Critical Gap</span>
+            <div className="flex items-center gap-3 text-xs">
+              <div className="flex items-center gap-1.5">
+                <div className="w-2.5 h-2.5 rounded-full bg-rose-500"></div>
+                <span className="text-[10px] uppercase text-slate-600 font-semibold">Critical Gap</span>
               </div>
-              <div className="flex items-center gap-1">
-                <div className="w-2 h-2 rounded-full bg-yellow-500"></div>
-                <span className="text-[9px] uppercase text-gray-400">High Demand</span>
+              <div className="flex items-center gap-1.5">
+                <div className="w-2.5 h-2.5 rounded-full bg-amber-500"></div>
+                <span className="text-[10px] uppercase text-slate-600 font-semibold">High Demand</span>
               </div>
-              <div className="flex items-center gap-1">
-                <div className="w-2 h-2 rounded-full bg-blue-500"></div>
-                <span className="text-[9px] uppercase text-gray-400">Moderate</span>
+              <div className="flex items-center gap-1.5">
+                <div className="w-2.5 h-2.5 rounded-full bg-blue-500"></div>
+                <span className="text-[10px] uppercase text-slate-600 font-semibold">Moderate</span>
               </div>
             </div>
           </div>
@@ -314,61 +375,61 @@ export const IndiaOverviewDashboard: React.FC<IndiaOverviewDashboardProps> = ({
         </div>
 
         {/* Right All-India States Ranking & Sectoral Panel (5 Cols) */}
-        <div className="lg:col-span-5 flex flex-col gap-3">
+        <div className="lg:col-span-5 flex flex-col gap-4">
           {/* All-India States Demand & Gap Ranking Table */}
-          <div className="bg-[#0E1117] border border-[#1F2937] p-3.5 flex flex-col">
-            <div className="flex items-center justify-between border-b border-[#1F2937] pb-2.5 mb-2.5">
+          <div className="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-sm flex flex-col">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-3">
               <div>
-                <h3 className="font-mono font-bold text-xs text-white uppercase flex items-center gap-1.5">
-                  <Flame className="w-3.5 h-3.5 text-[#F27D26]" />
-                  All-India State Demand Matrix ({filteredStates.length} States)
+                <h3 className="font-bold text-xs text-slate-900 uppercase flex items-center gap-1.5">
+                  <Flame className="w-4 h-4 text-[#7C3AED]" />
+                  State Demand Matrix ({filteredStates.length} States)
                 </h3>
-                <p className="text-[10px] font-mono text-gray-500">RANKED BY TOTAL ANNUAL CONSUMPTION (KL / YR)</p>
+                <p className="text-[11px] text-slate-500">Ranked by annual lubricant consumption</p>
               </div>
-              <span className="text-[10px] font-mono font-bold text-[#F27D26] bg-[#1F2937] px-2 py-0.5 rounded border border-[#374151]">
-                36 STATES AUDITED
+              <span className="tag-purple text-[10px] font-bold">
+                36 States
               </span>
             </div>
 
             {/* Quick Search and Filter Bar */}
-            <div className="flex items-center gap-2 mb-2.5 font-mono text-xs">
+            <div className="flex items-center gap-2 mb-3">
               <div className="relative flex-1">
-                <Search className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400" />
+                <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                 <input
                   type="text"
                   placeholder="Filter states or industries..."
                   value={stateSearchTerm}
                   onChange={(e) => setStateSearchTerm(e.target.value)}
-                  className="w-full pl-8 pr-2.5 py-1 text-xs bg-[#05070B] border border-[#1F2937] rounded text-white placeholder-gray-500 focus:outline-none focus:border-[#F27D26]"
+                  className="w-full pl-9 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-purple-500 focus:bg-white transition-all"
                 />
               </div>
 
               {selectedZoneFilter !== 'all' && (
                 <button
                   onClick={() => setSelectedZoneFilter('all')}
-                  className="px-2 py-1 text-[10px] bg-[#1F2937] text-gray-300 rounded border border-[#374151] hover:text-white"
+                  className="px-2.5 py-1.5 text-[10px] bg-slate-100 text-slate-700 rounded-xl border border-slate-200 hover:bg-slate-200 font-bold"
                 >
-                  Clear Zone ({selectedZoneFilter})
+                  Clear ({selectedZoneFilter})
                 </button>
               )}
             </div>
 
-            <div className="space-y-2 max-h-[300px] overflow-y-auto pr-1">
+            <div className="space-y-2 max-h-[320px] overflow-y-auto pr-1">
               {filteredStates.map((st, idx) => {
                 const borderAccent = st.whiteSpotScore >= 80 
-                  ? 'border-red-500' 
+                  ? 'border-rose-500' 
                   : st.whiteSpotScore >= 65 
-                    ? 'border-yellow-500' 
+                    ? 'border-amber-500' 
                     : 'border-blue-500';
                 
                 const scoreColor = st.whiteSpotScore >= 80 
-                  ? 'text-red-500' 
+                  ? 'text-rose-600' 
                   : st.whiteSpotScore >= 65 
-                    ? 'text-yellow-500' 
-                    : 'text-blue-500';
+                    ? 'text-amber-600' 
+                    : 'text-blue-600';
 
-                // Find matching location if exists for district drilldown
                 const matchingLocation = locations.find(l => l.stateCode === st.stateCode) || locations[0];
+                const isSelected = selectedLocation?.stateCode === st.stateCode;
 
                 return (
                   <div
@@ -376,40 +437,40 @@ export const IndiaOverviewDashboard: React.FC<IndiaOverviewDashboardProps> = ({
                     onClick={() => {
                       if (matchingLocation) onSelectLocation(matchingLocation);
                     }}
-                    className={`p-2.5 rounded-sm border-l-2 ${borderAccent} text-xs cursor-pointer transition-all ${
-                      selectedLocation?.stateCode === st.stateCode
-                        ? 'bg-[#1F2937] border-t border-r border-b border-[#F27D26]/40 text-white'
-                        : 'bg-[#151921] border-t border-r border-b border-[#1F2937] text-gray-300 hover:bg-[#1F2937]/70'
+                    className={`p-3 rounded-xl border-l-4 ${borderAccent} text-xs cursor-pointer transition-all ${
+                      isSelected
+                        ? 'bg-purple-50/70 border-t border-r border-b border-purple-200 text-slate-900 shadow-sm'
+                        : 'bg-slate-50/60 border-t border-r border-b border-slate-200/80 text-slate-700 hover:bg-white hover:shadow-sm'
                     }`}
                   >
                     <div className="flex items-center justify-between mb-1">
-                      <div className="flex items-center gap-1.5">
-                        <span className="font-mono text-[10px] text-gray-500 font-bold">#{idx + 1}</span>
-                        <span className="font-bold text-white text-xs">{st.stateName}</span>
-                        <span className="text-[10px] font-mono text-[#F27D26] font-bold">({st.nationalSharePct}%)</span>
-                        <span className="text-[9px] font-mono px-1 py-0.2 rounded bg-[#0A0B0E] text-gray-400 border border-[#374151]">
+                      <div className="flex items-center gap-2">
+                        <span className="text-[10px] text-slate-400 font-bold">#{idx + 1}</span>
+                        <span className="font-bold text-slate-900 text-xs">{st.stateName}</span>
+                        <span className="text-[10px] font-bold text-[#7C3AED]">({st.nationalSharePct}%)</span>
+                        <span className="text-[9px] px-1.5 py-0.5 rounded bg-white text-slate-600 border border-slate-200 font-semibold">
                           {st.region}
                         </span>
                       </div>
-                      <span className={`font-mono font-bold ${scoreColor} text-[10px]`}>
+                      <span className={`font-bold ${scoreColor} text-[10px]`}>
                         SCORE: {st.whiteSpotScore}
                       </span>
                     </div>
 
-                    <div className="grid grid-cols-3 gap-2 text-[10px] font-mono text-gray-400 mt-1">
+                    <div className="grid grid-cols-3 gap-2 text-[10px] text-slate-500 mt-1.5">
                       <div>
-                        <span>DEMAND:</span> <strong className="text-gray-200">{st.totalDemandKL.toLocaleString()} KL</strong>
+                        <span>Demand:</span> <strong className="text-slate-800">{st.totalDemandKL.toLocaleString()} KL</strong>
                       </div>
                       <div>
-                        <span>GAP:</span> <strong className="text-red-400">{st.supplyGapKL.toLocaleString()} KL</strong>
+                        <span>Gap:</span> <strong className="text-rose-600">{st.supplyGapKL.toLocaleString()} KL</strong>
                       </div>
                       <div>
-                        <span>VALUE:</span> <strong className="text-emerald-400">₹{st.marketValueINR.toLocaleString()} Cr</strong>
+                        <span>Value:</span> <strong className="text-emerald-700">₹{st.marketValueINR.toLocaleString()} Cr</strong>
                       </div>
                     </div>
 
-                    <div className="mt-1.5 flex items-center justify-between text-[10px] text-gray-400 pt-1.5 border-t border-[#1F2937]">
-                      <span className="text-gray-400 font-mono truncate max-w-[200px]">
+                    <div className="mt-2 flex items-center justify-between text-[10px] text-slate-500 pt-1.5 border-t border-slate-200/70">
+                      <span className="truncate max-w-[200px]">
                         Hubs: {st.topDistricts.slice(0, 2).map(d => d.districtName.split(' ')[0]).join(', ')}
                       </span>
                       {onNavigateToTab && (
@@ -418,9 +479,9 @@ export const IndiaOverviewDashboard: React.FC<IndiaOverviewDashboardProps> = ({
                             e.stopPropagation();
                             onNavigateToTab('state');
                           }}
-                          className="text-gray-300 hover:text-[#F27D26] font-mono text-[10px] flex items-center gap-0.5 uppercase font-bold shrink-0"
+                          className="text-[#7C3AED] hover:text-[#5B21B6] text-[10px] flex items-center gap-0.5 font-bold shrink-0"
                         >
-                          <span>Inspect State</span>
+                          <span>Inspect</span>
                           <ChevronRight className="w-3 h-3" />
                         </button>
                       )}
@@ -432,27 +493,33 @@ export const IndiaOverviewDashboard: React.FC<IndiaOverviewDashboardProps> = ({
           </div>
 
           {/* All-India Sectoral & Zonal Demand Opportunity Chart */}
-          <div className="bg-[#0E1117] border border-[#1F2937] p-3.5 space-y-3">
-            <div className="flex items-center justify-between border-b border-[#1F2937] pb-2">
-              <h3 className="font-mono font-bold text-[11px] text-gray-300 uppercase tracking-wider flex items-center gap-1.5">
-                <BarChart3 className="w-3.5 h-3.5 text-[#F27D26]" />
-                National Sector Demand Breakdown (5.70M KL Total)
+          <div className="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-sm space-y-3">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
+              <h3 className="font-bold text-xs text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+                <BarChart3 className="w-4 h-4 text-[#7C3AED]" />
+                Sector Breakdown (5.70M KL)
               </h3>
-              <span className="text-[10px] font-mono text-emerald-400 font-bold">₹91,200 CR VALUE</span>
+              <span className="text-[11px] text-emerald-700 font-bold">₹91,200 Cr Value</span>
             </div>
 
             {/* Recharts Mini Sector Bar Chart */}
-            <div className="h-36 w-full font-mono text-[10px]">
+            <div className="h-36 w-full text-[10px]">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={nationalSectorData} layout="vertical" margin={{ top: 5, right: 20, left: 10, bottom: 5 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#1F2937" horizontal={false} />
-                  <XAxis type="number" stroke="#6B7280" tickFormatter={(v) => `${(v / 1000000).toFixed(1)}M`} tick={{ fontSize: 9 }} />
+                <BarChart data={nationalSectorData} layout="vertical" margin={{ top: 10, right: 60, left: 10, bottom: 5 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" horizontal={false} />
+                  <XAxis type="number" stroke="#94A3B8" tickFormatter={(v) => `${(v / 1000000).toFixed(1)}M KL`} tick={{ fontSize: 9, fill: '#64748B' }} />
                   <YAxis type="category" dataKey="sector" hide />
                   <Tooltip
-                    contentStyle={{ backgroundColor: '#0E1117', borderColor: '#374151', fontSize: '11px', color: '#fff' }}
+                    contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#E2E8F0', borderRadius: '12px', fontSize: '11px', color: '#0F172A', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)' }}
                     formatter={(val: any) => [`${Number(val).toLocaleString()} KL (${((Number(val)/5700000)*100).toFixed(1)}%)`, 'Demand']}
                   />
-                  <Bar dataKey="volumeKL" radius={[0, 4, 4, 0]}>
+                  <Bar dataKey="volumeKL" radius={[0, 6, 6, 0]}>
+                    <LabelList 
+                      dataKey="volumeKL" 
+                      position="right" 
+                      formatter={(val: any) => `${(Number(val)/1000000).toFixed(2)}M KL`} 
+                      style={{ fill: '#334155', fontSize: 10, fontWeight: 700 }} 
+                    />
                     {nationalSectorData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={entry.fill} />
                     ))}
@@ -462,19 +529,19 @@ export const IndiaOverviewDashboard: React.FC<IndiaOverviewDashboardProps> = ({
             </div>
 
             {/* Sector Details Strip */}
-            <div className="space-y-1.5 font-mono text-xs">
+            <div className="space-y-1.5 text-xs">
               {nationalSectorData.map((sec, idx) => (
-                <div key={idx} className="bg-[#151921] p-2 border border-[#1F2937] rounded flex items-center justify-between">
+                <div key={idx} className="bg-slate-50 p-2 border border-slate-200/80 rounded-xl flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: sec.fill }} />
                     <div>
-                      <span className="text-gray-200 font-bold text-[11px] block">{sec.sector}</span>
-                      <span className="text-[9.5px] text-gray-500">{sec.pct.toFixed(1)}% of national consumption</span>
+                      <span className="text-slate-800 font-bold text-xs block">{sec.sector}</span>
+                      <span className="text-[10px] text-slate-500">{sec.pct.toFixed(1)}% of national consumption</span>
                     </div>
                   </div>
                   <div className="text-right">
-                    <strong className="text-white text-xs">{(sec.volumeKL / 1000000).toFixed(2)}M KL</strong>
-                    <div className="text-[9px] text-emerald-400 font-bold">₹{(sec.volumeKL * 0.016).toLocaleString()} Cr</div>
+                    <strong className="text-slate-900 text-xs">{(sec.volumeKL / 1000000).toFixed(2)}M KL</strong>
+                    <div className="text-[10px] text-emerald-700 font-bold">₹{(sec.volumeKL * 0.016).toLocaleString()} Cr</div>
                   </div>
                 </div>
               ))}

@@ -43,6 +43,7 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
+  LabelList,
   ScatterChart,
   Scatter,
   ZAxis
@@ -390,83 +391,83 @@ export const DistributorOpportunityDashboard: React.FC<DistributorOpportunityDas
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-5">
       {/* Header & Sub-Navigation Bar */}
-      <div className="bg-[#0E1117] border border-[#1F2937] p-3.5 flex flex-wrap items-center justify-between gap-4">
+      <div className="bg-white border border-slate-200/90 p-5 rounded-2xl shadow-sm flex flex-wrap items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <h2 className="text-sm font-bold font-mono text-white uppercase flex items-center gap-2">
-              <Store className="w-4 h-4 text-cyan-400" />
+            <Store className="w-5 h-5 text-[#7C3AED]" />
+            <h2 className="text-base font-bold text-slate-900 tracking-tight">
               Distributor Intelligence &amp; White-Spot Comparative Analysis
             </h2>
-            <span className="text-[10px] font-mono font-bold bg-cyan-950 text-cyan-300 border border-cyan-700/50 px-2 py-0.5 rounded uppercase">
-              {totalTrackedDistributors} INCUMBENT HUBS AUDITED
+            <span className="text-[10px] font-bold bg-purple-50 text-[#7C3AED] border border-purple-200 px-2 py-0.5 rounded-full uppercase">
+              {totalTrackedDistributors} Incumbent Hubs Audited
             </span>
           </div>
-          <p className="text-[10px] font-mono text-gray-500 mt-0.5">
-            CROSS-BENCHMARKING ACTIVE OMC STOCKISTS VS. UNMET REGIONAL WHITE-SPOT OPPORTUNITIES
+          <p className="text-xs text-slate-500 mt-0.5">
+            Cross-benchmarking active OMC stockists vs. unmet regional white-spot opportunities
           </p>
         </div>
 
         {/* View Switcher Tabs */}
-        <div className="flex items-center flex-wrap gap-1 bg-[#0A0B0E] p-1 rounded border border-[#374151] font-mono text-[10px] font-bold">
+        <div className="flex items-center flex-wrap gap-1.5 bg-slate-50 p-1.5 rounded-xl border border-slate-200 text-xs font-semibold">
           <button
             onClick={() => setActiveView('maxClusters')}
-            className={`px-3 py-1.5 rounded transition-all flex items-center gap-1.5 uppercase ${
+            className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 uppercase ${
               activeView === 'maxClusters'
-                ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-black shadow-lg font-extrabold ring-1 ring-orange-400'
-                : 'text-orange-400/90 hover:text-white bg-orange-950/30'
+                ? 'bg-gradient-to-r from-[#7C3AED] to-[#4F46E5] text-white shadow-sm font-bold'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/60'
             }`}
           >
-            <Sparkles className="w-3 h-3" />
+            <Sparkles className="w-3.5 h-3.5 text-amber-300" />
             <span>36 MAX WHITE-SPOT CLUSTERS (1.51M KL DEFICIT)</span>
           </button>
 
           <button
             onClick={() => setActiveView('distributors')}
-            className={`px-3 py-1.5 rounded transition-all flex items-center gap-1.5 uppercase ${
+            className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 uppercase ${
               activeView === 'distributors'
-                ? 'bg-cyan-500 text-black shadow font-extrabold'
-                : 'text-gray-400 hover:text-white'
+                ? 'bg-gradient-to-r from-[#7C3AED] to-[#4F46E5] text-white shadow-sm font-bold'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/60'
             }`}
           >
-            <Store className="w-3 h-3" />
+            <Store className="w-3.5 h-3.5" />
             <span>CURRENT DISTRIBUTORS ({filteredDistributors.length})</span>
           </button>
 
           <button
             onClick={() => setActiveView('whiteSpots')}
-            className={`px-3 py-1.5 rounded transition-all flex items-center gap-1.5 uppercase ${
+            className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 uppercase ${
               activeView === 'whiteSpots'
-                ? 'bg-[#F27D26] text-black shadow font-extrabold'
-                : 'text-gray-400 hover:text-white'
+                ? 'bg-gradient-to-r from-[#7C3AED] to-[#4F46E5] text-white shadow-sm font-bold'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/60'
             }`}
           >
-            <Flame className="w-3 h-3" />
+            <Flame className="w-3.5 h-3.5" />
             <span>WHITE SPOTS ({filteredLocations.length})</span>
           </button>
 
           <button
             onClick={() => setActiveView('comparison')}
-            className={`px-3 py-1.5 rounded transition-all flex items-center gap-1.5 uppercase ${
+            className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 uppercase ${
               activeView === 'comparison'
-                ? 'bg-purple-500 text-white shadow font-extrabold'
-                : 'text-gray-400 hover:text-white'
+                ? 'bg-gradient-to-r from-[#7C3AED] to-[#4F46E5] text-white shadow-sm font-bold'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/60'
             }`}
           >
-            <Scale className="w-3 h-3" />
+            <Scale className="w-3.5 h-3.5" />
             <span>HEAD-TO-HEAD COMPARISON</span>
           </button>
 
           <button
             onClick={() => setActiveView('charts')}
-            className={`px-3 py-1.5 rounded transition-all flex items-center gap-1.5 uppercase ${
+            className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 uppercase ${
               activeView === 'charts'
-                ? 'bg-blue-500 text-white shadow font-extrabold'
-                : 'text-gray-400 hover:text-white'
+                ? 'bg-gradient-to-r from-[#7C3AED] to-[#4F46E5] text-white shadow-sm font-bold'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/60'
             }`}
           >
-            <BarChart3 className="w-3 h-3" />
+            <BarChart3 className="w-3.5 h-3.5" />
             <span>MARKET SHARE CHARTS</span>
           </button>
         </div>
@@ -474,23 +475,23 @@ export const DistributorOpportunityDashboard: React.FC<DistributorOpportunityDas
 
       {/* VIEW 0: ALL-INDIA 36 MAX WHITE-SPOT CLUSTERS & 100% DEFICIT COVERAGE ENGINE */}
       {activeView === 'maxClusters' && (
-        <div className="space-y-4 font-mono">
+        <div className="space-y-4">
           {/* Master Strategic Reconciliation Banner */}
-          <div className="bg-gradient-to-r from-[#12161F] via-[#1A120B] to-[#12161F] border border-orange-500/40 p-4 rounded relative overflow-hidden">
+          <div className="bg-gradient-to-r from-purple-50/80 via-indigo-50/50 to-white border border-purple-200/80 p-5 rounded-2xl shadow-sm relative overflow-hidden">
             <div className="flex flex-wrap items-start justify-between gap-4">
-              <div className="space-y-1 max-w-3xl">
+              <div className="space-y-1.5 max-w-3xl">
                 <div className="flex items-center gap-2">
-                  <span className="bg-orange-500 text-black text-[10px] font-extrabold px-2 py-0.5 rounded uppercase">
-                    100% DEFICIT RECONCILIATION
+                  <span className="bg-[#7C3AED] text-white text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase">
+                    100% Deficit Reconciliation
                   </span>
-                  <span className="text-gray-400 text-xs font-bold uppercase">
+                  <span className="text-slate-500 text-xs font-semibold uppercase">
                     36 Regional Clusters Covering Full National Deficit
                   </span>
                 </div>
-                <h3 className="text-base font-bold text-white uppercase tracking-wide">
+                <h3 className="text-base font-bold text-slate-900 uppercase tracking-wide">
                   MAX WHITE-SPOT INFRASTRUCTURE NETWORK — 1,510,500 KL/YR UNMET MARKET RECOVERY
                 </h3>
-                <p className="text-xs text-gray-300 leading-relaxed">
+                <p className="text-xs text-slate-600 leading-relaxed">
                   Engineered 36 master regional hub clusters across 6 geographic zones to bridge India’s entire unserved lubricant deficit ({formatKL(SUMMARY_36_MAX_CLUSTERS.totalDeficitCoveredKL)} / ₹24,168 Cr). Each cluster features calibrated depot sizing, safety stock buffering, multi-district reach, and freight savings.
                 </p>
               </div>
@@ -498,87 +499,87 @@ export const DistributorOpportunityDashboard: React.FC<DistributorOpportunityDas
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => downloadWhiteSpotExcel(locations)}
-                  className="bg-emerald-500/20 hover:bg-emerald-500 text-emerald-300 hover:text-black border border-emerald-500/50 px-3.5 py-2 text-xs font-bold rounded transition-all flex items-center gap-1.5 uppercase"
+                  className="bg-white hover:bg-emerald-50 text-emerald-700 border border-emerald-300 px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 uppercase shadow-2xs"
                 >
-                  <Download className="w-3.5 h-3.5" />
+                  <Download className="w-4 h-4 text-emerald-600" />
                   <span>EXPORT 36 CLUSTERS (EXCEL)</span>
                 </button>
               </div>
             </div>
 
             {/* Strategic KPI Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 mt-4 pt-3 border-t border-orange-500/20">
-              <div className="bg-[#0A0D14] p-2.5 border border-[#1F2937] rounded">
-                <span className="text-[9.5px] text-gray-400 uppercase block">Total Deficit Covered</span>
-                <span className="text-sm font-extrabold text-orange-400 block mt-0.5">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mt-4 pt-3.5 border-t border-purple-100">
+              <div className="bg-white p-3 border border-slate-200/90 rounded-xl shadow-2xs">
+                <span className="text-[10px] text-slate-500 uppercase font-medium block">Total Deficit Covered</span>
+                <span className="text-sm font-extrabold text-[#7C3AED] block mt-0.5">
                   {formatKL(SUMMARY_36_MAX_CLUSTERS.totalDeficitCoveredKL)}
                 </span>
-                <span className="text-[9px] text-gray-500 block">100% of National Gap</span>
+                <span className="text-[10px] text-slate-400 block font-medium">100% of National Gap</span>
               </div>
 
-              <div className="bg-[#0A0D14] p-2.5 border border-[#1F2937] rounded">
-                <span className="text-[9.5px] text-gray-400 uppercase block">Unmet Market Value</span>
-                <span className="text-sm font-extrabold text-emerald-400 block mt-0.5">
+              <div className="bg-white p-3 border border-slate-200/90 rounded-xl shadow-2xs">
+                <span className="text-[10px] text-slate-500 uppercase font-medium block">Unmet Market Value</span>
+                <span className="text-sm font-extrabold text-emerald-700 block mt-0.5">
                   ₹{SUMMARY_36_MAX_CLUSTERS.totalDeficitMarketValueCr.toLocaleString()} Cr
                 </span>
-                <span className="text-[9px] text-gray-500 block">@ ₹160/L Blended Realization</span>
+                <span className="text-[10px] text-slate-400 block font-medium">@ ₹160/L Realization</span>
               </div>
 
-              <div className="bg-[#0A0D14] p-2.5 border border-[#1F2937] rounded">
-                <span className="text-[9.5px] text-gray-400 uppercase block">Recommended Depot Net</span>
-                <span className="text-sm font-extrabold text-cyan-400 block mt-0.5">
+              <div className="bg-white p-3 border border-slate-200/90 rounded-xl shadow-2xs">
+                <span className="text-[10px] text-slate-500 uppercase font-medium block">Recommended Depot Net</span>
+                <span className="text-sm font-extrabold text-indigo-700 block mt-0.5">
                   {SUMMARY_36_MAX_CLUSTERS.totalRecommendedStorageCapacityKL.toLocaleString()} KL
                 </span>
-                <span className="text-[9px] text-gray-500 block">Across 36 Regional Hubs</span>
+                <span className="text-[10px] text-slate-400 block font-medium">Across 36 Regional Hubs</span>
               </div>
 
-              <div className="bg-[#0A0D14] p-2.5 border border-[#1F2937] rounded">
-                <span className="text-[9.5px] text-gray-400 uppercase block">Total Network Capex</span>
-                <span className="text-sm font-extrabold text-yellow-400 block mt-0.5">
+              <div className="bg-white p-3 border border-slate-200/90 rounded-xl shadow-2xs">
+                <span className="text-[10px] text-slate-500 uppercase font-medium block">Total Network Capex</span>
+                <span className="text-sm font-extrabold text-amber-600 block mt-0.5">
                   ₹{SUMMARY_36_MAX_CLUSTERS.totalNetworkCapexCr.toFixed(1)} Cr
                 </span>
-                <span className="text-[9px] text-gray-500 block">Hub Infrastructure & Racks</span>
+                <span className="text-[10px] text-slate-400 block font-medium">Hub Infrastructure &amp; Racks</span>
               </div>
 
-              <div className="bg-[#0A0D14] p-2.5 border border-[#1F2937] rounded">
-                <span className="text-[9.5px] text-gray-400 uppercase block">Annual Freight Savings</span>
-                <span className="text-sm font-extrabold text-green-400 block mt-0.5">
+              <div className="bg-white p-3 border border-slate-200/90 rounded-xl shadow-2xs">
+                <span className="text-[10px] text-slate-500 uppercase font-medium block">Annual Freight Savings</span>
+                <span className="text-sm font-extrabold text-emerald-700 block mt-0.5">
                   ₹{SUMMARY_36_MAX_CLUSTERS.totalAnnualFreightSavingsCr.toFixed(1)} Cr/yr
                 </span>
-                <span className="text-[9px] text-gray-500 block">Lead Time Reduced &lt;18 hrs</span>
+                <span className="text-[10px] text-slate-400 block font-medium">Lead Time &lt;18 hrs</span>
               </div>
 
-              <div className="bg-[#0A0D14] p-2.5 border border-[#1F2937] rounded">
-                <span className="text-[9.5px] text-gray-400 uppercase block">Year-1 Target Capture</span>
-                <span className="text-sm font-extrabold text-purple-400 block mt-0.5">
+              <div className="bg-white p-3 border border-slate-200/90 rounded-xl shadow-2xs">
+                <span className="text-[10px] text-slate-500 uppercase font-medium block">Year-1 Target Capture</span>
+                <span className="text-sm font-extrabold text-[#7C3AED] block mt-0.5">
                   {formatKL(SUMMARY_36_MAX_CLUSTERS.targetAnnualCaptureYear1KL)}
                 </span>
-                <span className="text-[9px] text-gray-500 block">Phase 1 Immediate Rollout</span>
+                <span className="text-[10px] text-slate-400 block font-medium">Phase 1 Rollout</span>
               </div>
             </div>
           </div>
 
           {/* Filter Toolbar */}
-          <div className="bg-[#0E1117] border border-[#1F2937] p-3 rounded flex flex-wrap items-center justify-between gap-3 text-xs">
+          <div className="bg-white border border-slate-200/90 p-4 rounded-2xl shadow-sm flex flex-wrap items-center justify-between gap-3 text-xs">
             {/* Search Input */}
             <div className="relative min-w-[220px] flex-1 max-w-sm">
-              <Search className="w-3.5 h-3.5 text-gray-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
+              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
                 placeholder="Search hub, city, state, industries, districts..."
                 value={search36}
                 onChange={(e) => setSearch36(e.target.value)}
-                className="w-full bg-[#151921] border border-[#374151] rounded pl-8 pr-3 py-1.5 text-white placeholder-gray-500 focus:outline-none focus:border-orange-500 text-xs"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-3 py-1.5 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-purple-500 text-xs font-medium"
               />
             </div>
 
             {/* Region Filter */}
             <div className="flex items-center gap-1.5">
-              <span className="text-gray-400 text-[11px] uppercase">Zone:</span>
+              <span className="text-slate-500 text-xs uppercase font-medium">Zone:</span>
               <select
                 value={regionFilter36}
                 onChange={(e) => setRegionFilter36(e.target.value)}
-                className="bg-[#151921] border border-[#374151] rounded px-2.5 py-1 text-white text-xs focus:outline-none focus:border-orange-500 uppercase"
+                className="bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 text-slate-800 text-xs focus:outline-none focus:border-purple-500 font-medium"
               >
                 <option value="all">ALL REGIONS (36)</option>
                 <option value="West">WEST ZONE (8)</option>
@@ -592,11 +593,11 @@ export const DistributorOpportunityDashboard: React.FC<DistributorOpportunityDas
 
             {/* Rollout Phase Filter */}
             <div className="flex items-center gap-1.5">
-              <span className="text-gray-400 text-[11px] uppercase">Phase:</span>
+              <span className="text-slate-500 text-xs uppercase font-medium">Phase:</span>
               <select
                 value={phaseFilter36}
                 onChange={(e) => setPhaseFilter36(e.target.value)}
-                className="bg-[#151921] border border-[#374151] rounded px-2.5 py-1 text-white text-xs focus:outline-none focus:border-orange-500 uppercase"
+                className="bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 text-slate-800 text-xs focus:outline-none focus:border-purple-500 font-medium"
               >
                 <option value="all">ALL PHASES (36)</option>
                 <option value="Phase 1">PHASE 1: 0-12 MO (14 HUBS)</option>
@@ -607,63 +608,63 @@ export const DistributorOpportunityDashboard: React.FC<DistributorOpportunityDas
 
             {/* Dominant Sector Filter */}
             <div className="flex items-center gap-1.5">
-              <span className="text-gray-400 text-[11px] uppercase">Sector:</span>
+              <span className="text-slate-500 text-xs uppercase font-medium">Sector:</span>
               <select
                 value={sectorFilter36}
                 onChange={(e) => setSectorFilter36(e.target.value)}
-                className="bg-[#151921] border border-[#374151] rounded px-2.5 py-1 text-white text-xs focus:outline-none focus:border-orange-500 uppercase max-w-[200px]"
+                className="bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 text-slate-800 text-xs focus:outline-none focus:border-purple-500 font-medium max-w-[200px]"
               >
                 <option value="all">ALL SECTORS</option>
-                <option value="Automotive & Fleet (HDEO/PCMO)">Automotive & Fleet (HDEO/PCMO)</option>
-                <option value="Heavy Industrial & Metals">Heavy Industrial & Metals</option>
-                <option value="Mining & Heavy Off-Highway">Mining & Heavy Off-Highway</option>
-                <option value="PCPIR Chemical & Process">PCPIR Chemical & Process</option>
-                <option value="Agri-Machinery & UTTO">Agri-Machinery & UTTO</option>
-                <option value="Port Marine & Heavy Logistics">Port Marine & Heavy Logistics</option>
+                <option value="Automotive & Fleet (HDEO/PCMO)">Automotive &amp; Fleet (HDEO/PCMO)</option>
+                <option value="Heavy Industrial & Metals">Heavy Industrial &amp; Metals</option>
+                <option value="Mining & Heavy Off-Highway">Mining &amp; Heavy Off-Highway</option>
+                <option value="PCPIR Chemical & Process">PCPIR Chemical &amp; Process</option>
+                <option value="Agri-Machinery & UTTO">Agri-Machinery &amp; UTTO</option>
+                <option value="Port Marine & Heavy Logistics">Port Marine &amp; Heavy Logistics</option>
               </select>
             </div>
 
-            <span className="text-gray-400 text-xs font-bold">
-              SHOWING <span className="text-orange-400">{filteredClusters36.length}</span> / 36 CLUSTERS
+            <span className="text-slate-500 text-xs font-semibold">
+              Showing <span className="text-[#7C3AED] font-bold">{filteredClusters36.length}</span> / 36 Clusters
             </span>
           </div>
 
           {/* Master Table of 36 Max White-Spot Clusters */}
-          <div className="bg-[#0E1117] border border-[#1F2937] rounded overflow-hidden">
-            <div className="p-3 bg-[#131720] border-b border-[#1F2937] flex items-center justify-between">
+          <div className="bg-white border border-slate-200/90 rounded-2xl overflow-hidden shadow-sm">
+            <div className="p-4 bg-slate-50/80 border-b border-slate-200 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="font-bold text-white text-xs uppercase flex items-center gap-1.5">
-                  <Flame className="w-3.5 h-3.5 text-orange-400" />
+                <span className="font-bold text-slate-900 text-xs uppercase flex items-center gap-1.5">
+                  <Flame className="w-4 h-4 text-[#7C3AED]" />
                   Strategic 36 White-Spot Master Coverage Grid
                 </span>
-                <span className="text-[10px] bg-orange-950 text-orange-300 border border-orange-800/50 px-2 py-0.5 rounded uppercase font-bold">
-                  TOTAL DEFICIT IN SELECTION: {formatKL(filteredClusters36.reduce((s, c) => s + c.unservedDeficitKL, 0))}
+                <span className="text-[10px] bg-purple-100 text-[#7C3AED] border border-purple-200 px-2 py-0.5 rounded-full uppercase font-bold">
+                  Total Deficit in Selection: {formatKL(filteredClusters36.reduce((s, c) => s + c.unservedDeficitKL, 0))}
                 </span>
               </div>
-              <span className="text-[10px] text-gray-400 uppercase">
-                CLICK ANY ROW TO VIEW FULL HUB SPECS
+              <span className="text-[10px] text-slate-400 uppercase font-medium">
+                Click any row to view full hub specs
               </span>
             </div>
 
             <div className="overflow-x-auto max-h-[500px]">
-              <table className="w-full text-left text-xs border-collapse font-mono">
-                <thead className="bg-[#0A0D14] sticky top-0 z-10 border-b border-[#1F2937] text-gray-400 uppercase text-[10px]">
+              <table className="w-full text-left text-xs border-collapse">
+                <thead className="bg-slate-100/80 sticky top-0 z-10 border-b border-slate-200 text-slate-500 uppercase text-[10px] font-semibold">
                   <tr>
-                    <th className="py-2.5 px-3">#</th>
-                    <th className="py-2.5 px-3">Cluster Name & Hub City</th>
-                    <th className="py-2.5 px-3">State & Zone</th>
-                    <th className="py-2.5 px-3 text-right">Cluster Demand</th>
-                    <th className="py-2.5 px-3 text-right">Supply</th>
-                    <th className="py-2.5 px-3 text-right text-orange-400">Deficit (KL/yr)</th>
-                    <th className="py-2.5 px-3 text-right text-emerald-400">Unmet Value</th>
-                    <th className="py-2.5 px-3 text-right text-cyan-400">Depot (KL)</th>
-                    <th className="py-2.5 px-3 text-right">Capex</th>
-                    <th className="py-2.5 px-3 text-right text-purple-400">Yr-1 Target</th>
-                    <th className="py-2.5 px-3">Dominant Sector</th>
-                    <th className="py-2.5 px-3">Phase</th>
+                    <th className="py-3 px-3">#</th>
+                    <th className="py-3 px-3">Cluster Name &amp; Hub City</th>
+                    <th className="py-3 px-3">State &amp; Zone</th>
+                    <th className="py-3 px-3 text-right">Cluster Demand</th>
+                    <th className="py-3 px-3 text-right">Supply</th>
+                    <th className="py-3 px-3 text-right text-[#7C3AED]">Deficit (KL/yr)</th>
+                    <th className="py-3 px-3 text-right text-emerald-700">Unmet Value</th>
+                    <th className="py-3 px-3 text-right text-indigo-700">Depot (KL)</th>
+                    <th className="py-3 px-3 text-right">Capex</th>
+                    <th className="py-3 px-3 text-right text-purple-700">Yr-1 Target</th>
+                    <th className="py-3 px-3">Dominant Sector</th>
+                    <th className="py-3 px-3">Phase</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#1F2937]/50 text-gray-300 text-xs">
+                <tbody className="divide-y divide-slate-100 text-slate-700 text-xs">
                   {filteredClusters36.map((c) => {
                     const isSelected = selectedClusterId36 === c.id;
                     return (
@@ -672,54 +673,54 @@ export const DistributorOpportunityDashboard: React.FC<DistributorOpportunityDas
                         onClick={() => setSelectedClusterId36(c.id)}
                         className={`cursor-pointer transition-colors ${
                           isSelected
-                            ? 'bg-orange-500/15 border-l-4 border-l-orange-500 text-white'
-                            : 'hover:bg-[#151921]'
+                            ? 'bg-purple-50/90 border-l-4 border-l-[#7C3AED] text-slate-900 font-medium'
+                            : 'hover:bg-slate-50/70'
                         }`}
                       >
-                        <td className="py-2 px-3 font-bold text-gray-400">{c.clusterRank}</td>
-                        <td className="py-2 px-3">
-                          <div className="font-bold text-white">{c.clusterName}</div>
-                          <div className="text-[10px] text-gray-400 flex items-center gap-1">
-                            <MapPin className="w-2.5 h-2.5 text-orange-400" />
+                        <td className="py-2.5 px-3 font-bold text-slate-400">{c.clusterRank}</td>
+                        <td className="py-2.5 px-3">
+                          <div className="font-bold text-slate-900">{c.clusterName}</div>
+                          <div className="text-[10px] text-slate-500 flex items-center gap-1">
+                            <MapPin className="w-3 h-3 text-[#7C3AED]" />
                             {c.targetHubCity}
                           </div>
                         </td>
-                        <td className="py-2 px-3">
-                          <div className="font-semibold">{c.stateName}</div>
-                          <span className="text-[9px] px-1.5 py-0.2 bg-[#1A202C] text-gray-400 rounded uppercase">
+                        <td className="py-2.5 px-3">
+                          <div className="font-semibold text-slate-800">{c.stateName}</div>
+                          <span className="text-[9px] px-1.5 py-0.5 bg-slate-100 text-slate-600 rounded-md uppercase font-medium">
                             {c.region}
                           </span>
                         </td>
-                        <td className="py-2 px-3 text-right text-gray-400">{c.totalClusterDemandKL.toLocaleString()}</td>
-                        <td className="py-2 px-3 text-right text-gray-400">{c.accessibleSupplyKL.toLocaleString()}</td>
-                        <td className="py-2 px-3 text-right font-bold text-orange-400">
+                        <td className="py-2.5 px-3 text-right text-slate-600">{c.totalClusterDemandKL.toLocaleString()}</td>
+                        <td className="py-2.5 px-3 text-right text-slate-600">{c.accessibleSupplyKL.toLocaleString()}</td>
+                        <td className="py-2.5 px-3 text-right font-bold text-[#7C3AED]">
                           {c.unservedDeficitKL.toLocaleString()} KL
-                          <div className="text-[9px] text-gray-500">({c.deficitCoveragePct}%)</div>
+                          <div className="text-[10px] text-slate-400 font-normal">({c.deficitCoveragePct}%)</div>
                         </td>
-                        <td className="py-2 px-3 text-right font-bold text-emerald-400">
+                        <td className="py-2.5 px-3 text-right font-bold text-emerald-700">
                           ₹{c.unmetMarketValueCr.toLocaleString()} Cr
                         </td>
-                        <td className="py-2 px-3 text-right font-bold text-cyan-400">
+                        <td className="py-2.5 px-3 text-right font-bold text-indigo-700">
                           {c.recommendedDepotSizeKL.toLocaleString()} KL
                         </td>
-                        <td className="py-2 px-3 text-right text-yellow-400">
+                        <td className="py-2.5 px-3 text-right text-amber-700 font-semibold">
                           ₹{c.estimatedCapexCr.toFixed(1)} Cr
                         </td>
-                        <td className="py-2 px-3 text-right font-bold text-purple-400">
+                        <td className="py-2.5 px-3 text-right font-bold text-purple-700">
                           {c.targetAnnualCaptureVolKL.toLocaleString()} KL
                         </td>
-                        <td className="py-2 px-3">
-                          <span className="text-[10px] bg-[#1E2430] text-cyan-300 px-2 py-0.5 rounded block whitespace-nowrap overflow-hidden text-ellipsis max-w-[140px]">
+                        <td className="py-2.5 px-3">
+                          <span className="text-[10px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md block whitespace-nowrap overflow-hidden text-ellipsis max-w-[140px] font-medium border border-slate-200/60">
                             {c.dominantSector}
                           </span>
                         </td>
-                        <td className="py-2 px-3">
-                          <span className={`text-[9.5px] px-2 py-0.5 rounded uppercase font-bold ${
+                        <td className="py-2.5 px-3">
+                          <span className={`text-[10px] px-2 py-0.5 rounded-full uppercase font-bold ${
                             c.rolloutPhase.startsWith('Phase 1')
-                              ? 'bg-emerald-950 text-emerald-300 border border-emerald-800/40'
+                              ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
                               : c.rolloutPhase.startsWith('Phase 2')
-                              ? 'bg-blue-950 text-blue-300 border border-blue-800/40'
-                              : 'bg-purple-950 text-purple-300 border border-purple-800/40'
+                              ? 'bg-blue-50 text-blue-700 border border-blue-200'
+                              : 'bg-purple-50 text-purple-700 border border-purple-200'
                           }`}>
                             {c.rolloutPhase.split(' ')[0]} {c.rolloutPhase.split(' ')[1]}
                           </span>
@@ -734,101 +735,101 @@ export const DistributorOpportunityDashboard: React.FC<DistributorOpportunityDas
 
           {/* Drill-Down Hub Specification Inspector Card */}
           {selectedCluster36 && (
-            <div className="bg-[#0E1117] border-2 border-orange-500/60 p-4 rounded space-y-3">
-              <div className="flex flex-wrap items-start justify-between gap-3 border-b border-[#1F2937] pb-3">
+            <div className="bg-white border border-purple-200 p-5 rounded-2xl shadow-sm space-y-4">
+              <div className="flex flex-wrap items-start justify-between gap-3 border-b border-slate-100 pb-3.5">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="bg-orange-500 text-black text-[10px] font-extrabold px-2 py-0.5 rounded uppercase">
+                    <span className="bg-[#7C3AED] text-white text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase">
                       RANK #{selectedCluster36.clusterRank}
                     </span>
-                    <span className="text-gray-400 text-xs uppercase font-bold">
+                    <span className="text-slate-500 text-xs uppercase font-semibold">
                       {selectedCluster36.region} Zone • {selectedCluster36.stateName}
                     </span>
-                    <span className="text-[10px] bg-emerald-950 text-emerald-300 border border-emerald-800 px-2 py-0.5 rounded uppercase font-bold">
+                    <span className="text-[10px] bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-0.5 rounded-full uppercase font-bold">
                       {selectedCluster36.rolloutPhase}
                     </span>
                   </div>
-                  <h4 className="text-base font-extrabold text-white mt-1 uppercase flex items-center gap-2">
-                    <Building className="w-4 h-4 text-orange-400" />
-                    {selectedCluster36.clusterName} ({selectedCluster36.targetHubCity} HUB)
+                  <h4 className="text-base font-extrabold text-slate-900 mt-1 uppercase flex items-center gap-2">
+                    <Building className="w-5 h-5 text-[#7C3AED]" />
+                    {selectedCluster36.clusterName} ({selectedCluster36.targetHubCity} Hub)
                   </h4>
-                  <p className="text-xs text-cyan-300 font-bold mt-0.5">
+                  <p className="text-xs text-indigo-700 font-semibold mt-0.5">
                     Dominant Demand: {selectedCluster36.dominantSector}
                   </p>
                 </div>
 
                 <div className="flex items-center gap-3">
                   <div className="text-right">
-                    <span className="text-[10px] text-gray-400 uppercase block">Unserved Deficit Volume</span>
-                    <span className="text-lg font-extrabold text-orange-400">
+                    <span className="text-[10px] text-slate-400 uppercase block font-medium">Unserved Deficit Volume</span>
+                    <span className="text-lg font-extrabold text-[#7C3AED]">
                       {selectedCluster36.unservedDeficitKL.toLocaleString()} KL/YR
                     </span>
-                    <span className="text-[10px] text-emerald-400 block font-bold">
+                    <span className="text-xs text-emerald-700 block font-bold">
                       ₹{selectedCluster36.unmetMarketValueCr.toLocaleString()} Cr Potential
                     </span>
                   </div>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 pt-1">
-                <div className="bg-[#151921] p-3 rounded border border-[#1F2937]">
-                  <span className="text-[10px] text-gray-400 uppercase block">Depot Sizing & Stocking</span>
-                  <div className="mt-1 space-y-1 text-xs">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3.5 pt-1">
+                <div className="bg-slate-50/90 p-4 rounded-xl border border-slate-200/80">
+                  <span className="text-[10px] text-slate-500 uppercase block font-bold tracking-wider">Depot Sizing &amp; Stocking</span>
+                  <div className="mt-2 space-y-1.5 text-xs">
                     <div className="flex justify-between">
-                      <span className="text-gray-400">Storage Capacity:</span>
-                      <span className="font-bold text-cyan-400">{selectedCluster36.recommendedDepotSizeKL.toLocaleString()} KL</span>
+                      <span className="text-slate-500">Storage Capacity:</span>
+                      <span className="font-bold text-indigo-700">{selectedCluster36.recommendedDepotSizeKL.toLocaleString()} KL</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-400">Safety Buffer:</span>
-                      <span className="font-bold text-yellow-400">{selectedCluster36.recommendedSafetyStockKL.toLocaleString()} KL</span>
+                      <span className="text-slate-500">Safety Buffer:</span>
+                      <span className="font-bold text-amber-700">{selectedCluster36.recommendedSafetyStockKL.toLocaleString()} KL</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-400">Demand Deficit Rate:</span>
-                      <span className="font-bold text-orange-400">{selectedCluster36.deficitCoveragePct}%</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-[#151921] p-3 rounded border border-[#1F2937]">
-                  <span className="text-[10px] text-gray-400 uppercase block">Financials & Savings</span>
-                  <div className="mt-1 space-y-1 text-xs">
-                    <div className="flex justify-between">
-                      <span className="text-gray-400">Setup Capex:</span>
-                      <span className="font-bold text-yellow-400">₹{selectedCluster36.estimatedCapexCr.toFixed(2)} Cr</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-400">Freight Savings:</span>
-                      <span className="font-bold text-green-400">₹{selectedCluster36.annualFreightSavingsCr.toFixed(2)} Cr/yr</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-400">Year-1 Target Vol:</span>
-                      <span className="font-bold text-purple-400">{selectedCluster36.targetAnnualCaptureVolKL.toLocaleString()} KL</span>
+                      <span className="text-slate-500">Demand Deficit Rate:</span>
+                      <span className="font-bold text-[#7C3AED]">{selectedCluster36.deficitCoveragePct}%</span>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-[#151921] p-3 rounded border border-[#1F2937]">
-                  <span className="text-[10px] text-gray-400 uppercase block">Anchor Industry Clients</span>
-                  <div className="mt-1 flex flex-wrap gap-1">
+                <div className="bg-slate-50/90 p-4 rounded-xl border border-slate-200/80">
+                  <span className="text-[10px] text-slate-500 uppercase block font-bold tracking-wider">Financials &amp; Savings</span>
+                  <div className="mt-2 space-y-1.5 text-xs">
+                    <div className="flex justify-between">
+                      <span className="text-slate-500">Setup Capex:</span>
+                      <span className="font-bold text-amber-700">₹{selectedCluster36.estimatedCapexCr.toFixed(2)} Cr</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-500">Freight Savings:</span>
+                      <span className="font-bold text-emerald-700">₹{selectedCluster36.annualFreightSavingsCr.toFixed(2)} Cr/yr</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-500">Year-1 Target Vol:</span>
+                      <span className="font-bold text-purple-700">{selectedCluster36.targetAnnualCaptureVolKL.toLocaleString()} KL</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-slate-50/90 p-4 rounded-xl border border-slate-200/80">
+                  <span className="text-[10px] text-slate-500 uppercase block font-bold tracking-wider">Anchor Industry Clients</span>
+                  <div className="mt-2 flex flex-wrap gap-1.5">
                     {selectedCluster36.keyAnchorIndustries.map((ind, i) => (
-                      <span key={i} className="text-[9.5px] bg-[#1E2430] text-gray-300 px-1.5 py-0.5 rounded border border-[#374151]">
+                      <span key={i} className="text-[10px] bg-white text-slate-700 px-2 py-0.5 rounded-md border border-slate-200 font-medium">
                         {ind}
                       </span>
                     ))}
                   </div>
                 </div>
 
-                <div className="bg-[#151921] p-3 rounded border border-[#1F2937]">
-                  <span className="text-[10px] text-gray-400 uppercase block">Serviced Ring Districts & Transport</span>
-                  <div className="mt-1 space-y-1.5">
+                <div className="bg-slate-50/90 p-4 rounded-xl border border-slate-200/80">
+                  <span className="text-[10px] text-slate-500 uppercase block font-bold tracking-wider">Serviced Ring Districts</span>
+                  <div className="mt-2 space-y-2">
                     <div className="flex flex-wrap gap-1">
                       {selectedCluster36.servicedDistricts.map((dist, i) => (
-                        <span key={i} className="text-[9.5px] bg-orange-950/60 text-orange-300 px-1.5 py-0.5 rounded border border-orange-800/40">
+                        <span key={i} className="text-[10px] bg-purple-50 text-[#7C3AED] px-2 py-0.5 rounded-md border border-purple-200 font-medium">
                           {dist}
                         </span>
                       ))}
                     </div>
-                    <p className="text-[9.5px] text-gray-400 italic">
+                    <p className="text-[10px] text-slate-500 italic">
                       Corridor: {selectedCluster36.logisticsConnectivity}
                     </p>
                   </div>
@@ -840,44 +841,44 @@ export const DistributorOpportunityDashboard: React.FC<DistributorOpportunityDas
       )}
 
       {/* Telemetry Strip: Active Incumbents Overview */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-        <div className="bg-[#0E1117] border border-[#1F2937] p-3 border-l-2 border-cyan-400">
-          <span className="text-[10px] text-gray-500 font-mono block uppercase">Total Tracked Distributors</span>
-          <span className="text-xl font-bold text-cyan-300 font-mono mt-0.5 block">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+        <div className="bg-white border border-slate-200/90 p-4 rounded-2xl shadow-sm border-l-4 border-l-indigo-600">
+          <span className="text-[10px] text-slate-500 font-semibold block uppercase">Total Tracked Distributors</span>
+          <span className="text-xl font-extrabold text-slate-900 mt-0.5 block">
             {totalTrackedDistributors} Hubs
           </span>
-          <span className="text-[10px] text-gray-400 font-mono block mt-0.5">
-            ACROSS {uniqueStates.length} INDUSTRIAL STATES
+          <span className="text-[10px] text-slate-400 block mt-0.5 font-medium">
+            Across {uniqueStates.length} industrial states
           </span>
         </div>
 
-        <div className="bg-[#0E1117] border border-[#1F2937] p-3 border-l-2 border-emerald-400">
-          <span className="text-[10px] text-gray-500 font-mono block uppercase">Incumbent Annual Volume</span>
-          <span className="text-xl font-bold text-emerald-400 font-mono mt-0.5 block">
+        <div className="bg-white border border-slate-200/90 p-4 rounded-2xl shadow-sm border-l-4 border-l-emerald-600">
+          <span className="text-[10px] text-slate-500 font-semibold block uppercase">Incumbent Annual Volume</span>
+          <span className="text-xl font-extrabold text-emerald-700 mt-0.5 block">
             {formatKL(totalIncumbentVolumeKL)}
           </span>
-          <span className="text-[10px] text-gray-400 font-mono block mt-0.5">
-            AVG THROUGHPUT: {Math.round(totalIncumbentVolumeKL / totalTrackedDistributors).toLocaleString()} KL/HUB
+          <span className="text-[10px] text-slate-400 block mt-0.5 font-medium">
+            Avg Throughput: {Math.round(totalIncumbentVolumeKL / totalTrackedDistributors).toLocaleString()} KL/Hub
           </span>
         </div>
 
-        <div className="bg-[#0E1117] border border-[#1F2937] p-3 border-l-2 border-yellow-400">
-          <span className="text-[10px] text-gray-500 font-mono block uppercase">Aggregated Storage Capacity</span>
-          <span className="text-xl font-bold text-yellow-300 font-mono mt-0.5 block">
+        <div className="bg-white border border-slate-200/90 p-4 rounded-2xl shadow-sm border-l-4 border-l-amber-500">
+          <span className="text-[10px] text-slate-500 font-semibold block uppercase">Aggregated Storage Capacity</span>
+          <span className="text-xl font-extrabold text-amber-700 mt-0.5 block">
             {totalStorageCapacityKL.toLocaleString()} KL
           </span>
-          <span className="text-[10px] text-gray-400 font-mono block mt-0.5">
-            CAPACITY TURNOVER: {(totalIncumbentVolumeKL / totalStorageCapacityKL).toFixed(1)}x /YEAR
+          <span className="text-[10px] text-slate-400 block mt-0.5 font-medium">
+            Turnover: {(totalIncumbentVolumeKL / totalStorageCapacityKL).toFixed(1)}x /year
           </span>
         </div>
 
-        <div className="bg-[#0E1117] border border-[#1F2937] p-3 border-l-2 border-[#F27D26]">
-          <span className="text-[10px] text-gray-500 font-mono block uppercase">Tied Retail &amp; Garages</span>
-          <span className="text-xl font-bold text-[#F27D26] font-mono mt-0.5 block">
+        <div className="bg-white border border-slate-200/90 p-4 rounded-2xl shadow-sm border-l-4 border-l-[#7C3AED]">
+          <span className="text-[10px] text-slate-500 font-semibold block uppercase">Tied Retail &amp; Garages</span>
+          <span className="text-xl font-extrabold text-[#7C3AED] mt-0.5 block">
             {totalDealersTied.toLocaleString()} Outlets
           </span>
-          <span className="text-[10px] text-gray-400 font-mono block mt-0.5">
-            AVG SERVICING RADIUS: 45.8 KM
+          <span className="text-[10px] text-slate-400 block mt-0.5 font-medium">
+            Avg Servicing Radius: 45.8 km
           </span>
         </div>
       </div>
@@ -886,16 +887,16 @@ export const DistributorOpportunityDashboard: React.FC<DistributorOpportunityDas
       {activeView === 'distributors' && (
         <div className="space-y-4">
           {/* Search and Filters Bar */}
-          <div className="bg-[#0E1117] border border-[#1F2937] p-3.5 flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
+          <div className="bg-white border border-slate-200/90 p-4 rounded-2xl shadow-sm flex flex-wrap items-center justify-between gap-3 text-xs">
             <div className="flex items-center gap-2 flex-1 min-w-[240px]">
               <div className="relative w-full max-w-sm">
-                <Search className="w-3.5 h-3.5 text-gray-400 absolute left-2.5 top-2.5" />
+                <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
                 <input
                   type="text"
                   placeholder="Search agency, brand, city, district or SKU..."
                   value={searchQuery}
                   onChange={e => setSearchQuery(e.target.value)}
-                  className="w-full bg-[#0A0B0E] border border-[#374151] rounded pl-8 pr-3 py-1.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-3 py-1.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-purple-500 font-medium"
                 />
               </div>
             </div>
@@ -903,11 +904,11 @@ export const DistributorOpportunityDashboard: React.FC<DistributorOpportunityDas
             <div className="flex items-center gap-2 flex-wrap">
               {/* Brand Filter */}
               <div className="flex items-center gap-1">
-                <span className="text-gray-500 text-[10px]">BRAND:</span>
+                <span className="text-slate-500 text-xs uppercase font-medium">Brand:</span>
                 <select
                   value={brandFilter}
                   onChange={e => setBrandFilter(e.target.value)}
-                  className="bg-[#0A0B0E] border border-[#374151] text-gray-200 text-xs rounded px-2 py-1.5 focus:outline-none focus:border-cyan-400"
+                  className="bg-slate-50 border border-slate-200 text-slate-800 text-xs rounded-xl px-2.5 py-1.5 focus:outline-none focus:border-purple-500 font-medium"
                 >
                   <option value="all">ALL BRANDS ({uniqueBrands.length})</option>
                   {uniqueBrands.map(b => (
@@ -918,11 +919,11 @@ export const DistributorOpportunityDashboard: React.FC<DistributorOpportunityDas
 
               {/* State Filter */}
               <div className="flex items-center gap-1">
-                <span className="text-gray-500 text-[10px]">STATE:</span>
+                <span className="text-slate-500 text-xs uppercase font-medium">State:</span>
                 <select
                   value={stateFilter}
                   onChange={e => setStateFilter(e.target.value)}
-                  className="bg-[#0A0B0E] border border-[#374151] text-gray-200 text-xs rounded px-2 py-1.5 focus:outline-none focus:border-cyan-400"
+                  className="bg-slate-50 border border-slate-200 text-slate-800 text-xs rounded-xl px-2.5 py-1.5 focus:outline-none focus:border-purple-500 font-medium"
                 >
                   <option value="all">ALL STATES ({uniqueStates.length})</option>
                   {uniqueStates.map(s => (
@@ -934,109 +935,109 @@ export const DistributorOpportunityDashboard: React.FC<DistributorOpportunityDas
               {/* Export Buttons */}
               <button
                 onClick={() => downloadWhiteSpotExcel(locations, 'Base')}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-950 hover:bg-emerald-900 text-emerald-300 border border-emerald-700/60 rounded transition-colors text-[10px] font-bold uppercase shadow"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-300 rounded-xl transition-colors text-xs font-bold uppercase shadow-2xs"
                 title="Download White-Spot & Distributor Validation Excel (.CSV)"
               >
-                <FileSpreadsheet className="w-3 h-3 text-emerald-400" />
+                <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-600" />
                 <span>EXCEL EXPORT (.CSV)</span>
               </button>
 
               <button
                 onClick={handleExportDistributorData}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1F2937] hover:bg-[#374151] text-cyan-300 border border-[#374151] rounded transition-colors text-[10px] font-bold uppercase"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 rounded-xl transition-colors text-xs font-bold uppercase"
               >
-                <Download className="w-3 h-3" />
+                <Download className="w-3.5 h-3.5" />
                 <span>JSON</span>
               </button>
             </div>
           </div>
 
           {/* Distributor Table */}
-          <div className="bg-[#0E1117] border border-[#1F2937] p-3.5 shadow-xl">
-            <div className="flex items-center justify-between border-b border-[#1F2937] pb-2 mb-3">
-              <h3 className="font-bold text-xs text-white uppercase font-mono tracking-wider flex items-center gap-2">
-                <Store className="w-3.5 h-3.5 text-cyan-400" />
+          <div className="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-sm">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-3">
+              <h3 className="font-bold text-xs text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                <Store className="w-4 h-4 text-[#7C3AED]" />
                 Current Lubricant Distributors &amp; Stockists ({filteredDistributors.length} Locations)
               </h3>
-              <span className="text-[10px] font-mono text-gray-500 uppercase">
-                GEOSPATIAL COORDINATES &amp; CAPACITY AUDITED
+              <span className="text-[10px] text-slate-400 uppercase font-medium">
+                Geospatial coordinates &amp; capacity audited
               </span>
             </div>
 
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs font-mono">
+              <table className="w-full text-left text-xs">
                 <thead>
-                  <tr className="border-b border-[#1F2937] text-[10px] text-gray-500 uppercase">
-                    <th className="pb-2 pl-2">DISTRIBUTOR &amp; LOCATION</th>
-                    <th className="pb-2">BRAND / PARENT</th>
-                    <th className="pb-2">CHANNEL TYPE</th>
-                    <th className="pb-2 text-right">ANNUAL VOLUME</th>
-                    <th className="pb-2 text-right">STORAGE CAP</th>
-                    <th className="pb-2 text-right">RETAILERS TIED</th>
-                    <th className="pb-2 text-right">COVERAGE RADIUS</th>
-                    <th className="pb-2 text-center">PERFORMANCE</th>
-                    <th className="pb-2 text-right pr-2">ACTION</th>
+                  <tr className="border-b border-slate-200 text-[10px] text-slate-500 uppercase font-semibold bg-slate-50/50">
+                    <th className="py-2.5 pl-3">DISTRIBUTOR &amp; LOCATION</th>
+                    <th className="py-2.5">BRAND / PARENT</th>
+                    <th className="py-2.5">CHANNEL TYPE</th>
+                    <th className="py-2.5 text-right">ANNUAL VOLUME</th>
+                    <th className="py-2.5 text-right">STORAGE CAP</th>
+                    <th className="py-2.5 text-right">RETAILERS TIED</th>
+                    <th className="py-2.5 text-right">COVERAGE RADIUS</th>
+                    <th className="py-2.5 text-center">PERFORMANCE</th>
+                    <th className="py-2.5 text-right pr-3">ACTION</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#1F2937]">
+                <tbody className="divide-y divide-slate-100">
                   {filteredDistributors.map((dist) => {
-                    const brandColor = BRAND_COLORS[dist.brand] || '#F27D26';
+                    const brandColor = BRAND_COLORS[dist.brand] || '#7C3AED';
                     return (
-                      <tr key={dist.id} className="hover:bg-[#151921] transition-colors">
-                        <td className="py-2.5 pl-2">
-                          <span className="font-bold text-white block">{dist.name}</span>
-                          <span className="text-[10px] text-gray-400 block">{dist.city}, {dist.district} ({dist.stateName})</span>
-                          <span className="text-[9px] text-gray-500 block truncate max-w-xs">{dist.address}</span>
+                      <tr key={dist.id} className="hover:bg-slate-50/80 transition-colors">
+                        <td className="py-3 pl-3">
+                          <span className="font-bold text-slate-900 block">{dist.name}</span>
+                          <span className="text-[10px] text-slate-500 block">{dist.city}, {dist.district} ({dist.stateName})</span>
+                          <span className="text-[10px] text-slate-400 block truncate max-w-xs">{dist.address}</span>
                         </td>
-                        <td className="py-2.5">
-                          <span className="px-2 py-0.5 rounded text-[10px] font-bold inline-block border" style={{
+                        <td className="py-3">
+                          <span className="px-2 py-0.5 rounded-full text-[10px] font-bold inline-block border" style={{
                             color: brandColor,
                             borderColor: `${brandColor}40`,
                             backgroundColor: `${brandColor}15`
                           }}>
                             {dist.brand}
                           </span>
-                          <span className="text-[9px] text-gray-500 block mt-0.5">{dist.parentCompany}</span>
+                          <span className="text-[10px] text-slate-500 block mt-0.5">{dist.parentCompany}</span>
                         </td>
-                        <td className="py-2.5">
-                          <span className="text-[10px] font-medium text-gray-300 bg-[#0A0B0E] px-1.5 py-0.5 rounded border border-[#374151]">
+                        <td className="py-3">
+                          <span className="text-[10px] font-medium text-slate-700 bg-slate-100 px-2 py-0.5 rounded-md border border-slate-200/80">
                             {dist.distributorType}
                           </span>
-                          <span className="text-[9px] text-gray-500 block mt-0.5">{dist.primarySector}</span>
+                          <span className="text-[10px] text-slate-400 block mt-0.5">{dist.primarySector}</span>
                         </td>
-                        <td className="py-2.5 text-right font-bold text-cyan-300">
+                        <td className="py-3 text-right font-bold text-[#7C3AED]">
                           {formatKL(dist.annualVolumeKL)}
-                          <span className="text-[9px] text-gray-500 block">{dist.monthlyThroughputKL} KL/mo</span>
+                          <span className="text-[10px] text-slate-400 block font-normal">{dist.monthlyThroughputKL} KL/mo</span>
                         </td>
-                        <td className="py-2.5 text-right font-bold text-gray-200">
+                        <td className="py-3 text-right font-bold text-slate-800">
                           {dist.warehouseCapacityKL} KL
-                          <span className="text-[9px] text-yellow-500/80 block">
+                          <span className="text-[10px] text-amber-600 block font-medium">
                             {((dist.annualVolumeKL / (dist.warehouseCapacityKL * 12)) * 100).toFixed(0)}% util
                           </span>
                         </td>
-                        <td className="py-2.5 text-right text-emerald-400 font-bold">
+                        <td className="py-3 text-right text-emerald-700 font-bold">
                           {dist.dealerNetworkCount}
-                          <span className="text-[9px] text-gray-500 block">+{dist.industrialAccountsCount} B2B accts</span>
+                          <span className="text-[10px] text-slate-400 block font-normal">+{dist.industrialAccountsCount} B2B</span>
                         </td>
-                        <td className="py-2.5 text-right text-gray-300">
+                        <td className="py-3 text-right text-slate-700">
                           {dist.coverageRadiusKm} km
-                          <span className="text-[9px] text-gray-500 block">{dist.avgLeadTimeDays}d lead</span>
+                          <span className="text-[10px] text-slate-400 block font-normal">{dist.avgLeadTimeDays}d lead</span>
                         </td>
-                        <td className="py-2.5 text-center">
-                          <span className={`px-2 py-0.5 rounded text-[9px] font-bold ${
+                        <td className="py-3 text-center">
+                          <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
                             dist.performanceTier === 'Dominant Leader'
-                              ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30'
+                              ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
                               : dist.performanceTier === 'Capacity Constrained'
-                              ? 'bg-yellow-500/10 text-yellow-400 border border-yellow-500/30'
+                              ? 'bg-amber-50 text-amber-700 border border-amber-200'
                               : dist.performanceTier === 'High Performer'
-                              ? 'bg-blue-500/10 text-blue-400 border border-blue-500/30'
-                              : 'bg-red-500/10 text-red-400 border border-red-500/30'
+                              ? 'bg-blue-50 text-blue-700 border border-blue-200'
+                              : 'bg-red-50 text-red-700 border border-red-200'
                           }`}>
                             {dist.performanceTier}
                           </span>
-                          <span className="text-[9px] text-gray-500 block mt-0.5">{dist.marketShareInDistrictPct}% share</span>
+                          <span className="text-[10px] text-slate-400 block mt-0.5 font-medium">{dist.marketShareInDistrictPct}% share</span>
                         </td>
-                        <td className="py-2.5 text-right pr-2">
+                        <td className="py-3 text-right pr-3">
                           <button
                             onClick={() => {
                               setSelectedDistributorId(dist.id);
@@ -1045,7 +1046,7 @@ export const DistributorOpportunityDashboard: React.FC<DistributorOpportunityDas
                               }
                               setActiveView('comparison');
                             }}
-                            className="px-2.5 py-1 rounded bg-[#1F2937] hover:bg-purple-900/60 text-purple-300 border border-purple-500/40 text-[10px] font-bold transition-all inline-flex items-center gap-1 uppercase"
+                            className="px-2.5 py-1 rounded-xl bg-purple-50 hover:bg-purple-100 text-[#7C3AED] border border-purple-200 text-[10px] font-bold transition-all inline-flex items-center gap-1 uppercase shadow-2xs"
                             title="Compare head-to-head with white spot"
                           >
                             <Scale className="w-3 h-3" />
@@ -1066,28 +1067,28 @@ export const DistributorOpportunityDashboard: React.FC<DistributorOpportunityDas
       {activeView === 'whiteSpots' && (
         <div className="space-y-4">
           {/* Dynamic Weight Tuning Panel */}
-          <div className="bg-[#0E1117] border border-[#1F2937] p-4 shadow-lg">
-            <div className="flex items-center justify-between border-b border-[#1F2937] pb-2 mb-3">
+          <div className="bg-white border border-slate-200/90 p-5 rounded-2xl shadow-sm">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-2.5 mb-3.5">
               <div className="flex items-center gap-2">
-                <Sliders className="w-3.5 h-3.5 text-[#F27D26]" />
-                <h3 className="font-bold text-xs text-white uppercase font-mono tracking-wider">
+                <Sliders className="w-4 h-4 text-[#7C3AED]" />
+                <h3 className="font-bold text-xs text-slate-900 uppercase tracking-wider">
                   Dynamic Multi-Criteria Weight Calibration
                 </h3>
               </div>
               <button
                 onClick={handleResetWeights}
-                className="flex items-center gap-1 text-[10px] font-mono text-gray-400 hover:text-[#F27D26] transition-colors"
+                className="flex items-center gap-1 text-xs text-slate-500 hover:text-[#7C3AED] transition-colors font-medium"
               >
-                <RotateCcw className="w-3 h-3" />
+                <RotateCcw className="w-3.5 h-3.5" />
                 <span>RESET BENCHMARKS</span>
               </button>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs font-mono">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
               <div>
-                <div className="flex justify-between mb-1 text-[10px]">
-                  <span className="text-gray-400">DEMAND POTENTIAL:</span>
-                  <span className="font-bold text-[#F27D26]">{scoringWeights.demandPotential}%</span>
+                <div className="flex justify-between mb-1.5 text-xs">
+                  <span className="text-slate-500 font-medium">DEMAND POTENTIAL:</span>
+                  <span className="font-bold text-[#7C3AED]">{scoringWeights.demandPotential}%</span>
                 </div>
                 <input
                   type="range"
@@ -1095,14 +1096,14 @@ export const DistributorOpportunityDashboard: React.FC<DistributorOpportunityDas
                   max={60}
                   value={scoringWeights.demandPotential}
                   onChange={e => handleWeightChange('demandPotential', Number(e.target.value))}
-                  className="w-full accent-[#F27D26] h-1 bg-[#1F2937] rounded cursor-pointer"
+                  className="w-full accent-purple-600 h-1.5 bg-slate-200 rounded-lg cursor-pointer"
                 />
               </div>
 
               <div>
-                <div className="flex justify-between mb-1 text-[10px]">
-                  <span className="text-gray-400">SUPPLY GAP WEIGHT:</span>
-                  <span className="font-bold text-red-400">{scoringWeights.supplyGap}%</span>
+                <div className="flex justify-between mb-1.5 text-xs">
+                  <span className="text-slate-500 font-medium">SUPPLY GAP WEIGHT:</span>
+                  <span className="font-bold text-rose-600">{scoringWeights.supplyGap}%</span>
                 </div>
                 <input
                   type="range"
@@ -1110,14 +1111,14 @@ export const DistributorOpportunityDashboard: React.FC<DistributorOpportunityDas
                   max={50}
                   value={scoringWeights.supplyGap}
                   onChange={e => handleWeightChange('supplyGap', Number(e.target.value))}
-                  className="w-full accent-red-500 h-1 bg-[#1F2937] rounded cursor-pointer"
+                  className="w-full accent-rose-500 h-1.5 bg-slate-200 rounded-lg cursor-pointer"
                 />
               </div>
 
               <div>
-                <div className="flex justify-between mb-1 text-[10px]">
-                  <span className="text-gray-400">COMPETITOR DEFICIT:</span>
-                  <span className="font-bold text-yellow-400">{scoringWeights.competitorGap}%</span>
+                <div className="flex justify-between mb-1.5 text-xs">
+                  <span className="text-slate-500 font-medium">COMPETITOR DEFICIT:</span>
+                  <span className="font-bold text-amber-600">{scoringWeights.competitorGap}%</span>
                 </div>
                 <input
                   type="range"
@@ -1125,14 +1126,14 @@ export const DistributorOpportunityDashboard: React.FC<DistributorOpportunityDas
                   max={40}
                   value={scoringWeights.competitorGap}
                   onChange={e => handleWeightChange('competitorGap', Number(e.target.value))}
-                  className="w-full accent-yellow-500 h-1 bg-[#1F2937] rounded cursor-pointer"
+                  className="w-full accent-amber-500 h-1.5 bg-slate-200 rounded-lg cursor-pointer"
                 />
               </div>
 
               <div>
-                <div className="flex justify-between mb-1 text-[10px]">
-                  <span className="text-gray-400">ACCESSIBILITY DISTANCE:</span>
-                  <span className="font-bold text-blue-400">{scoringWeights.accessibilityGap}%</span>
+                <div className="flex justify-between mb-1.5 text-xs">
+                  <span className="text-slate-500 font-medium">ACCESSIBILITY DISTANCE:</span>
+                  <span className="font-bold text-indigo-600">{scoringWeights.accessibilityGap}%</span>
                 </div>
                 <input
                   type="range"
@@ -1140,22 +1141,22 @@ export const DistributorOpportunityDashboard: React.FC<DistributorOpportunityDas
                   max={30}
                   value={scoringWeights.accessibilityGap}
                   onChange={e => handleWeightChange('accessibilityGap', Number(e.target.value))}
-                  className="w-full accent-blue-500 h-1 bg-[#1F2937] rounded cursor-pointer"
+                  className="w-full accent-indigo-500 h-1.5 bg-slate-200 rounded-lg cursor-pointer"
                 />
               </div>
             </div>
           </div>
 
           {/* Archetype Filter Tabs */}
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-0.5 font-mono text-[10px]">
+          <div className="flex items-center gap-2 overflow-x-auto pb-0.5 text-xs">
             {whiteSpotTypes.map(t => (
               <button
                 key={t.id}
                 onClick={() => setSelectedTypeFilter(t.id)}
-                className={`px-3 py-1.5 rounded text-[10px] font-bold whitespace-nowrap transition-all uppercase ${
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all uppercase ${
                   selectedTypeFilter === t.id
-                    ? 'bg-[#1F2937] text-[#F27D26] border border-[#F27D26]'
-                    : 'bg-[#0E1117] border border-[#1F2937] text-gray-400 hover:text-white hover:bg-[#151921]'
+                    ? 'bg-[#7C3AED] text-white shadow-sm'
+                    : 'bg-white border border-slate-200/90 text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                 }`}
               >
                 {t.label}
@@ -1164,81 +1165,81 @@ export const DistributorOpportunityDashboard: React.FC<DistributorOpportunityDas
           </div>
 
           {/* Ranked Candidate White Spots Table */}
-          <div className="bg-[#0E1117] border border-[#1F2937] p-3.5 shadow-xl">
-            <div className="flex items-center justify-between border-b border-[#1F2937] pb-2 mb-3">
-              <h3 className="font-bold text-xs text-white uppercase font-mono tracking-wider flex items-center gap-2">
-                <Flame className="w-3.5 h-3.5 text-[#F27D26]" />
+          <div className="bg-white border border-slate-200/90 rounded-2xl p-4 shadow-sm">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-3">
+              <h3 className="font-bold text-xs text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                <Flame className="w-4 h-4 text-[#7C3AED]" />
                 Ranked Distributor Opportunities ({filteredLocations.length} Matching Districts)
               </h3>
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => downloadWhiteSpotExcel(locations, 'Base')}
-                  className="flex items-center gap-1.5 px-2.5 py-1 bg-emerald-950 hover:bg-emerald-900 text-emerald-300 border border-emerald-700/60 rounded transition-colors text-[10px] font-bold uppercase shadow"
+                  className="flex items-center gap-1.5 px-3 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-300 rounded-xl transition-colors text-[10px] font-bold uppercase shadow-2xs"
                   title="Download full candidate white spots excel dataset"
                 >
-                  <FileSpreadsheet className="w-3 h-3 text-emerald-400" />
+                  <FileSpreadsheet className="w-3 h-3 text-emerald-600" />
                   <span>EXPORT EXCEL (.CSV)</span>
                 </button>
-                <span className="text-[10px] font-mono text-gray-500 uppercase">
-                  DYNAMIC SCORE APPLIED
+                <span className="text-[10px] text-slate-400 uppercase font-medium">
+                  Dynamic score applied
                 </span>
               </div>
             </div>
 
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs font-mono">
+              <table className="w-full text-left text-xs">
                 <thead>
-                  <tr className="border-b border-[#1F2937] text-[10px] text-gray-500 uppercase">
-                    <th className="pb-2 pl-2">RANK</th>
-                    <th className="pb-2">DISTRICT / STATE</th>
-                    <th className="pb-2">STRATEGIC ARCHETYPE</th>
-                    <th className="pb-2 text-right">TOTAL DEMAND</th>
-                    <th className="pb-2 text-right">SUPPLY GAP</th>
-                    <th className="pb-2 text-right">COVERAGE</th>
-                    <th className="pb-2 text-right">DYNAMIC SCORE</th>
-                    <th className="pb-2 text-right pr-2">ACTION</th>
+                  <tr className="border-b border-slate-200 text-[10px] text-slate-500 uppercase font-semibold bg-slate-50/50">
+                    <th className="py-2.5 pl-3">RANK</th>
+                    <th className="py-2.5">DISTRICT / STATE</th>
+                    <th className="py-2.5">STRATEGIC ARCHETYPE</th>
+                    <th className="py-2.5 text-right">TOTAL DEMAND</th>
+                    <th className="py-2.5 text-right">SUPPLY GAP</th>
+                    <th className="py-2.5 text-right">COVERAGE</th>
+                    <th className="py-2.5 text-right">DYNAMIC SCORE</th>
+                    <th className="py-2.5 text-right pr-3">ACTION</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#1F2937]">
+                <tbody className="divide-y divide-slate-100">
                   {filteredLocations.map((loc, idx) => {
                     const isCritical = loc.dynamicScore >= 80;
                     return (
-                      <tr key={loc.id} className="hover:bg-[#151921] transition-colors">
-                        <td className="py-2.5 pl-2 font-bold text-gray-400">#{idx + 1}</td>
-                        <td className="py-2.5">
-                          <span className="font-bold text-white block">{loc.name}</span>
-                          <span className="text-[10px] text-gray-500">{loc.stateName}</span>
+                      <tr key={loc.id} className="hover:bg-slate-50/80 transition-colors">
+                        <td className="py-3 pl-3 font-bold text-slate-400">#{idx + 1}</td>
+                        <td className="py-3">
+                          <span className="font-bold text-slate-900 block">{loc.name}</span>
+                          <span className="text-[10px] text-slate-400">{loc.stateName}</span>
                         </td>
-                        <td className="py-2.5">
-                          <span className="text-[10px] font-semibold text-[#F27D26] bg-[#0A0B0E] px-1.5 py-0.5 rounded border border-[#374151]">
+                        <td className="py-3">
+                          <span className="text-[10px] font-semibold text-[#7C3AED] bg-purple-50 px-2 py-0.5 rounded-md border border-purple-200">
                             {loc.whiteSpotType.split('—')[0]}
                           </span>
                         </td>
-                        <td className="py-2.5 text-right font-bold text-gray-200">
+                        <td className="py-3 text-right font-bold text-slate-800">
                           {formatKL(loc.totalEstimatedDemandKL)}
                         </td>
-                        <td className="py-2.5 text-right font-bold text-red-400">
+                        <td className="py-3 text-right font-bold text-rose-600">
                           {formatKL(loc.supplyGapKL)}
                         </td>
-                        <td className="py-2.5 text-right text-yellow-400">
+                        <td className="py-3 text-right text-amber-600 font-semibold">
                           {loc.supplyCoverageRatioPct}%
                         </td>
-                        <td className="py-2.5 text-right">
-                          <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                        <td className="py-3 text-right">
+                          <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
                             isCritical
-                              ? 'bg-red-500/10 text-red-400 border border-red-500/30'
-                              : 'bg-[#1F2937] text-[#F27D26] border border-[#374151]'
+                              ? 'bg-rose-50 text-rose-700 border border-rose-200'
+                              : 'bg-purple-50 text-[#7C3AED] border border-purple-200'
                           }`}>
                             {loc.dynamicScore.toFixed(1)} / 100
                           </span>
                         </td>
-                        <td className="py-2.5 text-right pr-2 flex items-center justify-end gap-1.5">
+                        <td className="py-3 text-right pr-3 flex items-center justify-end gap-1.5">
                           <button
                             onClick={() => {
                               setSelectedWhiteSpotId(loc.id);
                               setActiveView('comparison');
                             }}
-                            className="px-2 py-1 rounded bg-[#1F2937] hover:bg-purple-900/60 text-purple-300 border border-purple-500/40 text-[10px] font-bold transition-all inline-flex items-center gap-1 uppercase"
+                            className="px-2.5 py-1 rounded-xl bg-purple-50 hover:bg-purple-100 text-[#7C3AED] border border-purple-200 text-[10px] font-bold transition-all inline-flex items-center gap-1 uppercase shadow-2xs"
                             title="Compare with incumbent distributors"
                           >
                             <Scale className="w-3 h-3" />
@@ -1246,7 +1247,7 @@ export const DistributorOpportunityDashboard: React.FC<DistributorOpportunityDas
                           </button>
                           <button
                             onClick={() => onSelectDistrict(loc)}
-                            className="px-2.5 py-1 rounded bg-[#1F2937] hover:bg-[#374151] text-gray-200 hover:text-[#F27D26] border border-[#374151] text-[10px] font-bold transition-all inline-flex items-center gap-1 uppercase"
+                            className="px-2.5 py-1 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 text-[10px] font-bold transition-all inline-flex items-center gap-1 uppercase"
                           >
                             <span>INSPECT</span>
                             <ChevronRight className="w-3 h-3" />
@@ -1266,17 +1267,17 @@ export const DistributorOpportunityDashboard: React.FC<DistributorOpportunityDas
       {activeView === 'comparison' && (
         <div className="space-y-4">
           {/* Selectors Bar */}
-          <div className="bg-[#0E1117] border border-[#1F2937] p-3.5 grid grid-cols-1 md:grid-cols-2 gap-4 font-mono text-xs">
+          <div className="bg-white border border-slate-200/90 p-4 rounded-2xl shadow-sm grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
             {/* Left: Choose White Spot District */}
             <div>
-              <label className="text-[10px] text-gray-400 font-bold uppercase mb-1 flex items-center gap-1.5">
-                <Flame className="w-3 h-3 text-[#F27D26]" />
-                SELECT TARGET WHITE-SPOT DISTRICT:
+              <label className="text-[10px] text-slate-500 font-bold uppercase mb-1.5 flex items-center gap-1.5">
+                <Flame className="w-3.5 h-3.5 text-[#7C3AED]" />
+                Select Target White-Spot District:
               </label>
               <select
                 value={selectedWhiteSpotId}
                 onChange={e => setSelectedWhiteSpotId(e.target.value)}
-                className="w-full bg-[#0A0B0E] border border-[#374151] text-white rounded px-3 py-2 text-xs font-bold focus:outline-none focus:border-[#F27D26]"
+                className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none focus:border-purple-500"
               >
                 {locations.map(l => (
                   <option key={l.id} value={l.id}>
@@ -1288,14 +1289,14 @@ export const DistributorOpportunityDashboard: React.FC<DistributorOpportunityDas
 
             {/* Right: Choose Incumbent Distributor */}
             <div>
-              <label className="text-[10px] text-gray-400 font-bold uppercase mb-1 flex items-center gap-1.5">
-                <Store className="w-3 h-3 text-cyan-400" />
-                SELECT INCUMBENT COMPETITOR DISTRIBUTOR:
+              <label className="text-[10px] text-slate-500 font-bold uppercase mb-1.5 flex items-center gap-1.5">
+                <Store className="w-3.5 h-3.5 text-indigo-600" />
+                Select Incumbent Competitor Distributor:
               </label>
               <select
                 value={selectedDistributorId}
                 onChange={e => setSelectedDistributorId(e.target.value)}
-                className="w-full bg-[#0A0B0E] border border-[#374151] text-white rounded px-3 py-2 text-xs font-bold focus:outline-none focus:border-cyan-400"
+                className="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none focus:border-purple-500"
               >
                 {distributors.map(d => (
                   <option key={d.id} value={d.id}>
@@ -1309,65 +1310,65 @@ export const DistributorOpportunityDashboard: React.FC<DistributorOpportunityDas
           {/* Side-by-Side Comparison Matrix */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {/* Proposed White Spot Profile */}
-            <div className="bg-[#0E1117] border-2 border-[#F27D26]/60 p-4 rounded shadow-xl flex flex-col justify-between font-mono">
+            <div className="bg-white border-2 border-purple-200 p-5 rounded-2xl shadow-sm flex flex-col justify-between">
               <div>
-                <div className="flex items-center justify-between border-b border-[#1F2937] pb-2 mb-3">
+                <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-3">
                   <div className="flex items-center gap-2">
-                    <Flame className="w-4 h-4 text-[#F27D26]" />
-                    <span className="text-xs font-bold text-white uppercase">PROPOSED WHITE-SPOT EXPANSION</span>
+                    <Flame className="w-4 h-4 text-[#7C3AED]" />
+                    <span className="text-xs font-bold text-slate-900 uppercase">Proposed White-Spot Expansion</span>
                   </div>
-                  <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#1F2937] text-[#F27D26] border border-[#F27D26]/40">
+                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-purple-50 text-[#7C3AED] border border-purple-200">
                     SCORE: {compareWhiteSpot.whiteSpotScore}/100
                   </span>
                 </div>
 
-                <h3 className="text-base font-bold text-white">{compareWhiteSpot.name}</h3>
-                <div className="text-xs text-gray-400 mb-3">{compareWhiteSpot.stateName} • {compareWhiteSpot.region} Zone</div>
+                <h3 className="text-base font-bold text-slate-900">{compareWhiteSpot.name}</h3>
+                <div className="text-xs text-slate-500 mb-3">{compareWhiteSpot.stateName} • {compareWhiteSpot.region} Zone</div>
 
                 {/* Key Metric Grid */}
-                <div className="grid grid-cols-2 gap-2 text-xs mb-3 bg-[#050608] p-3 rounded border border-[#1F2937]">
+                <div className="grid grid-cols-2 gap-2 text-xs mb-3 bg-slate-50 p-3.5 rounded-xl border border-slate-200/80">
                   <div>
-                    <span className="text-gray-500 text-[10px] block">TOTAL REGIONAL DEMAND:</span>
-                    <span className="text-base font-bold text-[#F27D26]">{formatKL(compareWhiteSpot.totalEstimatedDemandKL)}</span>
+                    <span className="text-slate-400 text-[10px] block uppercase font-medium">Total Regional Demand:</span>
+                    <span className="text-base font-bold text-[#7C3AED]">{formatKL(compareWhiteSpot.totalEstimatedDemandKL)}</span>
                   </div>
                   <div>
-                    <span className="text-gray-500 text-[10px] block">UNMET SUPPLY GAP:</span>
-                    <span className="text-base font-bold text-red-400">{formatKL(compareWhiteSpot.supplyGapKL)}</span>
+                    <span className="text-slate-400 text-[10px] block uppercase font-medium">Unmet Supply Gap:</span>
+                    <span className="text-base font-bold text-rose-600">{formatKL(compareWhiteSpot.supplyGapKL)}</span>
                   </div>
                   <div>
-                    <span className="text-gray-500 text-[10px] block">PROPOSED DEPOT CAPACITY:</span>
-                    <span className="text-sm font-bold text-white">{compareWhiteSpot.recommendedStorageCapacityKL} KL</span>
+                    <span className="text-slate-400 text-[10px] block uppercase font-medium">Proposed Depot Capacity:</span>
+                    <span className="text-sm font-bold text-slate-800">{compareWhiteSpot.recommendedStorageCapacityKL} KL</span>
                   </div>
                   <div>
-                    <span className="text-gray-500 text-[10px] block">UNMET REVENUE OPPORTUNITY:</span>
-                    <span className="text-sm font-bold text-green-400">₹{compareWhiteSpot.unmetOpportunityValueINR} CR</span>
+                    <span className="text-slate-400 text-[10px] block uppercase font-medium">Unmet Revenue Opportunity:</span>
+                    <span className="text-sm font-bold text-emerald-700">₹{compareWhiteSpot.unmetOpportunityValueINR} Cr</span>
                   </div>
                 </div>
 
-                <div className="space-y-1.5 text-xs text-gray-300">
-                  <div className="flex justify-between border-b border-[#1F2937]/50 pb-1">
-                    <span className="text-gray-500">Current Local Supply Coverage:</span>
-                    <strong className="text-yellow-400">{compareWhiteSpot.supplyCoverageRatioPct}%</strong>
+                <div className="space-y-2 text-xs text-slate-700">
+                  <div className="flex justify-between border-b border-slate-100 pb-1.5">
+                    <span className="text-slate-500">Current Local Supply Coverage:</span>
+                    <strong className="text-amber-600">{compareWhiteSpot.supplyCoverageRatioPct}%</strong>
                   </div>
-                  <div className="flex justify-between border-b border-[#1F2937]/50 pb-1">
-                    <span className="text-gray-500">Incumbents in District:</span>
-                    <strong className="text-white">{compareWhiteSpot.supply.masterDistributorsCount} Master Dist. ({compareWhiteSpot.supply.retailLubricantOutletsCount} Outlets)</strong>
+                  <div className="flex justify-between border-b border-slate-100 pb-1.5">
+                    <span className="text-slate-500">Incumbents in District:</span>
+                    <strong className="text-slate-900">{compareWhiteSpot.supply.masterDistributorsCount} Master Dist. ({compareWhiteSpot.supply.retailLubricantOutletsCount} Outlets)</strong>
                   </div>
-                  <div className="flex justify-between border-b border-[#1F2937]/50 pb-1">
-                    <span className="text-gray-500">Recommended Facility:</span>
-                    <strong className="text-cyan-300">{compareWhiteSpot.recommendedFacility}</strong>
+                  <div className="flex justify-between border-b border-slate-100 pb-1.5">
+                    <span className="text-slate-500">Recommended Facility:</span>
+                    <strong className="text-indigo-700">{compareWhiteSpot.recommendedFacility}</strong>
                   </div>
-                  <div className="flex justify-between border-b border-[#1F2937]/50 pb-1">
-                    <span className="text-gray-500">Primary Demand Drivers:</span>
-                    <strong className="text-[#F27D26]">{compareWhiteSpot.keyIndustries.slice(0, 2).join(', ')}</strong>
+                  <div className="flex justify-between border-b border-slate-100 pb-1.5">
+                    <span className="text-slate-500">Primary Demand Drivers:</span>
+                    <strong className="text-[#7C3AED]">{compareWhiteSpot.keyIndustries.slice(0, 2).join(', ')}</strong>
                   </div>
                 </div>
               </div>
 
-              <div className="mt-4 pt-3 border-t border-[#1F2937] flex items-center justify-between">
+              <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
                 <button
                   onClick={() => onSelectDistrict(compareWhiteSpot)}
-                  className="px-3 py-1.5 bg-[#F27D26] hover:bg-[#d96a1a] text-black font-bold rounded text-xs transition-colors flex items-center gap-1 uppercase"
+                  className="px-3.5 py-1.5 bg-[#7C3AED] hover:bg-[#6D28D9] text-white font-bold rounded-xl text-xs transition-colors flex items-center gap-1 uppercase shadow-2xs"
                 >
                   <span>Open Full District Dossier</span>
                   <ChevronRight className="w-3.5 h-3.5" />
@@ -1376,114 +1377,114 @@ export const DistributorOpportunityDashboard: React.FC<DistributorOpportunityDas
             </div>
 
             {/* Incumbent Distributor Profile */}
-            <div className="bg-[#0E1117] border-2 border-cyan-500/60 p-4 rounded shadow-xl flex flex-col justify-between font-mono">
+            <div className="bg-white border-2 border-indigo-200 p-5 rounded-2xl shadow-sm flex flex-col justify-between">
               <div>
-                <div className="flex items-center justify-between border-b border-[#1F2937] pb-2 mb-3">
+                <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-3">
                   <div className="flex items-center gap-2">
-                    <Store className="w-4 h-4 text-cyan-400" />
-                    <span className="text-xs font-bold text-white uppercase">INCUMBENT DISTRIBUTOR BENCHMARK</span>
+                    <Store className="w-4 h-4 text-indigo-600" />
+                    <span className="text-xs font-bold text-slate-900 uppercase">Incumbent Distributor Benchmark</span>
                   </div>
-                  <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-cyan-950 text-cyan-300 border border-cyan-700/50 uppercase">
+                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200 uppercase">
                     {compareDistributor.brand}
                   </span>
                 </div>
 
-                <h3 className="text-base font-bold text-cyan-300">{compareDistributor.name}</h3>
-                <div className="text-xs text-gray-400 mb-3">{compareDistributor.city}, {compareDistributor.district} ({compareDistributor.stateName})</div>
+                <h3 className="text-base font-bold text-indigo-700">{compareDistributor.name}</h3>
+                <div className="text-xs text-slate-500 mb-3">{compareDistributor.city}, {compareDistributor.district} ({compareDistributor.stateName})</div>
 
                 {/* Key Metric Grid */}
-                <div className="grid grid-cols-2 gap-2 text-xs mb-3 bg-[#050608] p-3 rounded border border-[#1F2937]">
+                <div className="grid grid-cols-2 gap-2 text-xs mb-3 bg-slate-50 p-3.5 rounded-xl border border-slate-200/80">
                   <div>
-                    <span className="text-gray-500 text-[10px] block">ANNUAL VOLUME THROUGHPUT:</span>
-                    <span className="text-base font-bold text-cyan-300">{formatKL(compareDistributor.annualVolumeKL)}</span>
+                    <span className="text-slate-400 text-[10px] block uppercase font-medium">Annual Throughput:</span>
+                    <span className="text-base font-bold text-indigo-700">{formatKL(compareDistributor.annualVolumeKL)}</span>
                   </div>
                   <div>
-                    <span className="text-gray-500 text-[10px] block">WAREHOUSE CAPACITY:</span>
-                    <span className="text-base font-bold text-white">{compareDistributor.warehouseCapacityKL} KL</span>
+                    <span className="text-slate-400 text-[10px] block uppercase font-medium">Warehouse Capacity:</span>
+                    <span className="text-base font-bold text-slate-800">{compareDistributor.warehouseCapacityKL} KL</span>
                   </div>
                   <div>
-                    <span className="text-gray-500 text-[10px] block">TIED DEALER NETWORK:</span>
-                    <span className="text-sm font-bold text-emerald-400">{compareDistributor.dealerNetworkCount} Retail Outlets</span>
+                    <span className="text-slate-400 text-[10px] block uppercase font-medium">Tied Dealer Network:</span>
+                    <span className="text-sm font-bold text-emerald-700">{compareDistributor.dealerNetworkCount} Outlets</span>
                   </div>
                   <div>
-                    <span className="text-gray-500 text-[10px] block">DELIVERY RADIUS &amp; LEAD:</span>
-                    <span className="text-sm font-bold text-yellow-400">{compareDistributor.coverageRadiusKm} KM ({compareDistributor.avgLeadTimeDays}d)</span>
+                    <span className="text-slate-400 text-[10px] block uppercase font-medium">Delivery Radius &amp; Lead:</span>
+                    <span className="text-sm font-bold text-amber-600">{compareDistributor.coverageRadiusKm} KM ({compareDistributor.avgLeadTimeDays}d)</span>
                   </div>
                 </div>
 
-                <div className="space-y-1.5 text-xs text-gray-300">
-                  <div className="flex justify-between border-b border-[#1F2937]/50 pb-1">
-                    <span className="text-gray-500">Parent OMC / Entity:</span>
-                    <strong className="text-white">{compareDistributor.parentCompany}</strong>
+                <div className="space-y-2 text-xs text-slate-700">
+                  <div className="flex justify-between border-b border-slate-100 pb-1.5">
+                    <span className="text-slate-500">Parent OMC / Entity:</span>
+                    <strong className="text-slate-900">{compareDistributor.parentCompany}</strong>
                   </div>
-                  <div className="flex justify-between border-b border-[#1F2937]/50 pb-1">
-                    <span className="text-gray-500">Channel Type:</span>
-                    <strong className="text-cyan-300">{compareDistributor.distributorType}</strong>
+                  <div className="flex justify-between border-b border-slate-100 pb-1.5">
+                    <span className="text-slate-500">Channel Type:</span>
+                    <strong className="text-indigo-700">{compareDistributor.distributorType}</strong>
                   </div>
-                  <div className="flex justify-between border-b border-[#1F2937]/50 pb-1">
-                    <span className="text-gray-500">Performance Status:</span>
-                    <strong className="text-white">{compareDistributor.performanceTier} ({compareDistributor.marketShareInDistrictPct}% District Share)</strong>
+                  <div className="flex justify-between border-b border-slate-100 pb-1.5">
+                    <span className="text-slate-500">Performance Status:</span>
+                    <strong className="text-slate-900">{compareDistributor.performanceTier} ({compareDistributor.marketShareInDistrictPct}% Share)</strong>
                   </div>
-                  <div className="flex justify-between border-b border-[#1F2937]/50 pb-1">
-                    <span className="text-gray-500">Top Selling SKUs:</span>
-                    <strong className="text-gray-200 truncate max-w-xs">{compareDistributor.topSellingSKUs.slice(0, 2).join(', ')}</strong>
+                  <div className="flex justify-between border-b border-slate-100 pb-1.5">
+                    <span className="text-slate-500">Top Selling SKUs:</span>
+                    <strong className="text-slate-700 truncate max-w-xs">{compareDistributor.topSellingSKUs.slice(0, 2).join(', ')}</strong>
                   </div>
                 </div>
               </div>
 
-              <div className="mt-4 pt-3 border-t border-[#1F2937] flex items-center justify-between text-[10px] text-gray-400">
-                <span>CONTACT: <strong className="text-white">{compareDistributor.contactPerson}</strong> ({compareDistributor.contactPhone})</span>
-                <span>ESTABLISHED: <strong className="text-white">{compareDistributor.establishedYear}</strong></span>
+              <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+                <span>Contact: <strong className="text-slate-800">{compareDistributor.contactPerson}</strong></span>
+                <span>Established: <strong className="text-slate-800">{compareDistributor.establishedYear}</strong></span>
               </div>
             </div>
           </div>
 
           {/* Strategic Head-to-Head Headroom Evaluation */}
-          <div className="bg-[#0E1117] border border-[#1F2937] p-4 rounded font-mono">
-            <h4 className="text-xs font-bold text-white uppercase flex items-center gap-2 mb-3">
-              <Sparkles className="w-3.5 h-3.5 text-[#F27D26]" />
+          <div className="bg-white border border-slate-200/90 p-5 rounded-2xl shadow-sm">
+            <h4 className="text-xs font-bold text-slate-900 uppercase flex items-center gap-2 mb-3.5">
+              <Sparkles className="w-4 h-4 text-[#7C3AED]" />
               Strategic Market Entry Headroom &amp; Competitor Gap Assessment
             </h4>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-              <div className="bg-[#050608] p-3 rounded border border-[#1F2937]">
-                <span className="text-gray-500 text-[10px] block uppercase">Throughput Headroom</span>
-                <div className="text-lg font-bold text-emerald-400 mt-1">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 text-xs">
+              <div className="bg-slate-50/90 p-4 rounded-xl border border-slate-200/80">
+                <span className="text-slate-500 text-[10px] block uppercase font-semibold">Throughput Headroom</span>
+                <div className="text-lg font-bold text-emerald-700 mt-1">
                   {compareWhiteSpot.supplyGapKL > compareDistributor.annualVolumeKL ? (
                     <span>+{(compareWhiteSpot.supplyGapKL - compareDistributor.annualVolumeKL).toLocaleString()} KL Overhang</span>
                   ) : (
                     <span>{(compareWhiteSpot.supplyGapKL / compareDistributor.annualVolumeKL * 100).toFixed(0)}% of Incumbent Vol</span>
                   )}
                 </div>
-                <p className="text-[9px] text-gray-400 mt-1">
+                <p className="text-[10px] text-slate-500 mt-1.5 leading-relaxed">
                   Unmet demand in {compareWhiteSpot.name} represents {((compareWhiteSpot.supplyGapKL / compareDistributor.annualVolumeKL) * 100).toFixed(0)}% of {compareDistributor.name}&apos;s total yearly volume.
                 </p>
               </div>
 
-              <div className="bg-[#050608] p-3 rounded border border-[#1F2937]">
-                <span className="text-gray-500 text-[10px] block uppercase">Service Lead Time Advantage</span>
-                <div className="text-lg font-bold text-cyan-300 mt-1">
+              <div className="bg-slate-50/90 p-4 rounded-xl border border-slate-200/80">
+                <span className="text-slate-500 text-[10px] block uppercase font-semibold">Service Lead Time Advantage</span>
+                <div className="text-lg font-bold text-indigo-700 mt-1">
                   {compareDistributor.avgLeadTimeDays > 2.0 ? (
                     <span>Vulnerable Lead ({compareDistributor.avgLeadTimeDays} Days)</span>
                   ) : (
                     <span>Competitive Lead ({compareDistributor.avgLeadTimeDays} Days)</span>
                   )}
                 </div>
-                <p className="text-[9px] text-gray-400 mt-1">
+                <p className="text-[10px] text-slate-500 mt-1.5 leading-relaxed">
                   A local Tier-2 micro-depot in {compareWhiteSpot.name} can deliver same-day (0.5 day) lead time, cutting {compareDistributor.avgLeadTimeDays - 0.5} days off incumbent delivery.
                 </p>
               </div>
 
-              <div className="bg-[#050608] p-3 rounded border border-[#1F2937]">
-                <span className="text-gray-500 text-[10px] block uppercase">Incumbent Capacity Stress</span>
-                <div className="text-lg font-bold text-yellow-400 mt-1">
+              <div className="bg-slate-50/90 p-4 rounded-xl border border-slate-200/80">
+                <span className="text-slate-500 text-[10px] block uppercase font-semibold">Incumbent Capacity Stress</span>
+                <div className="text-lg font-bold text-amber-700 mt-1">
                   {compareDistributor.performanceTier === 'Capacity Constrained' ? (
                     <span>High Constraint (Bottlenecked)</span>
                   ) : (
                     <span>{compareDistributor.performanceTier}</span>
                   )}
                 </div>
-                <p className="text-[9px] text-gray-400 mt-1">
+                <p className="text-[10px] text-slate-500 mt-1.5 leading-relaxed">
                   Incumbent storage turnover is {(compareDistributor.annualVolumeKL / compareDistributor.warehouseCapacityKL).toFixed(1)}x/yr, indicating high warehouse load and strong retail willingness to switch.
                 </p>
               </div>
@@ -1496,90 +1497,90 @@ export const DistributorOpportunityDashboard: React.FC<DistributorOpportunityDas
       {activeView === 'charts' && (
         <div className="space-y-4">
           {/* Strategic Market Share Summary KPI Header */}
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-2.5 font-mono">
-            <div className="bg-[#0E1117] border border-[#1F2937] p-3 rounded">
-              <span className="text-[9.5px] text-gray-500 uppercase block">Total Market Benchmark</span>
-              <div className="text-base font-bold text-white mt-0.5">5.70M KL</div>
-              <span className="text-[9px] text-emerald-400 font-bold">₹91,200 Cr Value</span>
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+            <div className="bg-white border border-slate-200/90 p-4 rounded-2xl shadow-sm">
+              <span className="text-[10px] text-slate-500 uppercase block font-medium">Total Market Benchmark</span>
+              <div className="text-base font-extrabold text-slate-900 mt-0.5">5.70M KL</div>
+              <span className="text-[10px] text-emerald-700 font-bold">₹91,200 Cr Value</span>
             </div>
-            <div className="bg-[#0E1117] border border-[#1F2937] p-3 rounded">
-              <span className="text-[9.5px] text-gray-500 uppercase block">PSU OMC Dominance</span>
-              <div className="text-base font-bold text-red-400 mt-0.5">46.5% Share</div>
-              <span className="text-[9px] text-gray-400">2.65M KL (Servo/MAK/HP)</span>
+            <div className="bg-white border border-slate-200/90 p-4 rounded-2xl shadow-sm">
+              <span className="text-[10px] text-slate-500 uppercase block font-medium">PSU OMC Dominance</span>
+              <div className="text-base font-extrabold text-rose-600 mt-0.5">46.5% Share</div>
+              <span className="text-[10px] text-slate-500">2.65M KL (Servo/MAK/HP)</span>
             </div>
-            <div className="bg-[#0E1117] border border-[#1F2937] p-3 rounded">
-              <span className="text-[9.5px] text-gray-500 uppercase block">Global MNC Footprint</span>
-              <div className="text-base font-bold text-emerald-400 mt-0.5">23.5% Share</div>
-              <span className="text-[9px] text-gray-400">1.34M KL (Castrol/Shell)</span>
+            <div className="bg-white border border-slate-200/90 p-4 rounded-2xl shadow-sm">
+              <span className="text-[10px] text-slate-500 uppercase block font-medium">Global MNC Footprint</span>
+              <div className="text-base font-extrabold text-emerald-700 mt-0.5">23.5% Share</div>
+              <span className="text-[10px] text-slate-500">1.34M KL (Castrol/Shell)</span>
             </div>
-            <div className="bg-[#0E1117] border border-[#1F2937] p-3 rounded">
-              <span className="text-[9.5px] text-gray-500 uppercase block">Domestic &amp; Regional</span>
-              <div className="text-base font-bold text-[#F27D26] mt-0.5">30.0% Share</div>
-              <span className="text-[9px] text-gray-400">1.71M KL (Gulf/Veedol/JVs)</span>
+            <div className="bg-white border border-slate-200/90 p-4 rounded-2xl shadow-sm">
+              <span className="text-[10px] text-slate-500 uppercase block font-medium">Domestic &amp; Regional</span>
+              <div className="text-base font-extrabold text-amber-700 mt-0.5">30.0% Share</div>
+              <span className="text-[10px] text-slate-500">1.71M KL (Gulf/Veedol/JVs)</span>
             </div>
-            <div className="bg-[#0E1117] border border-cyan-500/30 p-3 rounded col-span-2 md:col-span-1 bg-cyan-950/20">
-              <span className="text-[9.5px] text-cyan-400 uppercase block font-bold">Unmet Deficit Pool</span>
-              <div className="text-base font-bold text-cyan-300 mt-0.5">1.51M KL (26.5%)</div>
-              <span className="text-[9px] text-cyan-400 font-bold">₹24,117 Cr Opportunity</span>
+            <div className="bg-purple-50/80 border border-purple-200 p-4 rounded-2xl shadow-sm col-span-2 md:col-span-1">
+              <span className="text-[10px] text-[#7C3AED] uppercase block font-bold">Unmet Deficit Pool</span>
+              <div className="text-base font-extrabold text-[#7C3AED] mt-0.5">1.51M KL (26.5%)</div>
+              <span className="text-[10px] text-purple-700 font-bold">₹24,117 Cr Opportunity</span>
             </div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {/* Chart 1: Brand Market Share & Volume Breakdown */}
-            <div className="bg-[#0E1117] border border-[#1F2937] p-3.5 flex flex-col">
-              <div className="flex flex-wrap items-center justify-between border-b border-[#1F2937] pb-2 mb-3 gap-2">
+            <div className="bg-white border border-slate-200/90 p-5 rounded-2xl shadow-sm flex flex-col">
+              <div className="flex flex-wrap items-center justify-between border-b border-slate-100 pb-3 mb-3 gap-2">
                 <div>
-                  <span className="font-mono font-bold text-xs text-white uppercase flex items-center gap-1.5">
-                    <BarChart3 className="w-3.5 h-3.5 text-cyan-400" />
+                  <span className="font-bold text-xs text-slate-900 uppercase flex items-center gap-1.5">
+                    <BarChart3 className="w-4 h-4 text-[#7C3AED]" />
                     Incumbent Brand Market Share &amp; Throughput
                   </span>
-                  <p className="text-[9.5px] font-mono text-gray-500 mt-0.5">
+                  <p className="text-[10px] text-slate-500 mt-0.5">
                     {brandViewMode === 'national' ? 'ALL-INDIA AUDITED BRAND ALLOCATIONS (5.70M KL TOTAL)' : 'TRACKED CHANNEL DISTRIBUTOR FOOTPRINT'}
                   </p>
                 </div>
                 <div className="flex items-center gap-2 flex-wrap">
                   {/* Scope Switcher */}
-                  <div className="flex items-center gap-1 bg-[#151921] p-1 border border-[#1F2937] rounded">
+                  <div className="flex items-center gap-1 bg-slate-100 p-1 border border-slate-200 rounded-xl text-xs">
                     <button
                       onClick={() => setBrandViewMode('national')}
-                      className={`px-2 py-0.5 text-[9.5px] font-mono font-bold uppercase transition-colors rounded ${
+                      className={`px-2.5 py-0.5 text-[10px] font-bold uppercase transition-colors rounded-lg ${
                         brandViewMode === 'national'
-                          ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/40'
-                          : 'text-gray-400 hover:text-white'
+                          ? 'bg-white text-[#7C3AED] shadow-2xs font-extrabold'
+                          : 'text-slate-600 hover:text-slate-900'
                       }`}
                     >
                       5.7M Macro
                     </button>
                     <button
                       onClick={() => setBrandViewMode('tracked')}
-                      className={`px-2 py-0.5 text-[9.5px] font-mono font-bold uppercase transition-colors rounded ${
+                      className={`px-2.5 py-0.5 text-[10px] font-bold uppercase transition-colors rounded-lg ${
                         brandViewMode === 'tracked'
-                          ? 'bg-[#F27D26]/20 text-[#F27D26] border border-[#F27D26]/40'
-                          : 'text-gray-400 hover:text-white'
+                          ? 'bg-white text-[#7C3AED] shadow-2xs font-extrabold'
+                          : 'text-slate-600 hover:text-slate-900'
                       }`}
                     >
-                      Channel Nodes
+                      Nodes
                     </button>
                   </div>
 
                   {/* Chart Style Switcher */}
-                  <div className="flex items-center gap-1 bg-[#151921] p-1 border border-[#1F2937] rounded">
+                  <div className="flex items-center gap-1 bg-slate-100 p-1 border border-slate-200 rounded-xl text-xs">
                     <button
                       onClick={() => setBrandChartType('bar')}
-                      className={`px-2 py-0.5 text-[9.5px] font-mono font-bold uppercase transition-colors rounded ${
+                      className={`px-2.5 py-0.5 text-[10px] font-bold uppercase transition-colors rounded-lg ${
                         brandChartType === 'bar'
-                          ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
-                          : 'text-gray-400 hover:text-white'
+                          ? 'bg-white text-emerald-700 shadow-2xs font-extrabold'
+                          : 'text-slate-600 hover:text-slate-900'
                       }`}
                     >
                       Bar
                     </button>
                     <button
                       onClick={() => setBrandChartType('donut')}
-                      className={`px-2 py-0.5 text-[9.5px] font-mono font-bold uppercase transition-colors rounded ${
+                      className={`px-2.5 py-0.5 text-[10px] font-bold uppercase transition-colors rounded-lg ${
                         brandChartType === 'donut'
-                          ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
-                          : 'text-gray-400 hover:text-white'
+                          ? 'bg-white text-emerald-700 shadow-2xs font-extrabold'
+                          : 'text-slate-600 hover:text-slate-900'
                       }`}
                     >
                       Donut (%)
@@ -1589,25 +1590,26 @@ export const DistributorOpportunityDashboard: React.FC<DistributorOpportunityDas
               </div>
 
               {brandChartType === 'bar' ? (
-                <div className="h-64 w-full font-mono text-[10px]">
+                <div className="h-72 w-full text-xs">
                   <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={brandShareChartData} margin={{ top: 10, right: 15, left: -5, bottom: 25 }}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#1F2937" vertical={false} />
+                    <BarChart data={brandShareChartData} margin={{ top: 20, right: 15, left: 10, bottom: 40 }}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
                       <XAxis 
                         dataKey="brand" 
-                        stroke="#6B7280" 
-                        angle={-25} 
+                        stroke="#94a3b8" 
+                        angle={-30} 
                         textAnchor="end" 
-                        height={45} 
-                        tick={{ fontSize: 9.5 }} 
+                        height={50} 
+                        interval={0}
+                        tick={{ fontSize: 10, fill: '#334155', fontWeight: 500 }} 
                       />
                       <YAxis 
-                        stroke="#6B7280" 
-                        tickFormatter={(v) => v >= 1000000 ? `${(v/1000000).toFixed(2)}M` : `${(v/1000).toFixed(0)}k`} 
-                        tick={{ fontSize: 9.5 }}
+                        stroke="#94a3b8" 
+                        tickFormatter={(v) => v >= 1000000 ? `${(v/1000000).toFixed(2)}M KL` : `${(v/1000).toFixed(0)}k KL`} 
+                        tick={{ fontSize: 10, fill: '#64748b' }}
                       />
                       <Tooltip
-                        contentStyle={{ backgroundColor: '#0C1017', borderColor: '#374151', fontSize: '11px', color: '#fff', borderRadius: '4px' }}
+                        contentStyle={{ backgroundColor: '#ffffff', borderColor: '#e2e8f0', fontSize: '11px', color: '#0f172a', borderRadius: '8px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)' }}
                         formatter={(val: any, name: any, item: any) => [
                           `${Number(val).toLocaleString()} KL/YR (${item.payload.sharePct?.toFixed(1)}% Share • ₹${(item.payload.revenueINR || 0).toLocaleString()} Cr)`,
                           'Supply Volume'
@@ -1615,6 +1617,12 @@ export const DistributorOpportunityDashboard: React.FC<DistributorOpportunityDas
                         labelFormatter={(label) => `Brand: ${label}`}
                       />
                       <Bar dataKey="volumeKL" radius={[4, 4, 0, 0]}>
+                        <LabelList 
+                          dataKey="sharePct" 
+                          position="top" 
+                          formatter={(val: any) => `${Number(val).toFixed(1)}%`} 
+                          style={{ fill: '#334155', fontSize: 9, fontWeight: 700 }} 
+                        />
                         {brandShareChartData.map((entry, index) => (
                           <Cell key={`cell-${index}`} fill={entry.fill} />
                         ))}
@@ -1623,15 +1631,15 @@ export const DistributorOpportunityDashboard: React.FC<DistributorOpportunityDas
                   </ResponsiveContainer>
                 </div>
               ) : (
-                <div className="h-64 w-full font-mono text-[10px]">
+                <div className="h-72 w-full text-xs">
                   <ResponsiveContainer width="100%" height="100%">
-                    <PieChart>
+                    <PieChart margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
                       <Pie
                         data={brandShareChartData}
                         dataKey="sharePct"
                         nameKey="brand"
                         cx="50%"
-                        cy="50%"
+                        cy="45%"
                         innerRadius={55}
                         outerRadius={85}
                         paddingAngle={2}
@@ -1641,7 +1649,7 @@ export const DistributorOpportunityDashboard: React.FC<DistributorOpportunityDas
                         ))}
                       </Pie>
                       <Tooltip
-                        contentStyle={{ backgroundColor: '#0C1017', borderColor: '#374151', fontSize: '11px', color: '#fff', borderRadius: '4px' }}
+                        contentStyle={{ backgroundColor: '#ffffff', borderColor: '#e2e8f0', fontSize: '11px', color: '#0f172a', borderRadius: '8px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)' }}
                         formatter={(val: any, name: any, item: any) => [
                           `${Number(val).toFixed(1)}% (${Number(item.payload.volumeKL).toLocaleString()} KL/YR)`,
                           name
@@ -1651,7 +1659,12 @@ export const DistributorOpportunityDashboard: React.FC<DistributorOpportunityDas
                         layout="horizontal" 
                         verticalAlign="bottom" 
                         align="center"
-                        wrapperStyle={{ fontSize: '9px', fontFamily: 'monospace', paddingTop: '8px' }}
+                        formatter={(val, entry: any) => (
+                          <span className="text-slate-700 font-medium text-[10px]">
+                            {val} <span className="text-slate-400">({entry.payload.sharePct?.toFixed(1)}%)</span>
+                          </span>
+                        )}
+                        wrapperStyle={{ fontSize: '10px', paddingTop: '8px' }}
                       />
                     </PieChart>
                   </ResponsiveContainer>
@@ -1660,48 +1673,60 @@ export const DistributorOpportunityDashboard: React.FC<DistributorOpportunityDas
             </div>
 
             {/* Chart 2: State-wise Market Volume & Supply Capture */}
-            <div className="bg-[#0E1117] border border-[#1F2937] p-3.5 flex flex-col">
-              <div className="flex flex-wrap items-center justify-between border-b border-[#1F2937] pb-2 mb-3 gap-2">
+            <div className="bg-white border border-slate-200/90 p-5 rounded-2xl shadow-sm flex flex-col">
+              <div className="flex flex-wrap items-center justify-between border-b border-slate-100 pb-3 mb-3 gap-2">
                 <div>
-                  <span className="font-mono font-bold text-xs text-white uppercase flex items-center gap-1.5">
-                    <Compass className="w-3.5 h-3.5 text-emerald-400" />
+                  <span className="font-bold text-xs text-slate-900 uppercase flex items-center gap-1.5">
+                    <Compass className="w-4 h-4 text-emerald-600" />
                     State-wise Market Distribution &amp; Demand
                   </span>
-                  <p className="text-[9.5px] font-mono text-gray-500 mt-0.5">
+                  <p className="text-[10px] text-slate-500 mt-0.5">
                     {stateViewMode === 'allIndia' ? 'TOP 10 STATES CONSUMPTION (ALL-INDIA BENCHMARK)' : 'VOLUME TRACKED ACROSS CHANNEL DISTRIBUTORS'}
                   </p>
                 </div>
-                <div className="flex items-center gap-1 bg-[#151921] p-1 border border-[#1F2937] rounded">
+                <div className="flex items-center gap-1 bg-slate-100 p-1 border border-slate-200 rounded-xl">
                   <button
                     onClick={() => setStateViewMode('allIndia')}
-                    className={`px-2 py-0.5 text-[9.5px] font-mono font-bold uppercase transition-colors rounded ${
+                    className={`px-2.5 py-0.5 text-[10px] font-bold uppercase transition-colors rounded-lg ${
                       stateViewMode === 'allIndia'
-                        ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
-                        : 'text-gray-400 hover:text-white'
+                        ? 'bg-white text-emerald-700 shadow-2xs font-extrabold'
+                        : 'text-slate-600 hover:text-slate-900'
                     }`}
                   >
                     Top States (5.7M)
                   </button>
                   <button
                     onClick={() => setStateViewMode('channel')}
-                    className={`px-2 py-0.5 text-[9.5px] font-mono font-bold uppercase transition-colors rounded ${
+                    className={`px-2.5 py-0.5 text-[10px] font-bold uppercase transition-colors rounded-lg ${
                       stateViewMode === 'channel'
-                        ? 'bg-[#F27D26]/20 text-[#F27D26] border border-[#F27D26]/40'
-                        : 'text-gray-400 hover:text-white'
+                        ? 'bg-white text-[#7C3AED] shadow-2xs font-extrabold'
+                        : 'text-slate-600 hover:text-slate-900'
                     }`}
                   >
                     Channel Nodes
                   </button>
                 </div>
               </div>
-              <div className="h-64 w-full font-mono text-[10px]">
+              <div className="h-72 w-full text-xs">
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={stateDistributionData} margin={{ top: 10, right: 10, left: -10, bottom: 25 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#1F2937" vertical={false} />
-                    <XAxis dataKey="state" stroke="#6B7280" angle={-25} textAnchor="end" height={45} tick={{ fontSize: 9.5 }} />
-                    <YAxis stroke="#6B7280" tickFormatter={(v) => `${(v/1000).toFixed(0)}k`} />
+                  <BarChart data={stateDistributionData} margin={{ top: 20, right: 15, left: 10, bottom: 40 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
+                    <XAxis 
+                      dataKey="state" 
+                      stroke="#94a3b8" 
+                      angle={-30} 
+                      textAnchor="end" 
+                      height={50} 
+                      interval={0}
+                      tick={{ fontSize: 10, fill: '#334155', fontWeight: 500 }} 
+                    />
+                    <YAxis 
+                      stroke="#94a3b8" 
+                      tickFormatter={(v) => `${(v/1000).toFixed(0)}k KL`} 
+                      tick={{ fontSize: 10, fill: '#64748b' }} 
+                    />
                     <Tooltip
-                      contentStyle={{ backgroundColor: '#0E1117', borderColor: '#374151', fontSize: '11px', color: '#fff' }}
+                      contentStyle={{ backgroundColor: '#ffffff', borderColor: '#e2e8f0', fontSize: '11px', color: '#0f172a', borderRadius: '8px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)' }}
                       formatter={(val: any, name: any, item: any) => [
                         `${Number(val).toLocaleString()} KL/YR (${item.payload.sharePct?.toFixed(1)}% Share • Gap: ${Number(item.payload.gapKL || 0).toLocaleString()} KL)`,
                         stateViewMode === 'allIndia' ? 'Total State Demand' : 'Tracked Channel Volume'
@@ -1709,6 +1734,12 @@ export const DistributorOpportunityDashboard: React.FC<DistributorOpportunityDas
                       labelFormatter={(label, items: any) => items?.[0]?.payload?.fullName || label}
                     />
                     <Bar dataKey="volumeKL" radius={[4, 4, 0, 0]}>
+                      <LabelList 
+                        dataKey="volumeKL" 
+                        position="top" 
+                        formatter={(val: any) => `${(Number(val)/1000).toFixed(0)}k`} 
+                        style={{ fill: '#334155', fontSize: 9, fontWeight: 700 }} 
+                      />
                       {stateDistributionData.map((entry, index) => (
                         <Cell key={`state-cell-${index}`} fill={index === 0 ? '#10b981' : index === 1 ? '#06b6d4' : index === 2 ? '#3b82f6' : '#6366f1'} />
                       ))}
@@ -1719,27 +1750,27 @@ export const DistributorOpportunityDashboard: React.FC<DistributorOpportunityDas
             </div>
 
             {/* Chart 3: Corporate Category & Channel Structure */}
-            <div className="bg-[#0E1117] border border-[#1F2937] p-3.5 flex flex-col">
-              <div className="flex items-center justify-between border-b border-[#1F2937] pb-2 mb-3">
+            <div className="bg-white border border-slate-200/90 p-5 rounded-2xl shadow-sm flex flex-col">
+              <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-3">
                 <div>
-                  <span className="font-mono font-bold text-xs text-white uppercase flex items-center gap-1.5">
-                    <Boxes className="w-3.5 h-3.5 text-[#F27D26]" />
+                  <span className="font-bold text-xs text-slate-900 uppercase flex items-center gap-1.5">
+                    <Boxes className="w-4 h-4 text-[#7C3AED]" />
                     Corporate Sector Market Share (5.70M KL)
                   </span>
-                  <p className="text-[9.5px] font-mono text-gray-500 mt-0.5">
-                    PUBLIC SECTOR OMCS VS GLOBAL MNCS VS DOMESTIC LISTED
+                  <p className="text-[10px] text-slate-500 mt-0.5">
+                    Public sector OMCs vs. Global MNCs vs. Domestic listed
                   </p>
                 </div>
-                <span className="text-[10px] font-mono text-emerald-400 font-bold">₹91,200 CR TOTAL</span>
+                <span className="text-[10px] text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">₹91,200 Cr Total</span>
               </div>
-              <div className="h-64 w-full font-mono text-[10px]">
+              <div className="h-72 w-full text-xs">
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={corporateSegmentData} layout="vertical" margin={{ top: 5, right: 25, left: 30, bottom: 5 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#1F2937" horizontal={false} />
-                    <XAxis type="number" stroke="#6B7280" tickFormatter={(v) => `${(v/1000000).toFixed(1)}M`} />
-                    <YAxis type="category" dataKey="shortName" stroke="#6B7280" tick={{ fontSize: 9.5 }} width={80} />
+                  <BarChart data={corporateSegmentData} layout="vertical" margin={{ top: 10, right: 80, left: 10, bottom: 10 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" horizontal={false} />
+                    <XAxis type="number" stroke="#94a3b8" tickFormatter={(v) => `${(v/1000000).toFixed(1)}M KL`} tick={{ fontSize: 10, fill: '#64748b' }} />
+                    <YAxis type="category" dataKey="shortName" stroke="#94a3b8" tick={{ fontSize: 10, fill: '#334155', fontWeight: 600 }} width={95} />
                     <Tooltip
-                      contentStyle={{ backgroundColor: '#0E1117', borderColor: '#374151', fontSize: '11px', color: '#fff' }}
+                      contentStyle={{ backgroundColor: '#ffffff', borderColor: '#e2e8f0', fontSize: '11px', color: '#0f172a', borderRadius: '8px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)' }}
                       formatter={(val: any, name: any, item: any) => [
                         `${(Number(val)/1000000).toFixed(2)}M KL (${item.payload.sharePct}% • ₹${item.payload.revenueINR.toLocaleString()} Cr) — ${item.payload.description}`,
                         'Sector Volume'
@@ -1747,6 +1778,12 @@ export const DistributorOpportunityDashboard: React.FC<DistributorOpportunityDas
                       labelFormatter={(label, items: any) => items?.[0]?.payload?.name || label}
                     />
                     <Bar dataKey="volumeKL" radius={[0, 4, 4, 0]}>
+                      <LabelList 
+                        dataKey="volumeKL" 
+                        position="right" 
+                        formatter={(val: any) => `${(Number(val)/1000000).toFixed(2)}M KL`} 
+                        style={{ fill: '#334155', fontSize: 9, fontWeight: 700 }} 
+                      />
                       {corporateSegmentData.map((entry, index) => (
                         <Cell key={`corp-cell-${index}`} fill={entry.fill} />
                       ))}
@@ -1757,36 +1794,51 @@ export const DistributorOpportunityDashboard: React.FC<DistributorOpportunityDas
             </div>
 
             {/* Chart 4: Unmet White-Spot Demand vs Incumbent Distributor Volume */}
-            <div className="bg-[#0E1117] border border-[#1F2937] p-3.5 flex flex-col">
-              <div className="flex items-center justify-between border-b border-[#1F2937] pb-2 mb-3">
+            <div className="bg-white border border-slate-200/90 p-5 rounded-2xl shadow-sm flex flex-col">
+              <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-3">
                 <div>
-                  <span className="font-mono font-bold text-xs text-white uppercase flex items-center gap-1.5">
-                    <Scale className="w-3.5 h-3.5 text-cyan-400" />
+                  <span className="font-bold text-xs text-slate-900 uppercase flex items-center gap-1.5">
+                    <Scale className="w-4 h-4 text-indigo-600" />
                     White-Spot Deficit vs. Incumbent Distribution Volume
                   </span>
-                  <p className="text-[9.5px] font-mono text-gray-500 mt-0.5">
-                    UNMET SUPPLY GAP VS CURRENT LOGISTICS COVERAGE (TOP 8 HUBS)
+                  <p className="text-[10px] text-slate-500 mt-0.5">
+                    Unmet supply gap vs. current logistics coverage (Top 8 Hubs)
                   </p>
                 </div>
-                <span className="text-[10px] font-mono text-gray-500 uppercase">HIGH CONTEST HUBS</span>
+                <span className="text-[10px] text-slate-500 uppercase font-medium">High Contest Hubs</span>
               </div>
-              <div className="h-64 w-full font-mono text-[10px]">
+              <div className="h-72 w-full text-xs">
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={districtVersusData} margin={{ top: 10, right: 15, left: -10, bottom: 25 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#1F2937" vertical={false} />
-                    <XAxis dataKey="name" stroke="#6B7280" tick={{ fontSize: 9.5 }} angle={-25} textAnchor="end" height={40} />
-                    <YAxis stroke="#6B7280" tickFormatter={(v) => `${(v/1000).toFixed(0)}k`} />
+                  <BarChart data={districtVersusData} margin={{ top: 15, right: 15, left: 10, bottom: 40 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
+                    <XAxis 
+                      dataKey="name" 
+                      stroke="#94a3b8" 
+                      tick={{ fontSize: 10, fill: '#334155', fontWeight: 500 }} 
+                      angle={-30} 
+                      textAnchor="end" 
+                      height={50} 
+                      interval={0}
+                    />
+                    <YAxis 
+                      stroke="#94a3b8" 
+                      tickFormatter={(v) => `${(v/1000).toFixed(0)}k KL`} 
+                      tick={{ fontSize: 10, fill: '#64748b' }} 
+                    />
                     <Tooltip
-                      contentStyle={{ backgroundColor: '#0E1117', borderColor: '#374151', fontSize: '11px', color: '#fff' }}
+                      contentStyle={{ backgroundColor: '#ffffff', borderColor: '#e2e8f0', fontSize: '11px', color: '#0f172a', borderRadius: '8px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)' }}
                       formatter={(val: any, name: any, item: any) => [
                         `${Number(val).toLocaleString()} KL (${item.payload.gapPct}% Deficit Rate)`,
                         name === 'unmetGapKL' ? 'Unserved Market Gap' : 'Incumbent Tracked Volume'
                       ]}
                       labelFormatter={(label, items: any) => items?.[0]?.payload?.fullName || label}
                     />
-                    <Legend wrapperStyle={{ fontSize: '9.5px', paddingTop: '5px' }} />
+                    <Legend 
+                      wrapperStyle={{ fontSize: '10px', paddingTop: '5px' }} 
+                      formatter={(val) => <span className="text-slate-700 font-medium">{val}</span>}
+                    />
                     <Bar name="Unmet Market Gap (KL)" dataKey="unmetGapKL" fill="#ef4444" radius={[4, 4, 0, 0]} />
-                    <Bar name="Incumbent Volume (KL)" dataKey="incumbentVolumeKL" fill="#06b6d4" radius={[4, 4, 0, 0]} />
+                    <Bar name="Incumbent Volume (KL)" dataKey="incumbentVolumeKL" fill="#7c3aed" radius={[4, 4, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>

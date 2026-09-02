@@ -217,30 +217,30 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-4">
-      <div className="bg-[#0E1117] border border-[#2D3748] w-full max-w-4xl h-[720px] max-h-[92vh] shadow-[0_0_50px_rgba(0,0,0,0.8)] flex flex-col overflow-hidden rounded-lg">
+    <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 font-sans">
+      <div className="bg-white border border-slate-200/90 w-full max-w-4xl h-[720px] max-h-[92vh] shadow-2xl flex flex-col overflow-hidden rounded-2xl">
         
         {/* Modal Header */}
-        <div className="px-4 py-3 bg-[#07090E] border-b border-[#1F2937] flex items-center justify-between shrink-0">
+        <div className="px-5 py-4 bg-white border-b border-slate-200/80 flex items-center justify-between shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded bg-[#1F2937] border border-[#374151] flex items-center justify-center text-[#F27D26] shadow-[0_0_12px_rgba(242,125,38,0.25)]">
-              <Sparkles className="w-4 h-4" />
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#7C3AED] to-[#4F46E5] flex items-center justify-center text-white shadow-sm">
+              <Sparkles className="w-5 h-5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="font-bold text-xs sm:text-sm text-white uppercase font-mono tracking-tight">
+                <h3 className="font-bold text-sm sm:text-base text-slate-900 tracking-tight">
                   AI Strategic Lubricants Market Analyst
                 </h3>
-                <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-500/40 uppercase">
-                  GEMINI 3.7 GROUNDED
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 uppercase">
+                  Gemini 3.7 Grounded
                 </span>
               </div>
-              <p className="text-[10px] font-mono text-gray-400 mt-0.5 flex items-center gap-2 flex-wrap">
-                <span>5.70M KL NATIONAL DEMAND</span>
-                <span className="text-gray-600">•</span>
-                <span>50 AUDITED COMPETITORS (8.85M KL CAP)</span>
-                <span className="text-gray-600">•</span>
-                <span>8,720 DISTRIBUTORS</span>
+              <p className="text-xs text-slate-500 mt-0.5 flex items-center gap-2 flex-wrap">
+                <span>5.70M KL Demand</span>
+                <span className="text-slate-300">•</span>
+                <span>50 Audited Competitors (8.85M KL Cap)</span>
+                <span className="text-slate-300">•</span>
+                <span>8,720 Distributors</span>
               </p>
             </div>
           </div>
@@ -249,88 +249,88 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
             <button
               onClick={handleClearHistory}
               title="Clear Conversation History"
-              className="p-1.5 rounded text-gray-400 hover:text-red-400 hover:bg-[#1F2937] transition-colors flex items-center gap-1 text-[10px] font-mono"
+              className="p-2 rounded-xl text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors flex items-center gap-1 text-xs font-semibold"
             >
-              <Trash2 className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">CLEAR</span>
+              <Trash2 className="w-4 h-4" />
+              <span className="hidden sm:inline">Clear</span>
             </button>
             <button
               onClick={onClose}
-              className="p-1.5 rounded text-gray-400 hover:text-white hover:bg-[#1F2937] transition-colors"
+              className="p-2 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
             >
-              <X className="w-4 h-4" />
+              <X className="w-5 h-5" />
             </button>
           </div>
         </div>
 
         {/* Active Context Banner */}
-        <div className="px-4 py-1.5 bg-[#0A0D14] border-b border-[#1F2937] flex items-center justify-between text-[10px] font-mono text-gray-400 shrink-0 overflow-x-auto gap-2">
-          <div className="flex items-center gap-3">
-            <span className="flex items-center gap-1 text-[#F27D26] font-bold uppercase">
-              <Layers className="w-3 h-3" />
-              <span>CONTEXT:</span>
+        <div className="px-5 py-2 bg-slate-50/80 border-b border-slate-200/60 flex items-center justify-between text-xs text-slate-500 shrink-0 overflow-x-auto gap-2">
+          <div className="flex items-center gap-2.5">
+            <span className="flex items-center gap-1 text-[#7C3AED] font-bold uppercase text-[10px]">
+              <Layers className="w-3.5 h-3.5" />
+              <span>Context:</span>
             </span>
-            <span className="bg-[#151921] px-2 py-0.5 rounded border border-[#2D3748] text-gray-200">
+            <span className="bg-white px-2.5 py-0.5 rounded-lg border border-slate-200 text-slate-700 font-medium">
               {selectedLocation ? `District: ${selectedLocation.name} (${selectedLocation.stateName})` : 'All-India 700+ Districts Grid'}
             </span>
-            <span className="bg-[#151921] px-2 py-0.5 rounded border border-[#2D3748] text-amber-300">
+            <span className="bg-purple-50 text-purple-700 px-2.5 py-0.5 rounded-lg border border-purple-200 font-semibold">
               Scenario: {financialAssumptions.scenario} ({financialAssumptions.scenario === 'Conservative' ? '8%' : financialAssumptions.scenario === 'Base' ? '15%' : '25%'} share)
             </span>
           </div>
-          <div className="text-gray-500 hidden md:block">
+          <div className="text-slate-400 text-[11px] hidden md:block">
             Grounding: VAHAN 4.0 • PPAC • MOSPI • IBM Mining
           </div>
         </div>
 
         {/* Chat History Messages Scroll Area */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-4 text-xs font-mono bg-[#090C12]">
+        <div className="flex-1 overflow-y-auto p-5 space-y-4 text-sm bg-slate-50/50">
           {messages.map(msg => (
             <div
               key={msg.id}
-              className={`flex gap-2.5 ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+              className={`flex gap-3 ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
             >
               {msg.sender === 'assistant' && (
-                <div className="w-7 h-7 rounded bg-[#151921] border border-[#374151] text-[#F27D26] flex items-center justify-center shrink-0 mt-0.5 shadow">
+                <div className="w-8 h-8 rounded-xl bg-purple-100 border border-purple-200 text-[#7C3AED] flex items-center justify-center shrink-0 mt-0.5 shadow-sm">
                   <Bot className="w-4 h-4" />
                 </div>
               )}
 
               <div
-                className={`p-3.5 max-w-2xl rounded-lg leading-relaxed text-xs shadow-md ${
+                className={`p-4 max-w-2xl rounded-2xl leading-relaxed text-sm shadow-sm ${
                   msg.sender === 'user'
-                    ? 'bg-[#F27D26] text-black font-semibold rounded-br-none'
-                    : 'bg-[#121620] border border-[#232B3B] text-gray-200 font-sans rounded-bl-none'
+                    ? 'bg-gradient-to-r from-[#7C3AED] to-[#4F46E5] text-white font-medium rounded-br-none'
+                    : 'bg-white border border-slate-200/90 text-slate-800 rounded-bl-none'
                 }`}
               >
                 {msg.sender === 'user' ? (
-                  <div className="font-mono text-xs whitespace-pre-wrap">{msg.text}</div>
+                  <div className="text-sm whitespace-pre-wrap">{msg.text}</div>
                 ) : (
-                  <div className="prose prose-invert prose-xs max-w-none text-gray-200 space-y-2 [&_h3]:text-sm [&_h3]:font-bold [&_h3]:text-white [&_h3]:mt-2 [&_h3]:mb-1 [&_strong]:text-white [&_ul]:list-disc [&_ul]:pl-4 [&_ul]:space-y-1 [&_ol]:list-decimal [&_ol]:pl-4 [&_ol]:space-y-1 [&_li]:text-gray-300 [&_p]:leading-relaxed [&_code]:bg-[#0E1117] [&_code]:px-1 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-[#F27D26]">
+                  <div className="prose prose-slate prose-sm max-w-none text-slate-800 space-y-2 [&_h3]:text-sm [&_h3]:font-bold [&_h3]:text-slate-900 [&_h3]:mt-2 [&_h3]:mb-1 [&_strong]:text-slate-900 [&_ul]:list-disc [&_ul]:pl-4 [&_ul]:space-y-1 [&_ol]:list-decimal [&_ol]:pl-4 [&_ol]:space-y-1 [&_li]:text-slate-700 [&_p]:leading-relaxed [&_code]:bg-purple-50 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded-md [&_code]:text-purple-700">
                     <Markdown>{msg.text}</Markdown>
                   </div>
                 )}
 
                 {/* Message footer with timestamp and copy button */}
-                <div className="flex items-center justify-between mt-2 pt-1.5 border-t border-[#1F2937]/60 text-[9.5px] font-mono text-gray-400">
-                  <span className={msg.sender === 'user' ? 'text-black/70' : 'text-gray-500'}>
+                <div className="flex items-center justify-between mt-2.5 pt-2 border-t border-slate-100 text-[10px] text-slate-400">
+                  <span className={msg.sender === 'user' ? 'text-white/80' : 'text-slate-400'}>
                     {msg.timestamp} {msg.source && `• ${msg.source}`}
                   </span>
                   
                   {msg.sender === 'assistant' && (
                     <button
                       onClick={() => handleCopy(msg.id, msg.text)}
-                      className="text-gray-400 hover:text-white flex items-center gap-1 transition-colors px-1.5 py-0.5 rounded bg-[#1A202C]/60 hover:bg-[#1A202C]"
+                      className="text-slate-400 hover:text-slate-700 flex items-center gap-1 transition-colors px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-slate-200"
                       title="Copy response to clipboard"
                     >
                       {copiedId === msg.id ? (
                         <>
-                          <Check className="w-3 h-3 text-emerald-400" />
-                          <span className="text-emerald-400 font-bold">COPIED</span>
+                          <Check className="w-3 h-3 text-emerald-600" />
+                          <span className="text-emerald-600 font-bold">Copied</span>
                         </>
                       ) : (
                         <>
                           <Copy className="w-3 h-3" />
-                          <span>COPY</span>
+                          <span>Copy</span>
                         </>
                       )}
                     </button>
@@ -339,7 +339,7 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
               </div>
 
               {msg.sender === 'user' && (
-                <div className="w-7 h-7 rounded bg-[#1F2937] border border-[#374151] text-gray-300 flex items-center justify-center shrink-0 mt-0.5 shadow">
+                <div className="w-8 h-8 rounded-xl bg-slate-800 text-white flex items-center justify-center shrink-0 mt-0.5 shadow-sm">
                   <User className="w-4 h-4" />
                 </div>
               )}
@@ -347,21 +347,21 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
           ))}
 
           {isLoading && (
-            <div className="flex gap-2.5 items-center text-xs text-[#F27D26] font-mono p-3 bg-[#121620] border border-[#232B3B] rounded max-w-md">
-              <div className="w-6 h-6 bg-[#151921] border border-[#374151] flex items-center justify-center rounded">
-                <Loader2 className="w-3.5 h-3.5 animate-spin" />
+            <div className="flex gap-3 items-center text-xs text-purple-700 font-medium p-3.5 bg-purple-50 border border-purple-200 rounded-2xl max-w-md">
+              <div className="w-7 h-7 bg-white border border-purple-200 flex items-center justify-center rounded-xl shadow-sm">
+                <Loader2 className="w-4 h-4 animate-spin text-[#7C3AED]" />
               </div>
-              <span className="font-bold animate-pulse">SYNTHESIZING MARKET INTELLIGENCE VIA GEMINI 3.7...</span>
+              <span className="font-semibold animate-pulse">Synthesizing market intelligence via Gemini 3.7...</span>
             </div>
           )}
           <div ref={messagesEndRef} />
         </div>
 
         {/* Categorized Prompt Suggestions */}
-        <div className="px-4 py-2.5 bg-[#07090E] border-t border-[#1F2937] font-mono shrink-0">
-          <div className="flex items-center gap-1.5 mb-2 overflow-x-auto no-scrollbar">
-            <span className="text-[9px] uppercase font-bold text-gray-500 tracking-wider mr-1 whitespace-nowrap">
-              CATEGORIES:
+        <div className="px-5 py-3 bg-slate-50 border-t border-slate-200/80 shrink-0">
+          <div className="flex items-center gap-2 mb-2 overflow-x-auto no-scrollbar">
+            <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider mr-1 whitespace-nowrap">
+              Categories:
             </span>
             {promptCategories.map((cat, idx) => {
               const Icon = cat.icon;
@@ -369,36 +369,36 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
                 <button
                   key={idx}
                   onClick={() => setActivePromptCategory(idx)}
-                  className={`text-[10px] px-2.5 py-1 rounded font-bold uppercase transition-all flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
+                  className={`text-xs px-3 py-1.5 rounded-xl font-bold uppercase transition-all flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
                     activePromptCategory === idx
-                      ? 'bg-[#F27D26] text-black shadow'
-                      : 'bg-[#151921] text-gray-400 border border-[#2D3748] hover:text-white'
+                      ? 'bg-gradient-to-r from-[#7C3AED] to-[#4F46E5] text-white shadow-sm'
+                      : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 hover:text-slate-900'
                   }`}
                 >
-                  <Icon className="w-3 h-3" />
+                  <Icon className="w-3.5 h-3.5" />
                   <span>{cat.name}</span>
                 </button>
               );
             })}
           </div>
 
-          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1">
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-0.5">
             {promptCategories[activePromptCategory].prompts.map((p, pIdx) => (
               <button
                 key={pIdx}
                 onClick={() => handleSendMessage(p)}
                 disabled={isLoading}
-                className="text-[10px] px-2.5 py-1 rounded bg-[#121620] hover:bg-[#1E2638] hover:text-amber-300 text-gray-300 border border-[#232B3B] whitespace-nowrap transition-colors flex items-center gap-1.5 shrink-0 group disabled:opacity-50"
+                className="text-xs px-3 py-1.5 rounded-xl bg-white hover:bg-purple-50 hover:text-purple-700 hover:border-purple-300 text-slate-700 border border-slate-200 whitespace-nowrap transition-colors flex items-center gap-1.5 shrink-0 group disabled:opacity-50 shadow-2xs"
               >
                 <span>{p}</span>
-                <ChevronRight className="w-3 h-3 text-[#F27D26] group-hover:translate-x-0.5 transition-transform" />
+                <ChevronRight className="w-3.5 h-3.5 text-[#7C3AED] group-hover:translate-x-0.5 transition-transform" />
               </button>
             ))}
           </div>
         </div>
 
         {/* Input Bar */}
-        <div className="p-3 bg-[#07090E] border-t border-[#1F2937] flex items-center gap-2 font-mono shrink-0">
+        <div className="p-4 bg-white border-t border-slate-200 flex items-center gap-2.5 shrink-0">
           <input
             type="text"
             placeholder="Ask anything (e.g. Compare Bharuch vs Nashik, ₹5 Cr Capex ROI, EV risk, Castrol vs Servo share)..."
@@ -406,15 +406,15 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
             onChange={e => setInputText(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && !isLoading && handleSendMessage()}
             disabled={isLoading}
-            className="flex-1 px-3 py-2 bg-[#121620] border border-[#2D3748] rounded text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#F27D26] disabled:opacity-50"
+            className="flex-1 px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-purple-500 disabled:opacity-50 transition-colors"
           />
           <button
             onClick={() => handleSendMessage()}
             disabled={!inputText.trim() || isLoading}
-            className="px-4 py-2 rounded bg-[#F27D26] hover:bg-[#E06D17] disabled:opacity-50 text-black font-bold text-xs transition-colors flex items-center gap-1.5 shadow-[0_0_12px_rgba(242,125,38,0.3)] uppercase shrink-0"
+            className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#7C3AED] to-[#4F46E5] hover:opacity-95 disabled:opacity-50 text-white font-bold text-xs sm:text-sm transition-all flex items-center gap-2 shadow-sm uppercase shrink-0"
           >
-            <span>ASK</span>
-            <Send className="w-3.5 h-3.5" />
+            <span>Ask</span>
+            <Send className="w-4 h-4" />
           </button>
         </div>
       </div>

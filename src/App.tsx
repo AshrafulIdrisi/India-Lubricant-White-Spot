@@ -4,6 +4,7 @@ import { LocationRecord, ScoringWeights, FinancialAssumptions, GridResolution, A
 import { DEFAULT_WEIGHTS, DEFAULT_FINANCIAL_ASSUMPTIONS } from './utils/demandEngine';
 import { downloadWhiteSpotExcel } from './utils/excelExporter';
 
+import { NavigationSidebar } from './components/NavigationSidebar';
 import { NavigationHeader, DashboardTab } from './components/NavigationHeader';
 import { IndiaOverviewDashboard } from './components/dashboards/IndiaOverviewDashboard';
 import { StateAnalysisDashboard } from './components/dashboards/StateAnalysisDashboard';
@@ -28,7 +29,9 @@ export default function App() {
   const [financialAssumptions, setFinancialAssumptions] = useState<FinancialAssumptions>(DEFAULT_FINANCIAL_ASSUMPTIONS);
   const [alerts, setAlerts] = useState<AlertNotification[]>(SYSTEM_ALERTS);
   const [isAiModalOpen, setIsAiModalOpen] = useState<boolean>(false);
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState<boolean>(false);
   const [exportNotice, setExportNotice] = useState<string | null>(null);
+  const [globalSearchTerm, setGlobalSearchTerm] = useState<string>('');
 
   const handleSelectLocation = (loc: LocationRecord) => {
     setSelectedLocation(loc);
@@ -46,7 +49,7 @@ export default function App() {
 
   const handleExportDossier = () => {
     const reportData = {
-      platform: "LuboIntel // India Lubricants White-Spot & Demand Intelligence Platform",
+      platform: "LuboIntel // Global Lubricant Market Insights",
       generatedAt: new Date().toISOString(),
       activeScenario: financialAssumptions.scenario,
       scoringWeights,
@@ -91,126 +94,153 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0A0B0E] text-[#D1D5DB] flex flex-col selection:bg-[#F27D26] selection:text-black font-sans">
-      {/* Top Main Navigation Header */}
-      <NavigationHeader
+    <div className="min-h-screen bg-[#F8FAFC] text-[#111827] flex selection:bg-purple-500/20 selection:text-purple-900 font-sans">
+      {/* Left Sidebar Navigation (Desktop + Mobile Drawer) */}
+      <NavigationSidebar
         activeTab={activeTab}
         onTabChange={setActiveTab}
         onOpenAiAssistant={() => setIsAiModalOpen(true)}
-        alerts={alerts}
         financialAssumptions={financialAssumptions}
-        onAssumptionsChange={setFinancialAssumptions}
-        onExportReport={handleExportDossier}
-        onExportExcel={handleExportExcel}
-        locations={locations}
+        isOpenMobile={isMobileSidebarOpen}
+        onCloseMobile={() => setIsMobileSidebarOpen(false)}
       />
 
-      {/* Export Toast Notification */}
-      {exportNotice && (
-        <div className="fixed bottom-10 right-6 z-50 bg-[#0E1117] border border-[#F27D26] text-[#F27D26] px-4 py-2.5 rounded shadow-2xl text-xs font-mono font-semibold flex items-center gap-2 animate-in fade-in slide-in-from-bottom-4">
-          <span className="w-2 h-2 rounded-full bg-[#F27D26] animate-ping" />
-          <span>{exportNotice}</span>
-        </div>
+      {/* Backdrop for Mobile Sidebar */}
+      {isMobileSidebarOpen && (
+        <div
+          onClick={() => setIsMobileSidebarOpen(false)}
+          className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 lg:hidden"
+        />
       )}
 
-      {/* Main View Body */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-5">
-        {activeTab === 'overview' && (
-          <IndiaOverviewDashboard
-            locations={locations}
-            warehouseNodes={warehouseNodes}
-            distributors={distributors}
-            selectedLocation={selectedLocation}
-            onSelectLocation={handleSelectLocation}
-            gridResolution={gridResolution}
-            onResolutionChange={setGridResolution}
-            scoringWeights={scoringWeights}
-            onWeightsChange={setScoringWeights}
-            onNavigateToDistrict={handleNavigateToDistrict}
-            onNavigateToTab={setActiveTab}
-          />
+      {/* Main Workspace Area */}
+      <div className="flex-1 flex flex-col min-w-0 min-h-screen">
+        
+        {/* Workspace Top Header Bar */}
+        <NavigationHeader
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+          onOpenAiAssistant={() => setIsAiModalOpen(true)}
+          alerts={alerts}
+          financialAssumptions={financialAssumptions}
+          onAssumptionsChange={setFinancialAssumptions}
+          onExportReport={handleExportDossier}
+          onExportExcel={handleExportExcel}
+          locations={locations}
+          onToggleMobileSidebar={() => setIsMobileSidebarOpen(!isMobileSidebarOpen)}
+          onSearchQuery={setGlobalSearchTerm}
+        />
+
+        {/* Export Toast Notification */}
+        {exportNotice && (
+          <div className="fixed bottom-12 right-6 z-50 bg-white border border-purple-200 text-purple-900 px-4 py-3 rounded-2xl shadow-xl text-xs font-semibold flex items-center gap-3 animate-in fade-in slide-in-from-bottom-4">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#7C3AED] animate-ping" />
+            <span>{exportNotice}</span>
+          </div>
         )}
 
-        {activeTab === 'brandValidation' && (
-          <BrandValidationDashboard />
-        )}
+        {/* Workspace Content Body */}
+        <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+          {activeTab === 'overview' && (
+            <IndiaOverviewDashboard
+              locations={locations}
+              warehouseNodes={warehouseNodes}
+              distributors={distributors}
+              selectedLocation={selectedLocation}
+              onSelectLocation={handleSelectLocation}
+              gridResolution={gridResolution}
+              onResolutionChange={setGridResolution}
+              scoringWeights={scoringWeights}
+              onWeightsChange={setScoringWeights}
+              onNavigateToDistrict={handleNavigateToDistrict}
+              onNavigateToTab={setActiveTab}
+            />
+          )}
 
-        {activeTab === 'state' && (
-          <StateAnalysisDashboard
-            locations={locations}
-            onSelectDistrict={handleNavigateToDistrict}
-          />
-        )}
+          {activeTab === 'brandValidation' && (
+            <BrandValidationDashboard />
+          )}
 
-        {activeTab === 'district' && (
-          <DistrictAnalysisDashboard
-            locations={locations}
-            distributors={distributors}
-            selectedLocation={selectedLocation}
-            onSelectLocation={handleSelectLocation}
-            onNavigateToBusinessCase={handleNavigateToBusinessCase}
-          />
-        )}
+          {activeTab === 'state' && (
+            <StateAnalysisDashboard
+              locations={locations}
+              onSelectDistrict={handleNavigateToDistrict}
+            />
+          )}
 
-        {activeTab === 'product' && (
-          <ProductAnalysisDashboard />
-        )}
+          {activeTab === 'district' && (
+            <DistrictAnalysisDashboard
+              locations={locations}
+              distributors={distributors}
+              selectedLocation={selectedLocation}
+              onSelectLocation={handleSelectLocation}
+              onNavigateToBusinessCase={handleNavigateToBusinessCase}
+            />
+          )}
 
-        {activeTab === 'distributor' && (
-          <DistributorOpportunityDashboard
-            locations={locations}
-            distributors={distributors}
-            scoringWeights={scoringWeights}
-            onWeightsChange={setScoringWeights}
-            onSelectDistrict={handleNavigateToDistrict}
-          />
-        )}
+          {activeTab === 'product' && (
+            <ProductAnalysisDashboard />
+          )}
 
-        {activeTab === 'warehouse' && (
-          <WarehouseOptimizationDashboard
-            warehouseNodes={warehouseNodes}
-          />
-        )}
+          {activeTab === 'distributor' && (
+            <DistributorOpportunityDashboard
+              locations={locations}
+              distributors={distributors}
+              scoringWeights={scoringWeights}
+              onWeightsChange={setScoringWeights}
+              onSelectDistrict={handleNavigateToDistrict}
+            />
+          )}
 
-        {activeTab === 'forecast' && (
-          <ForecastPipelineDashboard />
-        )}
+          {activeTab === 'warehouse' && (
+            <WarehouseOptimizationDashboard
+              warehouseNodes={warehouseNodes}
+            />
+          )}
 
-        {activeTab === 'businessCase' && (
-          <BusinessCaseSimulator
-            locations={locations}
-            selectedLocation={selectedLocation}
-            onSelectLocation={handleSelectLocation}
-            financialAssumptions={financialAssumptions}
-            onAssumptionsChange={setFinancialAssumptions}
-          />
-        )}
+          {activeTab === 'forecast' && (
+            <ForecastPipelineDashboard />
+          )}
 
-        {activeTab === 'documentation' && (
-          <MethodologyDocCenter />
-        )}
-      </main>
+          {activeTab === 'businessCase' && (
+            <BusinessCaseSimulator
+              locations={locations}
+              selectedLocation={selectedLocation}
+              onSelectLocation={handleSelectLocation}
+              financialAssumptions={financialAssumptions}
+              onAssumptionsChange={setFinancialAssumptions}
+            />
+          )}
 
-      {/* Technical Telemetry Status Footer */}
-      <footer className="h-8 bg-[#050608] border-t border-[#1F2937] flex items-center px-6 justify-between shrink-0 font-mono text-[10px] text-gray-500">
-        <div className="flex items-center gap-6">
-          <span className="flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-            STATUS: <strong className="text-gray-300">DATA_SYNC_COMPLETE</strong>
-          </span>
-          <span className="hidden sm:inline uppercase">
-            Confidence Index: <span className="text-green-400 font-bold">88.2% (VAHAN+PPAC)</span>
-          </span>
-          <span className="hidden md:inline text-gray-600">|</span>
-          <span className="hidden md:inline uppercase text-gray-400">
-            Active Grid: <strong className="text-[#F27D26]">{gridResolution}</strong>
-          </span>
-        </div>
-        <div className="flex items-center gap-4">
-          <span className="italic text-gray-400">AI-ASSISTANT: READY FOR QUERY...</span>
-          <span className="text-[#F27D26] font-bold">v2.5_PRO</span>
-        </div>
-      </footer>
+          {activeTab === 'documentation' && (
+            <MethodologyDocCenter />
+          )}
+        </main>
+
+        {/* Enterprise Telemetry Footer */}
+        <footer className="mt-auto h-11 bg-white border-t border-slate-200/80 flex items-center px-6 justify-between shrink-0 text-[11px] font-semibold text-slate-500">
+          <div className="flex items-center gap-6">
+            <span className="flex items-center gap-2 text-slate-700">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+              DATA ENGINE: <strong className="text-slate-900 font-bold">5.70M KL GROUNDED</strong>
+            </span>
+            <span className="hidden sm:inline text-slate-400">|</span>
+            <span className="hidden sm:inline text-slate-600">
+              Confidence Index: <strong className="text-emerald-700">88.2% (VAHAN 4.0 + PPAC)</strong>
+            </span>
+            <span className="hidden md:inline text-slate-400">|</span>
+            <span className="hidden md:inline text-slate-600">
+              Active Mesh Grid: <strong className="text-[#7C3AED]">{gridResolution}</strong>
+            </span>
+          </div>
+          <div className="flex items-center gap-4">
+            <span className="text-slate-500 hidden sm:inline">LuboIntel Decision Engine</span>
+            <span className="px-2 py-0.5 rounded bg-purple-50 text-[#7C3AED] font-bold border border-purple-200/60">
+              v2.8 Enterprise
+            </span>
+          </div>
+        </footer>
+      </div>
 
       {/* AI Strategic Market Analyst Modal */}
       <AiAssistantModal
@@ -224,3 +254,4 @@ export default function App() {
     </div>
   );
 }
+

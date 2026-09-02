@@ -796,8 +796,8 @@ export const IndiaGisMap: React.FC<IndiaGisMapProps> = ({
                 {/* Depot Label Pill */}
                 {(labelMode !== 'minimal' || isHovered) && (
                   <g transform="translate(12, -7)">
-                    <rect x="0" y="0" width={node.clusterName.split('—')[0].length * 6 + 18} height="15" rx="3" fill="#0C1017" stroke="#9333ea" strokeWidth="0.8" />
-                    <text x="5" y="11" fill="#e9d5ff" fontSize="8" fontWeight="700" className="pointer-events-none font-mono">
+                    <rect x="0" y="0" width={node.clusterName.split('—')[0].length * 6 + 18} height="15" rx="4" fill="#FFFFFF" stroke="#9333ea" strokeWidth="1" />
+                    <text x="5" y="11" fill="#6B21A8" fontSize="8" fontWeight="700" className="pointer-events-none font-sans">
                       📦 {node.clusterName.split('—')[0].trim()}
                     </text>
                   </g>
@@ -820,7 +820,7 @@ export const IndiaGisMap: React.FC<IndiaGisMapProps> = ({
                     y1={dist.originalY}
                     x2={dist.x}
                     y2={dist.y}
-                    stroke="#0891b2"
+                    stroke="#0284c7"
                     strokeWidth="0.8"
                     strokeDasharray="2,2"
                     opacity="0.6"
@@ -840,7 +840,7 @@ export const IndiaGisMap: React.FC<IndiaGisMapProps> = ({
                 >
                   {/* Selection Glow */}
                   {isSelected && (
-                    <circle r="14" fill="none" stroke="#22d3ee" strokeWidth="1.6" strokeDasharray="3,2" className="animate-spin" />
+                    <circle r="14" fill="none" stroke="#0284c7" strokeWidth="1.6" strokeDasharray="3,2" className="animate-spin" />
                   )}
 
                   {/* Diamond Icon */}
@@ -850,11 +850,11 @@ export const IndiaGisMap: React.FC<IndiaGisMapProps> = ({
                     width="10"
                     height="10"
                     transform="rotate(45)"
-                    fill={isSelected ? "#22d3ee" : isHovered ? "#06b6d4" : "#0891b2"}
+                    fill={isSelected ? "#0284c7" : isHovered ? "#0ea5e9" : "#38bdf8"}
                     stroke="#ffffff"
                     strokeWidth={isSelected ? "1.8" : "1.0"}
                   />
-                  <circle r="1.5" fill="#05070B" />
+                  <circle r="1.5" fill="#FFFFFF" />
 
                   {/* Detailed Brand Label Pill (Visible when hovered, selected, or in 'all' label mode) */}
                   {(isHovered || isSelected || labelMode === 'all') && (
@@ -864,12 +864,12 @@ export const IndiaGisMap: React.FC<IndiaGisMapProps> = ({
                         y="0" 
                         width={dist.brand.length * 6 + 45} 
                         height="16" 
-                        rx="3" 
-                        fill="#05070B" 
-                        stroke={isSelected ? "#22d3ee" : "#0891b2"} 
+                        rx="4" 
+                        fill="#FFFFFF" 
+                        stroke={isSelected ? "#0284c7" : "#38bdf8"} 
                         strokeWidth="1" 
                       />
-                      <text x="5" y="11" fill="#a5f3fc" fontSize="8" fontWeight="700" className="font-mono">
+                      <text x="5" y="11" fill="#0369a1" fontSize="8" fontWeight="700" className="font-sans">
                         🏢 {dist.brand} ({dist.annualVolumeKL.toLocaleString()} KL)
                       </text>
                     </g>
@@ -911,7 +911,7 @@ export const IndiaGisMap: React.FC<IndiaGisMapProps> = ({
                   <circle
                     r="18"
                     fill="none"
-                    stroke="#F27D26"
+                    stroke="#7C3AED"
                     strokeWidth="1.8"
                     strokeDasharray="4,3"
                     className="animate-spin"
@@ -921,34 +921,34 @@ export const IndiaGisMap: React.FC<IndiaGisMapProps> = ({
                 {/* Primary Circle Marker */}
                 <circle
                   r={isSelected ? 7.5 : 6}
-                  fill={isCritical ? '#ef4444' : '#F27D26'}
+                  fill={isCritical ? '#ef4444' : '#7C3AED'}
                   stroke="#ffffff"
                   strokeWidth={isSelected ? 2 : 1.2}
                 />
-                <circle r="2" fill="#05070B" />
+                <circle r="2" fill="#FFFFFF" />
 
                 {/* Clean, Non-Overlapping Label Badge Pill */}
                 {(labelMode !== 'minimal' || isSelected || isHovered || rankNumber <= 5) && (
-                  <g transform="translate(10, -9)" className="pointer-events-none select-none font-mono">
+                  <g transform="translate(10, -9)" className="pointer-events-none select-none font-sans">
                     {/* Badge Background Rect to prevent overlap bleeding */}
                     <rect
                       x="0"
                       y="0"
                       width={loc.name.split(' ')[0].length * 6.5 + 46}
                       height="18"
-                      rx="3.5"
-                      fill="#0C1017"
-                      stroke={isSelected ? '#F27D26' : isCritical ? '#ef4444' : '#475569'}
+                      rx="4"
+                      fill="#FFFFFF"
+                      stroke={isSelected ? '#7C3AED' : isCritical ? '#ef4444' : '#CBD5E1'}
                       strokeWidth={isSelected ? 1.5 : 1}
-                      className="drop-shadow-lg"
+                      className="drop-shadow-sm"
                     />
                     {/* Rank Indicator */}
-                    <text x="5" y="12.5" fill={isCritical ? '#f87171' : '#fb923c'} fontSize="8.5" fontWeight="800">
+                    <text x="5" y="12.5" fill={isCritical ? '#e11d48' : '#7C3AED'} fontSize="8.5" fontWeight="800">
                       #{rankNumber}
                     </text>
                     {/* District Name & Score */}
-                    <text x="20" y="12.5" fill="#ffffff" fontSize="8.5" fontWeight="700">
-                      {loc.name.split(' ')[0]} <tspan fill="#F27D26">({loc.whiteSpotScore.toFixed(0)})</tspan>
+                    <text x="20" y="12.5" fill="#1E293B" fontSize="8.5" fontWeight="700">
+                      {loc.name.split(' ')[0]} <tspan fill="#7C3AED">({loc.whiteSpotScore.toFixed(0)})</tspan>
                     </text>
                   </g>
                 )}
@@ -959,69 +959,69 @@ export const IndiaGisMap: React.FC<IndiaGisMapProps> = ({
 
         {/* Hover Tooltip Card: White Spot Node */}
         {hoveredLocation && (
-          <div className="absolute bottom-12 left-4 z-40 bg-[#0C1017]/98 backdrop-blur-md border border-[#F27D26] rounded p-3 text-xs text-gray-200 shadow-2xl max-w-sm pointer-events-none font-mono">
-            <div className="flex items-center justify-between gap-3 border-b border-[#1F2937] pb-1.5 mb-2">
-              <span className="font-bold text-sm text-[#F27D26] uppercase">{hoveredLocation.name}</span>
-              <span className="px-1.5 py-0.5 rounded text-[9px] font-bold bg-[#1F2937] text-white border border-[#374151]">
+          <div className="absolute bottom-12 left-4 z-40 bg-white/95 backdrop-blur-md border border-purple-200 rounded-2xl p-4 text-xs text-slate-800 shadow-xl max-w-sm pointer-events-none font-sans">
+            <div className="flex items-center justify-between gap-3 border-b border-slate-100 pb-2 mb-2.5">
+              <span className="font-bold text-sm text-[#7C3AED] uppercase">{hoveredLocation.name}</span>
+              <span className="px-2 py-0.5 rounded-lg text-[10px] font-bold bg-purple-50 text-purple-700 border border-purple-200">
                 SCORE: {hoveredLocation.whiteSpotScore}/100
               </span>
             </div>
-            <div className="grid grid-cols-2 gap-2 text-[10px] mb-2 font-mono">
+            <div className="grid grid-cols-2 gap-2 text-[11px] mb-2 font-sans">
               <div>
-                <span className="text-gray-500 block">TOTAL DEMAND:</span>
-                <span className="font-bold text-[#F27D26]">{hoveredLocation.totalEstimatedDemandKL.toLocaleString()} KL/YR</span>
+                <span className="text-slate-400 block text-[10px]">TOTAL DEMAND:</span>
+                <span className="font-bold text-[#7C3AED]">{hoveredLocation.totalEstimatedDemandKL.toLocaleString()} KL/YR</span>
               </div>
               <div>
-                <span className="text-gray-500 block">UNMET SUPPLY GAP:</span>
-                <span className="font-bold text-red-400">{hoveredLocation.supplyGapKL.toLocaleString()} KL/YR</span>
+                <span className="text-slate-400 block text-[10px]">UNMET SUPPLY GAP:</span>
+                <span className="font-bold text-rose-600">{hoveredLocation.supplyGapKL.toLocaleString()} KL/YR</span>
               </div>
               <div>
-                <span className="text-gray-500 block">COVERAGE RATIO:</span>
-                <span className="font-bold text-yellow-400">{hoveredLocation.supplyCoverageRatioPct}%</span>
+                <span className="text-slate-400 block text-[10px]">COVERAGE RATIO:</span>
+                <span className="font-bold text-amber-600">{hoveredLocation.supplyCoverageRatioPct}%</span>
               </div>
               <div>
-                <span className="text-gray-500 block">OPPORTUNITY POOL:</span>
-                <span className="font-bold text-green-400">₹{hoveredLocation.unmetOpportunityValueINR} CR</span>
+                <span className="text-slate-400 block text-[10px]">OPPORTUNITY POOL:</span>
+                <span className="font-bold text-emerald-600">₹{hoveredLocation.unmetOpportunityValueINR} CR</span>
               </div>
             </div>
-            <div className="text-[9px] text-gray-400 italic">
-              CLICK PIN TO DRILL INTO REGIONAL DEMAND &amp; FINANCIAL BUSINESS CASE.
+            <div className="text-[10px] text-slate-400 italic">
+              Click pin to drill into regional demand &amp; financial business case.
             </div>
           </div>
         )}
 
         {/* Hover Tooltip Card: Competitor Distributor */}
         {hoveredDistributor && (
-          <div className="absolute bottom-12 left-4 z-40 bg-[#0C1017]/98 backdrop-blur-md border border-cyan-500/80 rounded p-3 text-xs text-gray-200 shadow-2xl max-w-sm pointer-events-none font-mono">
-            <div className="flex items-center justify-between gap-3 border-b border-[#1F2937] pb-1.5 mb-2">
+          <div className="absolute bottom-12 left-4 z-40 bg-white/95 backdrop-blur-md border border-sky-200 rounded-2xl p-4 text-xs text-slate-800 shadow-xl max-w-sm pointer-events-none font-sans">
+            <div className="flex items-center justify-between gap-3 border-b border-slate-100 pb-2 mb-2">
               <div className="flex items-center gap-1.5">
-                <Store className="w-3.5 h-3.5 text-cyan-400" />
-                <span className="font-bold text-xs text-cyan-300 uppercase truncate">{hoveredDistributor.name}</span>
+                <Store className="w-4 h-4 text-sky-600" />
+                <span className="font-bold text-xs text-sky-700 uppercase truncate">{hoveredDistributor.name}</span>
               </div>
-              <span className="px-1.5 py-0.5 rounded text-[9px] font-bold bg-cyan-950 text-cyan-300 border border-cyan-700 uppercase">
+              <span className="px-2 py-0.5 rounded-lg text-[9px] font-bold bg-sky-50 text-sky-700 border border-sky-200 uppercase">
                 {hoveredDistributor.distributorType}
               </span>
             </div>
-            <div className="text-[10px] text-gray-400 mb-2 font-mono">
-              <span>BRAND: <strong className="text-white">{hoveredDistributor.brand}</strong> ({hoveredDistributor.parentCompany})</span>
-              <div className="text-gray-500 text-[9px]">{hoveredDistributor.address}</div>
+            <div className="text-[11px] text-slate-600 mb-2">
+              <span>BRAND: <strong className="text-slate-900">{hoveredDistributor.brand}</strong> ({hoveredDistributor.parentCompany})</span>
+              <div className="text-slate-400 text-[10px] truncate">{hoveredDistributor.address}</div>
             </div>
-            <div className="grid grid-cols-2 gap-2 text-[10px] mb-2 font-mono bg-[#05070B] p-2 rounded border border-[#1F2937]">
+            <div className="grid grid-cols-2 gap-2 text-[10px] mb-2 bg-slate-50 p-2.5 rounded-xl border border-slate-200">
               <div>
-                <span className="text-gray-500 block">ANNUAL VOLUME:</span>
-                <span className="font-bold text-cyan-400">{hoveredDistributor.annualVolumeKL.toLocaleString()} KL/YR</span>
+                <span className="text-slate-400 block">ANNUAL VOLUME:</span>
+                <span className="font-bold text-sky-700">{hoveredDistributor.annualVolumeKL.toLocaleString()} KL/YR</span>
               </div>
               <div>
-                <span className="text-gray-500 block">STORAGE CAP:</span>
-                <span className="font-bold text-white">{hoveredDistributor.warehouseCapacityKL} KL</span>
+                <span className="text-slate-400 block">STORAGE CAP:</span>
+                <span className="font-bold text-slate-800">{hoveredDistributor.warehouseCapacityKL} KL</span>
               </div>
               <div>
-                <span className="text-gray-500 block">DEALER NETWORK:</span>
-                <span className="font-bold text-emerald-400">{hoveredDistributor.dealerNetworkCount} OUTLETS</span>
+                <span className="text-slate-400 block">DEALER NETWORK:</span>
+                <span className="font-bold text-emerald-600">{hoveredDistributor.dealerNetworkCount} OUTLETS</span>
               </div>
               <div>
-                <span className="text-gray-500 block">COVERAGE RADIUS:</span>
-                <span className="font-bold text-yellow-400">{hoveredDistributor.coverageRadiusKm} KM ({hoveredDistributor.avgLeadTimeDays}d lead)</span>
+                <span className="text-slate-400 block">COVERAGE RADIUS:</span>
+                <span className="font-bold text-amber-600">{hoveredDistributor.coverageRadiusKm} KM ({hoveredDistributor.avgLeadTimeDays}d lead)</span>
               </div>
             </div>
           </div>
@@ -1029,29 +1029,29 @@ export const IndiaGisMap: React.FC<IndiaGisMapProps> = ({
 
         {/* Hover Tooltip Card: Mesh Cell Live Spatial Inspector */}
         {hoveredMeshCell && !hoveredLocation && !hoveredDistributor && (
-          <div className="absolute bottom-12 left-4 z-40 bg-[#0C1017]/95 backdrop-blur-md border border-amber-500/50 rounded p-2.5 text-xs text-gray-200 shadow-2xl max-w-xs pointer-events-none font-mono">
-            <div className="flex items-center justify-between gap-2 border-b border-[#1F2937] pb-1 mb-1.5">
-              <span className="text-[10px] font-bold text-amber-400 uppercase flex items-center gap-1">
-                <Crosshair className="w-3 h-3 text-amber-400" />
+          <div className="absolute bottom-12 left-4 z-40 bg-white/95 backdrop-blur-md border border-amber-200 rounded-2xl p-3 text-xs text-slate-800 shadow-xl max-w-xs pointer-events-none font-sans">
+            <div className="flex items-center justify-between gap-2 border-b border-slate-100 pb-1.5 mb-2">
+              <span className="text-[11px] font-bold text-amber-700 uppercase flex items-center gap-1">
+                <Crosshair className="w-3.5 h-3.5 text-amber-600" />
                 SPATIAL MESH CELL ({gridResolution})
               </span>
-              <span className="text-[9px] text-gray-400">
+              <span className="text-[10px] text-slate-400">
                 {hoveredMeshCell.lat}°N, {hoveredMeshCell.lng}°E
               </span>
             </div>
-            <div className="grid grid-cols-2 gap-1.5 text-[9px]">
+            <div className="grid grid-cols-2 gap-2 text-[10px]">
               <div>
-                <span className="text-gray-500 block">DEMAND INDEX:</span>
-                <span className="font-bold text-[#F27D26]">{hoveredMeshCell.demandIntensity} / 100</span>
+                <span className="text-slate-400 block">DEMAND INDEX:</span>
+                <span className="font-bold text-[#7C3AED]">{hoveredMeshCell.demandIntensity} / 100</span>
               </div>
               <div>
-                <span className="text-gray-500 block">DEFICIT SCORE:</span>
-                <span className="font-bold text-red-400">{hoveredMeshCell.gapScore} / 100</span>
+                <span className="text-slate-400 block">DEFICIT SCORE:</span>
+                <span className="font-bold text-rose-600">{hoveredMeshCell.gapScore} / 100</span>
               </div>
             </div>
             {hoveredMeshCell.nearestLocName && (
-              <div className="text-[8.5px] text-gray-400 mt-1 border-t border-[#1F2937] pt-1">
-                NEAREST CLUSTER: <strong className="text-white">{hoveredMeshCell.nearestLocName}</strong>
+              <div className="text-[9.5px] text-slate-500 mt-2 border-t border-slate-100 pt-1.5">
+                Nearest Cluster: <strong className="text-slate-800">{hoveredMeshCell.nearestLocName}</strong>
               </div>
             )}
           </div>
@@ -1059,39 +1059,39 @@ export const IndiaGisMap: React.FC<IndiaGisMapProps> = ({
       </div>
 
       {/* Bottom GIS Status & Telemetry HUD */}
-      <div className="bg-[#0C1017] border-t border-[#1F2937] px-3 py-1.5 flex flex-wrap items-center justify-between text-[10px] text-gray-400 z-10 font-mono">
-        <div className="flex items-center gap-3.5 flex-wrap">
-          <span className="font-bold text-gray-300 uppercase flex items-center gap-1">
-            <Compass className="w-3 h-3 text-[#F27D26]" />
+      <div className="bg-white border-t border-slate-200 px-4 py-2.5 flex flex-wrap items-center justify-between text-[11px] text-slate-500 z-10 font-sans">
+        <div className="flex items-center gap-4 flex-wrap">
+          <span className="font-bold text-slate-700 uppercase flex items-center gap-1.5">
+            <Compass className="w-3.5 h-3.5 text-[#7C3AED]" />
             GIS LEGEND:
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-red-500 inline-block" />
-            <span className="text-red-400 font-bold">CRITICAL WHITE SPOT (&gt;80)</span>
+            <span className="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block" />
+            <span className="text-rose-600 font-bold">Critical White Spot (&gt;80)</span>
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#F27D26] inline-block" />
-            <span className="text-[#F27D26] font-bold">HIGH OPPORTUNITY</span>
+            <span className="w-2.5 h-2.5 rounded-full bg-[#7C3AED] inline-block" />
+            <span className="text-[#7C3AED] font-bold">High Opportunity</span>
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rotate-45 bg-cyan-400 inline-block" />
-            <span className="text-cyan-300 font-bold">COMPETITOR DISTRIBUTOR</span>
+            <span className="w-2.5 h-2.5 rotate-45 bg-sky-500 inline-block" />
+            <span className="text-sky-700 font-bold">Competitor Distributor</span>
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-purple-500 inline-block" />
-            <span className="text-purple-300 font-bold">DEPOT HUB</span>
+            <span className="w-2.5 h-2.5 rounded-full bg-purple-600 inline-block" />
+            <span className="text-purple-700 font-bold">Depot Hub</span>
           </span>
         </div>
 
         {/* Telemetry */}
-        <div className="flex items-center gap-3 text-[9px] text-gray-400">
+        <div className="flex items-center gap-3 text-[10px] text-slate-400">
           {cursorCoords && (
-            <span className="text-cyan-300 font-bold">
+            <span className="text-purple-700 font-bold">
               📍 {cursorCoords.lat}°N, {cursorCoords.lng}°E
             </span>
           )}
-          <span>RESOLUTION: <strong className="text-white">{gridResolution}</strong></span>
-          <span>PROJECTION: <strong className="text-white">WGS84</strong></span>
+          <span>RESOLUTION: <strong className="text-slate-700">{gridResolution}</strong></span>
+          <span>PROJECTION: <strong className="text-slate-700">WGS84</strong></span>
         </div>
       </div>
     </div>
