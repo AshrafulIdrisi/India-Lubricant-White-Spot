@@ -506,7 +506,7 @@ export const DistrictAnalysisDashboard: React.FC<DistrictAnalysisDashboardProps>
         ) : (
           <div className="bg-[#050608] border border-[#1F2937] p-4 rounded text-center font-mono">
             <p className="text-xs text-gray-400">
-              No master stockist directly registered within this exact municipal boundary. Currently served via secondary supply routes from neighboring hub ({loc.supply.nearestDepotName}, {loc.supply.distanceToPrimaryDepotKm} km away).
+              No master stockist directly registered within this exact municipal boundary. Currently served via secondary supply routes from neighboring regional hub ({loc.supply.avgAccessibilityDistanceKm || 45} km average transit distance).
             </p>
             <p className="text-[10px] text-[#F27D26] font-bold mt-1 uppercase">
               HIGH PENETRATION OPPORTUNITY FOR FIRST-MOVER DEPOT DEPLOYMENT
