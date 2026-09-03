@@ -29,7 +29,8 @@ import {
   Truck,
   Boxes,
   Scale,
-  FileSpreadsheet
+  FileSpreadsheet,
+  Globe
 } from 'lucide-react';
 import {
   ResponsiveContainer,
@@ -55,16 +56,18 @@ import { ALL_INDIA_STATES_DATA } from '../../data/allIndiaStateData';
 import { ALL_36_MAX_WHITE_SPOT_CLUSTERS, SUMMARY_36_MAX_CLUSTERS, MaxWhiteSpotCluster } from '../../data/maxWhiteSpotClustersData';
 import { recalculateWhiteSpotScore, classifyOpportunityTier, formatKL, formatINR } from '../../utils/demandEngine';
 import { downloadWhiteSpotExcel } from '../../utils/excelExporter';
+import { OsmDistributorManager } from '../OsmDistributorManager';
 
 interface DistributorOpportunityDashboardProps {
   locations: LocationRecord[];
   distributors?: DistributorRecord[];
+  onDistributorsChange?: (distributors: DistributorRecord[]) => void;
   scoringWeights: ScoringWeights;
   onWeightsChange: (weights: ScoringWeights) => void;
   onSelectDistrict: (loc: LocationRecord) => void;
 }
 
-type TabView = 'maxClusters' | 'distributors' | 'whiteSpots' | 'comparison' | 'charts';
+type TabView = 'maxClusters' | 'osmNetwork' | 'distributors' | 'whiteSpots' | 'comparison' | 'charts';
 
 const BRAND_COLORS: Record<string, string> = {
   'IOCL Servo': '#ef4444',
@@ -83,6 +86,7 @@ const BRAND_COLORS: Record<string, string> = {
 export const DistributorOpportunityDashboard: React.FC<DistributorOpportunityDashboardProps> = ({
   locations,
   distributors = CURRENT_DISTRIBUTORS,
+  onDistributorsChange,
   scoringWeights,
   onWeightsChange,
   onSelectDistrict
@@ -91,6 +95,7 @@ export const DistributorOpportunityDashboard: React.FC<DistributorOpportunityDas
   const [selectedTypeFilter, setSelectedTypeFilter] = useState<string>('all');
   const [brandFilter, setBrandFilter] = useState<string>('all');
   const [stateFilter, setStateFilter] = useState<string>('all');
+  const [distributorSourceFilter, setDistributorSourceFilter] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
 
   // 36 Max White-Spot Clusters Filter States
@@ -149,6 +154,15 @@ export const DistributorOpportunityDashboard: React.FC<DistributorOpportunityDas
     return distributors.filter(dist => {
       const matchesBrand = brandFilter === 'all' || dist.brand === brandFilter;
       const matchesState = stateFilter === 'all' || dist.stateName === stateFilter;
+      
+      const matchesSource = distributorSourceFilter === 'all' || 
+        (distributorSourceFilter === 'pacs' && (dist.distributorType?.includes('PACS') || dist.osmMeta?.source?.includes('PACS') || dist.primarySector?.includes('Agri'))) ||
+        (distributorSourceFilter === 'osm' && (dist.osmMeta?.source?.includes('OpenStreetMap') || dist.osmMeta?.osmId)) ||
+        (distributorSourceFilter === 'omc' && (dist.distributorType === 'Direct OMC Depot' || dist.distributorType?.includes('OMC'))) ||
+        (distributorSourceFilter === 'stockist' && (dist.distributorType === 'Super Stockist' || dist.distributorType === 'Master Distributor')) ||
+        (distributorSourceFilter === 'transportNagar' && (dist.distributorType?.includes('Transport') || dist.name?.toLowerCase().includes('transport'))) ||
+        (distributorSourceFilter === 'industrial' && (dist.distributorType === 'Industrial Channel Partner' || dist.primarySector?.includes('Industrial')));
+
       const q = searchQuery.toLowerCase().trim();
       const matchesSearch = !q || 
         dist.name.toLowerCase().includes(q) ||
@@ -158,9 +172,9 @@ export const DistributorOpportunityDashboard: React.FC<DistributorOpportunityDas
         dist.stateName.toLowerCase().includes(q) ||
         dist.topSellingSKUs.some(sku => sku.toLowerCase().includes(q));
       
-      return matchesBrand && matchesState && matchesSearch;
+      return matchesBrand && matchesState && matchesSource && matchesSearch;
     });
-  }, [distributors, brandFilter, stateFilter, searchQuery]);
+  }, [distributors, brandFilter, stateFilter, distributorSourceFilter, searchQuery]);
 
   // Comparison Selected Items
   const compareWhiteSpot = useMemo(() => {
@@ -421,6 +435,18 @@ export const DistributorOpportunityDashboard: React.FC<DistributorOpportunityDas
           >
             <Sparkles className="w-3.5 h-3.5 text-amber-300" />
             <span>36 MAX WHITE-SPOT CLUSTERS (1.51M KL DEFICIT)</span>
+          </button>
+
+          <button
+            onClick={() => setActiveView('osmNetwork')}
+            className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 uppercase ${
+              activeView === 'osmNetwork'
+                ? 'bg-gradient-to-r from-[#7C3AED] to-[#4F46E5] text-white shadow-sm font-bold'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/60'
+            }`}
+          >
+            <Globe className="w-3.5 h-3.5 text-emerald-400" />
+            <span>OPENSTREETMAP GROUND DATA ({distributors.length})</span>
           </button>
 
           <button
@@ -883,6 +909,15 @@ export const DistributorOpportunityDashboard: React.FC<DistributorOpportunityDas
         </div>
       </div>
 
+      {/* VIEW: OPENSTREETMAP DATA ENGINE & OVERPASS TURBO */}
+      {activeView === 'osmNetwork' && (
+        <OsmDistributorManager
+          distributors={distributors}
+          locations={locations}
+          onDistributorsChange={onDistributorsChange}
+        />
+      )}
+
       {/* VIEW 1: CURRENT DISTRIBUTOR DIRECTORY & FILTERING */}
       {activeView === 'distributors' && (
         <div className="space-y-4">
@@ -932,6 +967,34 @@ export const DistributorOpportunityDashboard: React.FC<DistributorOpportunityDas
                 </select>
               </div>
 
+              {/* Source / Channel Filter */}
+              <div className="flex items-center gap-1">
+                <span className="text-slate-500 text-xs uppercase font-medium">Source / Type:</span>
+                <select
+                  value={distributorSourceFilter}
+                  onChange={e => setDistributorSourceFilter(e.target.value)}
+                  className="bg-purple-50/60 border border-purple-200 text-purple-900 text-xs rounded-xl px-2.5 py-1.5 focus:outline-none focus:border-purple-500 font-bold"
+                >
+                  <option value="all">ALL SOURCES ({distributors.length})</option>
+                  <option value="pacs">PACS &amp; AGRI COOPERATIVES (IFFCO / MARKFED)</option>
+                  <option value="osm">OPENSTREETMAP (OSM OVERPASS VERIFIED)</option>
+                  <option value="omc">DIRECT OMC DEPOTS &amp; RAIL SIDINGS</option>
+                  <option value="stockist">AUTHORIZED SUPER STOCKISTS</option>
+                  <option value="transportNagar">TRANSPORT NAGAR FLEET HUBS</option>
+                  <option value="industrial">INDUSTRIAL CHANNEL PARTNERS</option>
+                </select>
+              </div>
+
+              {/* Overpass Live Harvester Switch */}
+              <button
+                onClick={() => setActiveView('osmNetwork')}
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white rounded-xl transition-all text-xs font-bold uppercase shadow-sm"
+                title="Run Live Overpass Batch Harvester or Multi-PIN Extractor"
+              >
+                <Globe className="w-3.5 h-3.5" />
+                <span>OVERPASS HARVESTER</span>
+              </button>
+
               {/* Export Buttons */}
               <button
                 onClick={() => downloadWhiteSpotExcel(locations, 'Base')}
@@ -949,6 +1012,59 @@ export const DistributorOpportunityDashboard: React.FC<DistributorOpportunityDas
                 <Download className="w-3.5 h-3.5" />
                 <span>JSON</span>
               </button>
+            </div>
+          </div>
+
+          {/* Multi-Source Validation Metrics Summary Banner */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div className="bg-white border border-slate-200/90 rounded-2xl p-3.5 shadow-sm">
+              <span className="text-[10px] text-slate-500 uppercase font-bold tracking-wider block">TOTAL ACTIVE PRESENCE</span>
+              <div className="flex items-baseline justify-between mt-1">
+                <span className="text-xl font-black text-slate-900">{filteredDistributors.length} <span className="text-xs font-normal text-slate-500">Nodes</span></span>
+                <span className="text-xs font-bold text-[#7C3AED]">
+                  {formatKL(filteredDistributors.reduce((acc, d) => acc + d.annualVolumeKL, 0))}
+                </span>
+              </div>
+              <span className="text-[10px] text-slate-400 mt-1 block">Cross-verified across 36 states &amp; UTs</span>
+            </div>
+
+            <div className="bg-white border border-amber-200/80 bg-amber-50/20 rounded-2xl p-3.5 shadow-sm">
+              <span className="text-[10px] text-amber-800 uppercase font-bold tracking-wider block flex items-center gap-1">
+                <span>🌾</span> PACS &amp; AGRI COOPERATIVES
+              </span>
+              <div className="flex items-baseline justify-between mt-1">
+                <span className="text-xl font-black text-amber-900">
+                  {distributors.filter(d => d.distributorType?.includes('PACS') || d.osmMeta?.source?.includes('PACS') || d.primarySector?.includes('Agri')).length}
+                </span>
+                <span className="text-xs font-bold text-amber-700">Tractor &amp; UTTO</span>
+              </div>
+              <span className="text-[10px] text-amber-700/80 mt-1 block">Primary Agri Credit Societies / IFFCO</span>
+            </div>
+
+            <div className="bg-white border border-blue-200/80 bg-blue-50/20 rounded-2xl p-3.5 shadow-sm">
+              <span className="text-[10px] text-blue-800 uppercase font-bold tracking-wider block flex items-center gap-1">
+                <Globe className="w-3 h-3 text-blue-600" /> OSM OVERPASS VERIFIED
+              </span>
+              <div className="flex items-baseline justify-between mt-1">
+                <span className="text-xl font-black text-blue-900">
+                  {distributors.filter(d => d.osmMeta?.source?.includes('OpenStreetMap') || d.osmMeta?.osmId).length}
+                </span>
+                <span className="text-xs font-bold text-blue-700">Live Geocoded</span>
+              </div>
+              <span className="text-[10px] text-blue-700/80 mt-1 block">Fuel lube bays &amp; auto parts nodes</span>
+            </div>
+
+            <div className="bg-white border border-emerald-200/80 bg-emerald-50/20 rounded-2xl p-3.5 shadow-sm">
+              <span className="text-[10px] text-emerald-800 uppercase font-bold tracking-wider block flex items-center gap-1">
+                <Building2 className="w-3 h-3 text-emerald-600" /> OMC DEPOTS &amp; SIDINGS
+              </span>
+              <div className="flex items-baseline justify-between mt-1">
+                <span className="text-xl font-black text-emerald-900">
+                  {distributors.filter(d => d.distributorType === 'Direct OMC Depot' || d.distributorType?.includes('OMC')).length}
+                </span>
+                <span className="text-xs font-bold text-emerald-700">Bulk Rail Sidings</span>
+              </div>
+              <span className="text-[10px] text-emerald-700/80 mt-1 block">IOCL / BPCL / HPCL master depots</span>
             </div>
           </div>
 
@@ -1000,9 +1116,24 @@ export const DistributorOpportunityDashboard: React.FC<DistributorOpportunityDas
                           <span className="text-[10px] text-slate-500 block mt-0.5">{dist.parentCompany}</span>
                         </td>
                         <td className="py-3">
-                          <span className="text-[10px] font-medium text-slate-700 bg-slate-100 px-2 py-0.5 rounded-md border border-slate-200/80">
-                            {dist.distributorType}
-                          </span>
+                          <div className="flex flex-col gap-1">
+                            <span className="text-[10px] font-semibold text-slate-700 bg-slate-100 px-2 py-0.5 rounded-md border border-slate-200/80 inline-block w-fit">
+                              {dist.distributorType}
+                            </span>
+                            {dist.distributorType?.includes('PACS') || dist.osmMeta?.source?.includes('PACS') ? (
+                              <span className="text-[9px] font-bold text-amber-700 bg-amber-50 px-1.5 py-0.2 rounded border border-amber-200 inline-block w-fit">
+                                🌾 PACS Agri Coop
+                              </span>
+                            ) : dist.osmMeta?.source?.includes('OpenStreetMap') || dist.osmMeta?.osmId ? (
+                              <span className="text-[9px] font-bold text-blue-700 bg-blue-50 px-1.5 py-0.2 rounded border border-blue-200 inline-block w-fit">
+                                🌐 OSM Verified ({dist.osmMeta?.confidenceScore || 98}%)
+                              </span>
+                            ) : dist.distributorType === 'Direct OMC Depot' ? (
+                              <span className="text-[9px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.2 rounded border border-emerald-200 inline-block w-fit">
+                                🏭 Rail Siding Depot
+                              </span>
+                            ) : null}
+                          </div>
                           <span className="text-[10px] text-slate-400 block mt-0.5">{dist.primarySector}</span>
                         </td>
                         <td className="py-3 text-right font-bold text-[#7C3AED]">

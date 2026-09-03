@@ -1024,6 +1024,12 @@ export const IndiaGisMap: React.FC<IndiaGisMapProps> = ({
                 <span className="font-bold text-amber-600">{hoveredDistributor.coverageRadiusKm} KM ({hoveredDistributor.avgLeadTimeDays}d lead)</span>
               </div>
             </div>
+            {hoveredDistributor.osmMeta && (
+              <div className="flex items-center justify-between text-[9.5px] bg-sky-50/70 px-2 py-1 rounded-md border border-sky-100 text-sky-800">
+                <span>📍 OSM Node: <strong className="font-mono">{hoveredDistributor.osmMeta.osmId || 'osm-ground-survey'}</strong></span>
+                <span className="text-slate-500">{hoveredDistributor.osmMeta.source}</span>
+              </div>
+            )}
           </div>
         )}
 
@@ -1075,11 +1081,14 @@ export const IndiaGisMap: React.FC<IndiaGisMapProps> = ({
           </span>
           <span className="flex items-center gap-1.5">
             <span className="w-2.5 h-2.5 rotate-45 bg-sky-500 inline-block" />
-            <span className="text-sky-700 font-bold">Competitor Distributor</span>
+            <span className="text-sky-700 font-bold">Competitor Distributor (OSM Mapped)</span>
           </span>
           <span className="flex items-center gap-1.5">
             <span className="w-2.5 h-2.5 rounded-full bg-purple-600 inline-block" />
             <span className="text-purple-700 font-bold">Depot Hub</span>
+          </span>
+          <span className="text-[10px] text-slate-400 border-l border-slate-200 pl-3">
+            © OpenStreetMap contributors • Overpass API
           </span>
         </div>
 

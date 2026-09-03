@@ -1,6 +1,7 @@
 import { LocationRecord, WarehouseOptimizationNode, AlertNotification, DistributorRecord } from '../types';
 import { ALL_36_MAX_WHITE_SPOT_CLUSTERS, MaxWhiteSpotCluster } from './maxWhiteSpotClustersData';
 import { ALL_INDIA_DISTRIBUTORS } from './allIndiaDistributorsData';
+import { COMPREHENSIVE_GROUND_DISTRIBUTORS } from './groundDistributorDataset';
 
 /**
  * Transforms a MaxWhiteSpotCluster (from the Master 36 clusters network)
@@ -470,4 +471,7 @@ export const SYSTEM_ALERTS: AlertNotification[] = [
   }
 ];
 
-export const CURRENT_DISTRIBUTORS: DistributorRecord[] = ALL_INDIA_DISTRIBUTORS;
+export const CURRENT_DISTRIBUTORS: DistributorRecord[] = [
+  ...ALL_INDIA_DISTRIBUTORS,
+  ...COMPREHENSIVE_GROUND_DISTRIBUTORS
+];

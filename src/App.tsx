@@ -186,6 +186,7 @@ export default function App() {
             <DistributorOpportunityDashboard
               locations={locations}
               distributors={distributors}
+              onDistributorsChange={setDistributors}
               scoringWeights={scoringWeights}
               onWeightsChange={setScoringWeights}
               onSelectDistrict={handleNavigateToDistrict}

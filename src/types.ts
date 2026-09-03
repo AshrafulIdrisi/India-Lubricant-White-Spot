@@ -265,12 +265,46 @@ export type DistributorPerformanceTier =
   | 'Moderate' 
   | 'Vulnerable / Stagnant';
 
+export interface OsmMetadata {
+  osmId?: string;
+  osmType?: 'node' | 'way' | 'relation';
+  osmTags?: Record<string, string>;
+  source: 
+    | 'OpenStreetMap Ground Verified' 
+    | 'Audited OMC Depot' 
+    | 'Live Overpass Fetch' 
+    | 'OSM GeoJSON Import'
+    | 'PACS / Primary Agricultural Credit Society'
+    | 'Cooperative Marketing Federation (Agro)'
+    | 'Transport Nagar Siding'
+    | 'State Industrial Estate Registry'
+    | string;
+  amenity?: string;
+  shop?: string;
+  operator?: string;
+  openingHours?: string;
+  website?: string;
+  osmUrl?: string;
+  confidenceScore?: number;
+}
+
 export interface DistributorRecord {
   id: string;
   name: string;
   brand: string;
   parentCompany: string;
-  distributorType: 'Master Distributor' | 'Super Stockist' | 'Industrial Channel Partner' | 'Direct OMC Depot' | 'Institutional C&F';
+  distributorType: 
+    | 'Master Distributor' 
+    | 'Super Stockist' 
+    | 'Industrial Channel Partner' 
+    | 'Direct OMC Depot' 
+    | 'Institutional C&F' 
+    | 'Wholesale Hub'
+    | 'PACS / Agri Cooperative Stockist'
+    | 'Transport Nagar Hub'
+    | 'OMC Retail Lubricant Outlet'
+    | 'Multi-Brand Auto Retailer'
+    | string;
   district: string;
   stateCode: string;
   stateName: string;
@@ -282,7 +316,15 @@ export interface DistributorRecord {
   annualVolumeKL: number;
   warehouseCapacityKL: number;
   coverageRadiusKm: number;
-  primarySector: 'Automotive Retail (PCMO/MCO)' | 'Commercial Fleets (HDEO)' | 'Industrial & Metalworking' | 'Agri Machinery & UTTO' | 'Multi-Segment Full-Line';
+  primarySector: 
+    | 'Automotive Retail (PCMO/MCO)' 
+    | 'Commercial Fleets (HDEO)' 
+    | 'Industrial & Metalworking' 
+    | 'Agri Machinery & UTTO' 
+    | 'Multi-Segment Full-Line'
+    | 'Port Marine & Bunkering'
+    | 'Mining & Heavy Off-Highway'
+    | string;
   dealerNetworkCount: number;
   industrialAccountsCount: number;
   avgLeadTimeDays: number;
@@ -294,6 +336,7 @@ export interface DistributorRecord {
   topSellingSKUs: string[];
   whiteSpotProximityKm: number;
   targetWhiteSpotId?: string;
+  osmMeta?: OsmMetadata;
 }
 
 export interface AlertNotification {
