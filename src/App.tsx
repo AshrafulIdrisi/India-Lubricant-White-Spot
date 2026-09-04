@@ -16,6 +16,7 @@ import { ForecastPipelineDashboard } from './components/dashboards/ForecastPipel
 import { BusinessCaseSimulator } from './components/dashboards/BusinessCaseSimulator';
 import { MethodologyDocCenter } from './components/dashboards/MethodologyDocCenter';
 import { BrandValidationDashboard } from './components/dashboards/BrandValidationDashboard';
+import { ExecutiveKpiDashboard } from './components/dashboards/ExecutiveKpiDashboard';
 import { AiAssistantModal } from './components/AiAssistantModal';
 
 export default function App() {
@@ -153,6 +154,15 @@ export default function App() {
               scoringWeights={scoringWeights}
               onWeightsChange={setScoringWeights}
               onNavigateToDistrict={handleNavigateToDistrict}
+              onNavigateToTab={setActiveTab}
+            />
+          )}
+
+          {activeTab === 'executiveKpi' && (
+            <ExecutiveKpiDashboard
+              locations={locations}
+              distributors={distributors}
+              financialAssumptions={financialAssumptions}
               onNavigateToTab={setActiveTab}
             />
           )}

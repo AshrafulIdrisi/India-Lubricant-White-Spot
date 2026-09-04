@@ -16,7 +16,8 @@ import {
   ChevronRight,
   Zap,
   Boxes,
-  FileSpreadsheet
+  FileSpreadsheet,
+  Award
 } from 'lucide-react';
 import { DashboardTab } from './NavigationHeader';
 import { FinancialAssumptions } from '../types';
@@ -40,6 +41,7 @@ export const NavigationSidebar: React.FC<NavigationSidebarProps> = ({
 }) => {
   const mainNavItems = [
     { id: 'overview' as DashboardTab, label: 'Dashboard', sublabel: 'GIS Canvas & Heatmap', icon: Map },
+    { id: 'executiveKpi' as DashboardTab, label: 'Executive Scorecard', sublabel: 'C-Suite Strategy & Levers', icon: Award },
     { id: 'state' as DashboardTab, label: 'All-India Matrix', sublabel: '36 States (5.70M KL)', icon: Globe2 },
     { id: 'brandValidation' as DashboardTab, label: '50 Competitors', sublabel: '8.85M KL Capacity Audit', icon: ShieldCheck }
   ];

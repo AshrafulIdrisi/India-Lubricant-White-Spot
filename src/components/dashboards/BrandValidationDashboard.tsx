@@ -28,7 +28,8 @@ import {
   ChevronRight,
   ChevronDown,
   Table as TableIcon,
-  BadgeCheck
+  BadgeCheck,
+  Calendar
 } from 'lucide-react';
 import {
   ResponsiveContainer,
@@ -48,6 +49,7 @@ import { BrandCompanyData, CompanyCategory } from '../../types';
 import { BRAND_COMPANIES_DATA, MACRO_MARKET_RECONCILIATION, AUDIT_FORMULA_STEPS } from '../../data/brandMarketData';
 import { ALL_50_COMPETITORS, SUMMARY_COMPETITORS, CompetitorDetail } from '../../data/competitors24Data';
 import { formatKL, formatINR } from '../../utils/demandEngine';
+import { MultiYearValidationSection } from './MultiYearValidationSection';
 
 const BRAND_PALETTE: Record<string, string> = {
   'SERVO': '#ef4444',
@@ -66,7 +68,7 @@ export const BrandValidationDashboard: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [sortBy, setSortBy] = useState<'share' | 'volume' | 'capacity' | 'revenue' | 'clusterVol'>('share');
-  const [activeTab, setActiveTab] = useState<'benchmark' | 'competitorsMaster' | 'matrix' | 'charts' | 'comparator' | 'formulas'>('benchmark');
+  const [activeTab, setActiveTab] = useState<'benchmark' | 'multiYear' | 'competitorsMaster' | 'matrix' | 'charts' | 'comparator' | 'formulas'>('benchmark');
   const [expandedBrandId, setExpandedBrandId] = useState<string | null>(BRAND_COMPANIES_DATA[0].id);
   const [searchCompetitors, setSearchCompetitors] = useState<string>('');
   const [categoryFilterCompetitors, setCategoryFilterCompetitors] = useState<string>('all');
@@ -179,6 +181,7 @@ export const BrandValidationDashboard: React.FC = () => {
           <div className="flex items-center gap-1.5 bg-slate-100/80 p-1.5 rounded-xl border border-slate-200/80 text-xs flex-wrap">
             {[
               { id: 'benchmark', label: 'Exact Benchmark', icon: TableIcon, badge: '5.70M KL' },
+              { id: 'multiYear', label: '3-Year Data Validation', icon: Calendar, badge: 'FY24-FY27' },
               { id: 'competitorsMaster', label: '50 Competitors & Capacity', icon: Boxes, badge: '50 Brands' },
               { id: 'matrix', label: 'Supply Matrix', icon: Building2, badge: '10 Profiles' },
               { id: 'charts', label: 'Market Analytics', icon: BarChart3 },
@@ -766,6 +769,11 @@ export const BrandValidationDashboard: React.FC = () => {
             </div>
           </div>
         </div>
+      )}
+
+      {/* TAB: 3-YEAR HISTORICAL VALIDATION ANALYSIS */}
+      {activeTab === 'multiYear' && (
+        <MultiYearValidationSection />
       )}
 
       {/* TAB: 50 COMPETITORS & CAPACITY JUSTIFICATION */}

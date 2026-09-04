@@ -1,7 +1,6 @@
 import express from 'express';
 import path from 'path';
 import { GoogleGenAI } from '@google/genai';
-import { createServer as createViteServer } from 'vite';
 
 const app = express();
 const PORT = 3000;
@@ -218,6 +217,7 @@ Provide your expert analysis, specific cluster recommendation, facility sizing g
 // Setup Vite middleware in dev or static serving in prod
 async function startServer() {
   if (process.env.NODE_ENV !== 'production') {
+    const { createServer: createViteServer } = await import('vite');
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: 'spa'

@@ -27,6 +27,7 @@ import { downloadWhiteSpotExcel } from '../utils/excelExporter';
 
 export type DashboardTab = 
   | 'overview'
+  | 'executiveKpi'
   | 'brandValidation'
   | 'state'
   | 'district'
